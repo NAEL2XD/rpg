@@ -1,0 +1,6 @@
+export/*
+.haxelib/
+.vscode/*
+hxformat.json
+build.bat
+build.py
