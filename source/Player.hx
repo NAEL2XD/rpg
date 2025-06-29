@@ -30,7 +30,8 @@ class Player extends FlxSprite {
 
         if (FlxG.keys.justPressed.SPACE) {
             jumped = true;
-            PlayState.copyJump.y = 1;
+            PlayState.copyJump.y = -1;
+            PlayState.copyJump.acceleration.zero();
             PlayState.copyJump.acceleration.y = 700;
             PlayState.copyJump.velocity.y = -500;
         } else if (jumped && PlayState.copyJump.y < 0) {
@@ -45,6 +46,6 @@ class Player extends FlxSprite {
         currentPos[0] += velocityMovement[0];
         currentPos[1] += velocityMovement[1];
         x = currentPos[0];
-        y = currentPos[1] + PlayState.copyJump.y;
+        y = currentPos[1] - PlayState.copyJump.y;
     }
 }
