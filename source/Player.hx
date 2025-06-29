@@ -6,7 +6,6 @@ class Player extends FlxSprite {
     final key:Array<FlxKey> = [LEFT, DOWN, UP, RIGHT, A, S, W, D];
 
     var jumped:Bool = false;
-    var copyJump:FlxSprite = new FlxSprite();
     
     public function new() {
         super();
@@ -31,11 +30,14 @@ class Player extends FlxSprite {
 
         if (FlxG.keys.justPressed.SPACE) {
             jumped = true;
-            copyJump.y = 0;
-            copyJump.acceleration.y = 700;
-            copyJump.velocity.y = -500;
-        } else if (jumped && copyJump.y < 0) {
+            PlayState.copyJump.y = 0;
+            PlayState.copyJump.acceleration.y = 700;
+            PlayState.copyJump.velocity.y = -500;
+        } else if (jumped && PlayState.copyJump.y < 0) {
             jumped = false;
+            PlayState.copyJump.acceleration.y = 0;
+            PlayState.copyJump.velocity.y = 0;
+            PlayState.copyJump.y = 0;
         }
 
         velocityMovement[0] /= 1.15;
@@ -43,6 +45,6 @@ class Player extends FlxSprite {
         currentPos[0] += velocityMovement[0];
         currentPos[1] += velocityMovement[1];
         x = currentPos[0];
-        y = currentPos[1] + copyJump.y;
+        y = currentPos[1] + PlayState.copyJump.y;
     }
 }
