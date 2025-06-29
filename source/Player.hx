@@ -24,19 +24,11 @@ class Player extends FlxSprite {
                 }
             }
 
-            if (i < 2) {
-                if (velocityMovement[i] < 0) {
-                    velocityMovement[i] = velocityMovement[i] > -4 ? -4 : velocityMovement[i];
-                } else {
-                    velocityMovement[i] = velocityMovement[i] < 4 ? -4 : velocityMovement[i];
-                }
-            }
-
             i++;
         }
 
-        velocityMovement[0] /= 1.1;
-        velocityMovement[1] /= 1.1;
+        velocityMovement[0] /= 1.15;
+        velocityMovement[1] /= 1.15;
         x += velocityMovement[0];
         y += velocityMovement[1];
 
