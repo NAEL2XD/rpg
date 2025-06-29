@@ -2,7 +2,11 @@ package;
 
 class Player extends FlxSprite {
     var velocityMovement:Array<Float> = [0, 0];
+    var currentPos:Array<Float> = [0, 0];
     final key:Array<FlxKey> = [LEFT, DOWN, UP, RIGHT, A, S, W, D];
+
+    var jumped:Bool = false;
+    var copyJump:FlxSprite = new FlxSprite();
     
     public function new() {
         super();
@@ -14,8 +18,6 @@ class Player extends FlxSprite {
 
         for (k in key) {
             if (FlxG.keys.anyPressed([k])) {
-                trace("Pressed!");
-
                 switch(i % 4) {
                     case 0: velocityMovement[0] -= 0.5;
                     case 1: velocityMovement[1] += 0.5;
@@ -27,11 +29,20 @@ class Player extends FlxSprite {
             i++;
         }
 
+        if (FlxG.keys.justPressed.SPACE) {
+            jumped = true;
+            copyJump.y = 0;
+            copyJump.acceleration.y = 100;
+            copyJump.velocity.y = 60;
+        } else if (jumped && copyJump.y <= 0) {
+            jumped = false;
+        }
+
         velocityMovement[0] /= 1.15;
         velocityMovement[1] /= 1.15;
-        x += velocityMovement[0];
-        y += velocityMovement[1];
-
-        trace(velocityMovement);
+        currentPos[0] += velocityMovement[0];
+        currentPos[1] += velocityMovement[1];
+        x = currentPos[0];
+        y = currentPos[1] + copyJump.y;
     }
 }

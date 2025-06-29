@@ -2,7 +2,7 @@ package;
 
 class PlayState extends FlxState {
 	var player:Player = new Player();
- 
+
 	override public function create() {
 		add(player);
 		super.create();
