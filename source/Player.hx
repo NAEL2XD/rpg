@@ -31,7 +31,6 @@ class Player extends FlxSprite {
         if (FlxG.keys.justPressed.SPACE) {
             jumped = true;
             PlayState.copyJump.y = -1;
-            PlayState.copyJump.acceleration.zero();
             PlayState.copyJump.acceleration.y = 700;
             PlayState.copyJump.velocity.y = -500;
         } else if (jumped && PlayState.copyJump.y < 0) {
