@@ -7,9 +7,10 @@ class PlayState extends FlxState {
 	override public function create() {
 		add(player);
 
-		copyJump.makeGraphic(0, 0);
+		copyJump.makeGraphic(1, 1);
+		copyJump.visible = false;
         add(copyJump);
-		
+
 		super.create();
 	}
 
