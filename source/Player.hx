@@ -18,8 +18,8 @@ class Player extends FlxSprite {
 
                 switch(i % 4) {
                     case 0: velocityMovement[0] -= 0.5;
-                    case 1: velocityMovement[1] -= 0.5;
-                    case 2: velocityMovement[1] += 0.5;
+                    case 1: velocityMovement[1] 1= 0.5;
+                    case 2: velocityMovement[1] -= 0.5;
                     case 3: velocityMovement[0] += 0.5;
                 }
             }
