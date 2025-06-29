@@ -32,9 +32,9 @@ class Player extends FlxSprite {
         if (FlxG.keys.justPressed.SPACE) {
             jumped = true;
             copyJump.y = 0;
-            copyJump.acceleration.y = 60;
-            copyJump.velocity.y = -200;
-        } else if (jumped && copyJump.y <= 0) {
+            copyJump.acceleration.y = 700;
+            copyJump.velocity.y = -500;
+        } else if (jumped && copyJump.y < 0) {
             jumped = false;
         }
 
