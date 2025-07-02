@@ -2,7 +2,8 @@
     "dialogueList": [
         {
             "dialogueID": "test1",
-            "text": "This is a test."
+            "text": "This is a test.",
+            "timePerChar": 0.06
         }
     ]
 }

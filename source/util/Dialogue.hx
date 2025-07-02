@@ -8,23 +8,26 @@ import haxe.Json;
 import flixel.FlxSubState;
 
 class Dialogue extends FlxSubState {
+    var list = Json.parse(File.getContent("assets/data/dialogue.json"));
+    
     var spr:FlxObject = null;
     var timer:FlxTimer = new FlxTimer();
     var textSpr:FlxText = null;
 
     var dialogueText:String = "";
     var done:Bool = false;
+    var timePerChar:Float = 0;
 
     public function new(dialogueID:String, sprite:FlxObject) {
         done = false;
 
-        var list = Json.parse(File.getContent("assets/data/dialogue.json"));
         var dial:Array<Dynamic> = list.dialogueList;
 
         dialogueText = "";
         for (dID in dial) {
             if (dID.dialogueID == dialogueID) {
                 dialogueText = dID.text;
+                timePerChar = dID.timePerChar;
                 break;
             }
         }
@@ -57,19 +60,19 @@ class Dialogue extends FlxSubState {
         s.y = spr.y - 85;
         add(s);
 
-        final x = s.x + 8;
-        final y = s.y + 8;
+        final x = s.x + 4;
+        final y = s.y + 4;
 
         s = new FlxSprite().makeGraphic(l + 12, 52, 0xFF000000);
         s.x = pos - 66;
         s.y = spr.y - 76;
         add(s);
 
-        textSpr = new FlxText(x, y, l - 8, "").setFormat("assets/fonts/main.ttf", 12);
+        textSpr = new FlxText(x, y, l - 4, "").setFormat("assets/fonts/main.ttf", 18);
         add(textSpr);
 
         var ind:Int = -1;
-        timer.start(0.12, e -> {
+        timer.start(timePerChar, e -> {
             ind++;
             textSpr.text += dialogueText.charAt(ind);
 
@@ -78,7 +81,6 @@ class Dialogue extends FlxSubState {
             }
         }, dialogueText.length);
         
-        trace(dialogueText);
         super.create();
     }
 
