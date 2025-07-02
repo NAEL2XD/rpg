@@ -53,7 +53,7 @@ class Dialogue extends FlxSubState {
 
         s = new FlxSprite().makeGraphic(l + 12, 52, 0xFF000000);
         s.x = spr.x - 66;
-        s.y = spr.y - 60;
+        s.y = spr.y - 80;
         add(s);
         
         trace(dialogueText);
