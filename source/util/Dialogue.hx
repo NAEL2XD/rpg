@@ -30,7 +30,7 @@ class Dialogue extends FlxSubState {
     }
 
     override function create() {
-        final xy:Array<Array<Int>> = [[-16, -36, 40, 80], [-40, -36, 146, 40], [-38, -38, 142, 36]];
+        final xy:Array<Array<Int>> = [[-16, -36, 60, 120], [-100, -36, 200, 60], [-38, -38, 184, 76]];
         for (i in 0...2) {
             for (pos in xy) {
                 var s:FlxSprite = new FlxSprite(pos[0] + spr.x, pos[1] + spr.y).makeGraphic(pos[2], pos[3], i == 0 ? 0xFFFFFFFF : 0xFF000000);
@@ -38,8 +38,8 @@ class Dialogue extends FlxSubState {
             }
 
             for (j in 0...3) {
-                xy[i][j] -= 2;
-                xy[i][j+2] -= 4;
+                xy[i][j] += 4;
+                xy[i][j+2] -= 8;
             }
         }
         
