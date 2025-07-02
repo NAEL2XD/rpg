@@ -4,6 +4,11 @@
             "dialogueID": "test1",
             "text": "This is a test.",
             "timePerChar": 0.06
+        },
+        {
+            "dialogueID": "test2",
+            "text": "this is also a work in progress so yeah.",
+            "timePerChar": 0.06
         }
     ]
 }
