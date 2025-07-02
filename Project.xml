@@ -48,6 +48,11 @@
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
+	<haxedef name="HXCPP_CHECK_POINTER" />
+	<haxedef name="HXCPP_STACK_LINE" />
+	<haxedef name="HXCPP_STACK_TRACE" />
+	<haxedef name="HXCPP_CATCH_SEGV" />
+
 	<!--Remove the legacy health system-->
 	<haxedef name="FLX_NO_HEALTH" />
 	
