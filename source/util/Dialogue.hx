@@ -91,6 +91,7 @@ class Dialogue extends FlxSubState {
             } else {
                 timer.cancel();
                 textSpr.text = dialogueText;
+                done = true;
             }
         }
 
