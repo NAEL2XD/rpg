@@ -15,7 +15,6 @@ class Player extends FlxSprite {
     
     public function checkMovement() {
         var i:Int = 0;
-        
         for (k in [LEFT, DOWN, UP, RIGHT, A, S, W, D]) {
             if (FlxG.keys.anyPressed([k])) {
                 switch(i % 4) {
@@ -31,10 +30,10 @@ class Player extends FlxSprite {
 
         if (FlxG.keys.justPressed.SPACE) {
             jumped = true;
-            jumpHeight = 16;
+            jumpHeight = 8;
         } else if (jumped) {
             jumpHeight -= .5;
-            jumpY += height;
+            jumpY += jumpHeight;
 
             if (jumpY < 0) {
                 jumped = false;
