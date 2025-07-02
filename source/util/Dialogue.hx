@@ -25,8 +25,6 @@ class Dialogue extends FlxSubState {
     var timePerChar:Float = 0;
 
     public function new(dialogueID:Array<String>, sprite:FlxObject) {
-        done = false;
-
         var dial:Array<Dynamic> = list.dialogueList;
         queue = [];
 
@@ -89,6 +87,7 @@ class Dialogue extends FlxSubState {
     function newDialogue() {
         var ind:Int = -1;
 
+        done = false;
         textSpr.text = "";
 
         dialogueText = queue[0].dialogueText;
