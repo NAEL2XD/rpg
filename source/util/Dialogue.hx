@@ -34,7 +34,7 @@ class Dialogue extends FlxSubState {
             if (dID.dialogueID == dialogueID) {
                 var d:Dialogues = {
                     dialogueText: dID.text,
-                    timePerChar: iID.timePerChar
+                    timePerChar: dID.timePerChar
                 };
                 queue.push(d);
             }
