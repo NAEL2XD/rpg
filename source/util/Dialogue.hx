@@ -43,7 +43,7 @@ class Dialogue extends FlxSubState {
     override function create() {
         var s:FlxSprite = null;
         final l:Int = 256;
-        final pos:Float = spr.x - 40;
+        final pos:Float = spr.x - 50;
 
         s = new FlxSprite().makeGraphic(l, 82, 0xFFFFFFFF);
         s.x = pos - 60;
