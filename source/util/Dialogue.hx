@@ -41,10 +41,10 @@ class Dialogue extends FlxSubState {
             s = new FlxSprite(-104 + spr.x - newX, -94 + spr.y + newX).makeGraphic(208 - (newX * 2), 80 + (newX * 2), color);
             add(s);
 
-            s = new FlxSprite(-108 + spr.x - newX, -80 + spr.y + newX).makeGraphic(216 - (newX * 2), 72 + (newX * 2), color);
+            s = new FlxSprite(-112 + spr.x - newX, -86 + spr.y + newX).makeGraphic(216 - (newX * 2), 72 + (newX * 2), color);
             add(s);
 
-            s = new FlxSprite(-32 + spr.x - newX, -80 + spr.y + newX).makeGraphic(64 - (newX * 2), 64 + (newX * 2), color);
+            s = new FlxSprite(-32 + spr.x - newX, -78 + spr.y + newX).makeGraphic(64 - (newX * 2), 64 + (newX * 2), color);
             add(s);
         }
         
