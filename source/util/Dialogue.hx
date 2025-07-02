@@ -7,8 +7,14 @@ import sys.io.File;
 import haxe.Json;
 import flixel.FlxSubState;
 
+typedef Dialogues = {
+    dialogueText:String,
+    timePerChar:Float
+}
+
 class Dialogue extends FlxSubState {
     var list = Json.parse(File.getContent("assets/data/dialogue.json"));
+    var queue:Array<Dialogues> = [];
     
     var spr:FlxObject = null;
     var timer:FlxTimer = new FlxTimer();
@@ -18,22 +24,23 @@ class Dialogue extends FlxSubState {
     var done:Bool = false;
     var timePerChar:Float = 0;
 
-    public function new(dialogueID:String, sprite:FlxObject) {
+    public function new(dialogueID:Array<String>, sprite:FlxObject) {
         done = false;
 
         var dial:Array<Dynamic> = list.dialogueList;
+        queue = [];
 
-        dialogueText = "";
         for (dID in dial) {
             if (dID.dialogueID == dialogueID) {
-                dialogueText = dID.text;
-                timePerChar = dID.timePerChar;
-                break;
+                var d:Dialogues;
+                d.dialogueText = dID.text;
+                d.timePerChar  = dID.timePerChar;
+                queue.push(d);
             }
         }
 
-        if (dialogueText == "") {
-            throw 'Couldn\'t find dialogue ID: $dialogueID';
+        if (queue.length == 0) {
+            throw 'Couldn\'t find dialogue IDs: $dialogueID';
         }
 
         spr = sprite;
@@ -71,7 +78,17 @@ class Dialogue extends FlxSubState {
         textSpr = new FlxText(x, y, l - 4, "").setFormat("assets/fonts/main.ttf", 18);
         add(textSpr);
 
+        newDialogue();
+        
+        super.create();
+    }
+
+    function newDialogue() {
         var ind:Int = -1;
+
+        dialogueText = queue[0].dialogueText;
+        timePerChar  = queue[0].timePerChar;
+
         timer.start(timePerChar, e -> {
             ind++;
             textSpr.text += dialogueText.charAt(ind);
@@ -80,14 +97,18 @@ class Dialogue extends FlxSubState {
                 done = true;
             }
         }, dialogueText.length);
-        
-        super.create();
+
+        queue.shift();
     }
 
     override function update(elapsed:Float) {
         if (FlxG.keys.justPressed.ANY) {
             if (done) {
-                close();
+                if (queue.length == 0) {
+                    close();
+                } else {
+                    newDialogue();
+                }
             } else {
                 timer.cancel();
                 textSpr.text = dialogueText;
