@@ -31,12 +31,14 @@ class Dialogue extends FlxSubState {
         queue = [];
 
         for (dID in dial) {
-            if (dID.dialogueID == dialogueID) {
-                var d:Dialogues = {
-                    dialogueText: dID.text,
-                    timePerChar: dID.timePerChar
-                };
-                queue.push(d);
+            for (dialID in dialogueID) {
+                if (dID.dialogueID == dialID) {
+                    var d:Dialogues = {
+                        dialogueText: dID.text,
+                        timePerChar: dID.timePerChar
+                    };
+                    queue.push(d);
+                }
             }
         }
 
@@ -86,6 +88,8 @@ class Dialogue extends FlxSubState {
 
     function newDialogue() {
         var ind:Int = -1;
+
+        textSpr.text = "";
 
         dialogueText = queue[0].dialogueText;
         timePerChar  = queue[0].timePerChar;
