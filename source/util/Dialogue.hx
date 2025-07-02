@@ -30,9 +30,6 @@ class Dialogue extends FlxSubState {
     }
 
     override function create() {
-        var e = new FlxSprite().makeGraphic(999, 999, 0xFF666666);
-        add(e);
-
         var s:FlxSprite = null;
         var l:Int = 256;
 
