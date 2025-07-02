@@ -41,7 +41,7 @@ class Dialogue extends FlxSubState {
             }
 
             for (j in 0...2) {
-                xy[i][j] -= 4;
+                xy[i][j] += 4;
                 xy[i][j+2] -= 8;
             }
         }
