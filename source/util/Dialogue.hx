@@ -33,17 +33,19 @@ class Dialogue extends FlxSubState {
         var e = new FlxSprite().makeGraphic(999, 999, 0xFF666666);
         add(e);
 
-        final xy:Array<Array<Int>> = [[-20, 40, 40, 50], [-100, -36, 200, 80], [-92, -44, 200, 92]];
+        var s:FlxSprite = null;
         for (i in 0...2) {
-            for (pos in xy) {
-                var s:FlxSprite = new FlxSprite(pos[0] + spr.x, pos[1] + spr.y).makeGraphic(pos[2], pos[3], i == 0 ? 0xFF000000 : 0xFFFFFFFF);
-                add(s);
-            }
+            final color:Int = i == 0 ? 0xFF000000 : 0xFFFFFFFF;
+            final newX:Int = 4 * i;
 
-            for (j in 0...2) {
-                xy[i][j] += 4;
-                xy[i][j+2] -= 8;
-            }
+            s = new FlxSprite(-104 + spr.x - newX, -94 + spr.y + newX).makeGraphic(208 - (newX * 2), 80 + (newX * 2), color);
+            add(s);
+
+            s = new FlxSprite(-108 + spr.x - newX, -80 + spr.y + newX).makeGraphic(216 - (newX * 2), 72 + (newX * 2), color);
+            add(s);
+
+            s = new FlxSprite(-32 + spr.x - newX, -80 + spr.y + newX).makeGraphic(64 - (newX * 2), 64 + (newX * 2), color);
+            add(s);
         }
         
         trace(dialogueText);
