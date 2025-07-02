@@ -8,7 +8,7 @@ class Chapter1_1 extends FlxState {
 
     override function create() {
         new FlxTimer().start(1, e -> {
-            openSubState(new Dialogue(["test1", "test2"], sprite));
+            openSubState(new Dialogue(["test1", "test2", "test3"], sprite));
         });
 
         add(sprite);
