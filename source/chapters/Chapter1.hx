@@ -1,5 +1,6 @@
 package chapters;
 
+import haxe.Timer;
 import flixel.sound.FlxSound;
 import flixel.tweens.FlxTween;
 import flixel.math.FlxMath;
@@ -28,6 +29,7 @@ class Chapter1_1 extends FlxState {
         up.x = 551;
         up.y = 131;
         up.scale.set(1.5, 1.5);
+        up.updateHitbox();
         add(up);
 
         FlxG.camera.flash(0xFF000000, 2, function() {
@@ -57,11 +59,12 @@ class Chapter1_1 extends FlxState {
         player.checkMovement();
 
         up.alpha = 1.5 - (FlxMath.distanceBetween(player, up) / 100);
+        up.y = 133 + (Math.sin(Timer.stamp()) * 4);
         if (!player.cutscene) {
             if (FlxMath.distanceBetween(player, up) < 50 && FlxG.keys.justPressed.UP) {
                 FlxG.sound.play("assets/sounds/door_open.ogg");
                 player.cutscene = false;
-                
+
                 var black:FlxSprite = new FlxSprite().makeGraphic(640, 360, 0xFF000000);
                 black.alpha = 0;
                 FlxTween.tween(black, {alpha: 1}, 1, {onComplete: e -> {
@@ -77,7 +80,7 @@ class Chapter1_1 extends FlxState {
                     snd.play();
                 }});
                 add(black);
-            
+
                 FlxTween.num(FlxG.sound.music.volume, 0, 1, {}, e -> {
                     FlxG.sound.music.volume = e;
                 });
