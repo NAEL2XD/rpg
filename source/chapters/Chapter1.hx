@@ -106,6 +106,7 @@ class Chapter1_2 extends FlxState {
     var player:Player = new Player();
     var outside:FlxSprite = new FlxSprite().loadGraphic("assets/images/world/houseOutside/0.png");
     var jumped:Bool = false;
+    var readyToAttack:Bool = false;
 
     override function create() {
         outside.antialiasing = false;
@@ -158,25 +159,7 @@ class Chapter1_2 extends FlxState {
                 player.lockedVM = 5.25;
                 player.jump(true);
 
-                if (FlxG.overlap(player, noobs[0])) {
-                    openSubState(new Battle({
-                        enemyData: [{
-                            hp: 5,
-                            enemy: noobs[0],
-                            name: "Gang I"
-                        }, {
-                            hp: 5,
-                            enemy: noobs[1],
-                            name: "Gang II"
-                        }],
-                        background: "houseOut",
-                        extraDialogues: new Dialogue([{
-                            dID: "battleEnemy1",
-                            char: noobs[0]
-                        }])
-                    }));
-                }
-
+                readyToAttack = true;
                 jumped = true;
             }
 
@@ -198,6 +181,25 @@ class Chapter1_2 extends FlxState {
 
         if (jumped) {
             player.jump(false, -60);
+
+            if (FlxG.overlap(player, noobs[0]) && readyToAttack) {
+                openSubState(new Battle({
+                    enemyData: [{
+                        hp: 5,
+                        enemy: noobs[0],
+                        name: "Gang I"
+                    }, {
+                        hp: 5,
+                        enemy: noobs[1],
+                        name: "Gang II"
+                    }],
+                    background: "houseOut",
+                    extraDialogues: new Dialogue([{
+                        dID: "battleEnemy1",
+                        char: noobs[0]
+                    }])
+                }));
+            }
         }
 
         super.update(elapsed);
