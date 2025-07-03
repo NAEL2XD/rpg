@@ -16,9 +16,14 @@
             "timePerChar": 0.06
         },
         {
-            "dialogueID": "shocked",
-            "text": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!000000000!!",
+            "dialogueID": "shocked1",
+            "text": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
             "timePerChar": 0.01
+        },
+        {
+            "dialogueID": "shocked2",
+            "text": "Oh you better not be able to hurt me are you, little creep!?",
+            "timePerChar": 0.04
         }
     ]
 }

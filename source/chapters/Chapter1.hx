@@ -71,7 +71,10 @@ class Chapter1_1 extends FlxState {
                     var snd:FlxSound = FlxG.sound.load("assets/sounds/door_close.ogg");
                     snd.onComplete = function() {
                         var state = new Dialogue([{
-                            dID: "shocked",
+                            dID: "shocked1",
+                            char: player
+                        }, {
+                            dID: "shocked2",
                             char: player
                         }]);
                     
