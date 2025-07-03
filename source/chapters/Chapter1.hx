@@ -147,6 +147,9 @@ class Chapter1_2 extends FlxState {
             }, {
                 dID: "houseEnemyApproach8",
                 char: player
+            }, {
+                dID: "houseEnemyApproach9",
+                char: noobs[0]
             }]);
 
             state.closeCallback = function() {
