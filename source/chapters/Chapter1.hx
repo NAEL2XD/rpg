@@ -19,13 +19,14 @@ class Chapter1_1 extends FlxState {
                 dID: "test3",
                 char: sprite
             }]);
+            openSubState(state);
 
             state.closeCallback = function() {
                 var spriteMonster:FlxSprite = new FlxSprite();
                 spriteMonster.makeGraphic(24, 24, 0xFFFF0000);
                 spriteMonster.x = 480;
                 FlxTween.tween(spriteMonster, {x: 280}, 2, {onComplete: e -> {
-                    new Dialogue([{
+                    openSubState(new Dialogue([{
                         dID: "test4",
                         char: spriteMonster
                     }, {
@@ -37,7 +38,7 @@ class Chapter1_1 extends FlxState {
                     }, {
                         dID: "test7",
                         char: sprite
-                    }]);
+                    }]););
                 }});
                 add(spriteMonster);
             }
