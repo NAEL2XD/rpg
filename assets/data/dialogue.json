@@ -74,7 +74,7 @@
             "dialogueID": "houseEnemyApproach9",
             "text": "What are you gotta do now, loser-",
             "timePerChar": 0.06,
-            "manualPress": true
+            "manualPress": false
         }
     ]
 }
