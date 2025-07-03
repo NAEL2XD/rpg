@@ -115,7 +115,7 @@ class Chapter1_2 extends FlxState {
         for (i in 0...2) {
             noobs.push(new FlxSprite().makeGraphic(28, 28, 0xFF000000));
             noobs[i].x = 220 + (70 * i);
-            noobs[i].y = 228;
+            noobs[i].y = 222;
             add(noobs[i]);
         }
 
@@ -156,8 +156,8 @@ class Chapter1_2 extends FlxState {
             openSubState(state);
         });
 
-        player.x = 20;
-        player.posY = 196;
+        player.x = 50;
+        player.posY = 186;
         player.cutscene = true;
         player.checkMovement();
         add(player);
