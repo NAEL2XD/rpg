@@ -3,6 +3,7 @@ package util;
 class Player extends FlxSprite {
     public var cutscene:Bool = false;
     public var posY:Float = 0;
+    public var limitXPos:Array<Float> = [0, 0];
 
     var velocityMovement:Float = 0;
 
@@ -35,6 +36,8 @@ class Player extends FlxSprite {
         if (FlxG.keys.justPressed.SPACE) {
             jumped = true;
             jumpHeight = 8;
+
+            playSound("jump");
         } else if (jumped) {
             jumpHeight -= .5;
             jumpY += jumpHeight;
@@ -43,6 +46,12 @@ class Player extends FlxSprite {
                 jumpY = 0;
                 jumped = false;
             }
+        }
+
+        if (x < limitXPos[0]) {
+            x = limitXPos[0];
+        } else if (x > limitXPos[1]) {
+            x = limitXPos[1];
         }
 
         velocityMovement /= 1.15;

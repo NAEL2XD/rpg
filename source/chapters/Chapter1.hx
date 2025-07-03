@@ -15,6 +15,7 @@ class Chapter1_1 extends FlxState {
 
         player.x = 86;
         player.posY = 196;
+        player.limitXPos = [0, 616];
         player.checkMovement();
         player.cutscene = true;
         player.playSound("yawn");
