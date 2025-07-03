@@ -156,9 +156,10 @@ class Chapter1_2 extends FlxState {
             openSubState(state);
         });
 
-        player.x = 50;
+        player.x = 40;
         player.posY = 186;
         player.cutscene = true;
+        player.limitXPos = [0, 616];
         player.checkMovement();
         add(player);
 
