@@ -38,7 +38,7 @@ class Chapter1_1 extends FlxState {
                     }, {
                         dID: "test7",
                         char: sprite
-                    }]););
+                    }]));
                 }});
                 add(spriteMonster);
             }

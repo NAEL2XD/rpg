@@ -81,7 +81,7 @@ class Dialogue extends FlxSubState {
         sprArray.push(s);
         add(sprArray[2]);
 
-        final x = s.x + 2;
+        final x = s.x - 2;
         final y = s.y + 1;
 
         s = new FlxSprite().makeGraphic(l + 12, 52, 0xFF000000);
@@ -115,6 +115,12 @@ class Dialogue extends FlxSubState {
         for (spry in sprArray) {
             spry.x = pos   - xy[i][0];
             spry.y = spr.y - xy[i][1];
+
+            if (i == 2) {
+                textSpr.x = spry.x - 2;
+                textSpr.y = spry.y + 2;
+            }
+
             i++;
         }
 
