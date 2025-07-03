@@ -118,6 +118,8 @@ class Dialogue extends FlxSubState {
 
             if (spry.x < 0) {
                 spry.x += 70;
+            } else if (spry.x > 420) {
+                spry.x -= (spry.x - 200);
             }
 
             if (i == 2) {
@@ -126,6 +128,8 @@ class Dialogue extends FlxSubState {
 
                 if (textSpr.x < 0) {
                     textSpr.x += 70;
+                } else if (textSpr.x > 420) {
+                    textSpr.x -= (textSpr.x - 200);
                 }
             }
 
