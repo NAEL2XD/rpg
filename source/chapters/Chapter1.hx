@@ -13,8 +13,8 @@ class Chapter1_1 extends FlxState {
         house.screenCenter();
         add(house);
 
-        player.x = 80;
-        player.y = 170;
+        player.x = 86;
+        player.y = 196;
         player.cutscene = true;
         player.playSound("yawn");
         add(player);
@@ -43,6 +43,7 @@ class Chapter1_1 extends FlxState {
     }
 
     override function update(elapsed:Float) {
+        player.checkMovement();
         super.update(elapsed);
     }
 }
