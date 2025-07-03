@@ -14,6 +14,26 @@
             "dialogueID": "test3",
             "text": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "timePerChar": 0.03
+        },
+        {
+            "dialogueID": "test4",
+            "text": "Arrrre youuuuu the playyyyyyerrrrrr?",
+            "timePerChar": 0.08
+        },
+        {
+            "dialogueID": "test5",
+            "text": "Who are you?",
+            "timePerChar": 0.06
+        },
+        {
+            "dialogueID": "test6",
+            "text": "Yoooooooouuurrr bigggest thrrrrreat.",
+            "timePerChar": 0.08
+        },
+        {
+            "dialogueID": "test7",
+            "text": "Oh hell naw, i'm gonna show who's boss.",
+            "timePerChar": 0.06
         }
     ]
 }

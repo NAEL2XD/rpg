@@ -62,10 +62,6 @@ class Dialogue extends FlxSubState {
         final l:Int = 256;
         final pos:Float = spr.x - 50;
         sprArray = [];
-
-        var ddddd = new FlxSprite().makeGraphic(1000, 700);
-        ddddd.alpha = 0.2;
-        add(ddddd);
         
         var s:FlxSprite = new FlxSprite().makeGraphic(l, 82, 0xFFFFFFFF);
         s.x = pos - 60;
@@ -85,8 +81,8 @@ class Dialogue extends FlxSubState {
         sprArray.push(s);
         add(sprArray[2]);
 
-        final x = s.x + 4;
-        final y = s.y + 4;
+        final x = s.x + 2;
+        final y = s.y + 1;
 
         s = new FlxSprite().makeGraphic(l + 12, 52, 0xFF000000);
         s.x = pos - 66;
@@ -115,7 +111,7 @@ class Dialogue extends FlxSubState {
 
         var i:Int = 0;
         final xy:Array<Array<Int>> = [[60, 90], [70, 80], [56, 85], [66, 76]];
-        final pos:Float = spr.x - 50;
+        final pos:Float = spr.x - 60;
         for (spry in sprArray) {
             spry.x = pos   - xy[i][0];
             spry.y = spr.y - xy[i][1];
