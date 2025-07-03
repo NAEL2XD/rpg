@@ -62,6 +62,10 @@ class Dialogue extends FlxSubState {
         final l:Int = 256;
         final pos:Float = spr.x - 50;
         sprArray = [];
+
+        var ddddd = new FlxSprite().makeGraphic(1000, 700);
+        ddddd.alpha = 0.2;
+        add(ddddd);
         
         var s:FlxSprite = new FlxSprite().makeGraphic(l - 210, 82, 0xFFFFFFFF);
         s.x = pos - 60;
