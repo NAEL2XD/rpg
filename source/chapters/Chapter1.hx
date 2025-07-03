@@ -24,6 +24,7 @@ class Chapter1_1 extends FlxState {
             state.closeCallback = function() {
                 var spriteMonster:FlxSprite = new FlxSprite();
                 spriteMonster.makeGraphic(24, 24, 0xFFFF0000);
+                spriteMonster.screenCenter();
                 spriteMonster.x = 480;
                 FlxTween.tween(spriteMonster, {x: 280}, 2, {onComplete: e -> {
                     openSubState(new Dialogue([{

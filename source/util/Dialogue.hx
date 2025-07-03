@@ -90,7 +90,7 @@ class Dialogue extends FlxSubState {
         sprArray.push(s);
         add(sprArray[3]);
 
-        textSpr = new FlxText(x, y, l - 8, "").setFormat("assets/fonts/main.ttf", 18);
+        textSpr = new FlxText(0, 0, l, "").setFormat("assets/fonts/main.ttf", 18);
         add(textSpr);
 
         newDialogue();
@@ -117,7 +117,7 @@ class Dialogue extends FlxSubState {
             spry.y = spr.y - xy[i][1];
 
             if (i == 2) {
-                textSpr.x = spry.x - 2;
+                textSpr.x = spry.x;
                 textSpr.y = spry.y + 2;
             }
 
