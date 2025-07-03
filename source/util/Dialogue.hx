@@ -46,7 +46,7 @@ class Dialogue extends FlxSubState {
                         dialogueText: dID.text,
                         timePerChar: dID.timePerChar,
                         character: dialID.char,
-                        manualPress: dID.manualPress == null ? false : dID.manualPress
+                        manualPress: dID.manualPress == null ? true : dID.manualPress
                     });
                 }
             }
