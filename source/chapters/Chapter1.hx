@@ -1,5 +1,7 @@
 package chapters;
 
+import util.Battle;
+import flixel.util.FlxTimer;
 import haxe.Timer;
 import flixel.sound.FlxSound;
 import flixel.tweens.FlxTween;
@@ -155,6 +157,25 @@ class Chapter1_2 extends FlxState {
             state.closeCallback = function() {
                 player.lockedVM = 5.25;
                 player.jump(true);
+
+                new FlxTimer().start(1, e -> {
+                    openSubState(new Battle({
+                        enemyData: [{
+                            hp: 5,
+                            enemy: noobs[0],
+                            name: "Gang I"
+                        }, {
+                            hp: 5,
+                            enemy: noobs[1],
+                            name: "Gang II"
+                        }],
+                        background: "houseOut",
+                        extraDialogues: new Dialogue([{
+                            dID: "battleEnemy1",
+                            char: noobs[0]
+                        }])
+                    }));
+                });
 
                 jumped = true;
             }

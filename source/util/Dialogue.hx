@@ -3,10 +3,8 @@ package util;
 import flixel.sound.FlxSound;
 import flixel.util.FlxTimer;
 import flixel.text.FlxText;
-import flixel.FlxObject;
 import sys.io.File;
 import haxe.Json;
-import flixel.FlxSubState;
 
 typedef Dialogues = {
     dialogueText:String,

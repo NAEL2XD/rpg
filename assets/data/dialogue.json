@@ -75,6 +75,11 @@
             "text": "What are you gotta do now, loser-",
             "timePerChar": 0.06,
             "manualPress": false
+        } ,
+        {
+            "dialogueID": "battleEnemy1",
+            "text": "Ohoho, BIG mistake loser. Prepare to get defeated!",
+            "timePerChar": 0.06
         }
     ]
 }
