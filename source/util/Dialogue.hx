@@ -1,5 +1,6 @@
 package util;
 
+import flixel.sound.FlxSound;
 import flixel.util.FlxTimer;
 import flixel.text.FlxText;
 import flixel.FlxObject;
@@ -9,7 +10,13 @@ import flixel.FlxSubState;
 
 typedef Dialogues = {
     dialogueText:String,
-    timePerChar:Float
+    timePerChar:Float,
+    character:FlxObject
+}
+
+typedef DialogueMap = {
+    dID:String,
+    char:FlxObject
 }
 
 class Dialogue extends FlxSubState {
@@ -19,23 +26,25 @@ class Dialogue extends FlxSubState {
     var spr:FlxObject = null;
     var timer:FlxTimer = new FlxTimer();
     var textSpr:FlxText = null;
+    var sprArray:Array<FlxSprite> = [];
+    var speak:FlxSound = FlxG.sound.load("assets/sounds/speak.ogg");
 
     var dialogueText:String = "";
     var done:Bool = false;
     var timePerChar:Float = 0;
 
-    public function new(dialogueID:Array<String>, sprite:FlxObject) {
+    public function new(dialogueID:Array<DialogueMap>) {
         var dial:Array<Dynamic> = list.dialogueList;
         queue = [];
 
         for (dID in dial) {
             for (dialID in dialogueID) {
-                if (dID.dialogueID == dialID) {
-                    var d:Dialogues = {
+                if (dID.dialogueID == dialID.dID) {
+                    queue.push({
                         dialogueText: dID.text,
-                        timePerChar: dID.timePerChar
-                    };
-                    queue.push(d);
+                        timePerChar: dID.timePerChar,
+                        character: dialID.char
+                    });
                 }
             }
         }
@@ -44,29 +53,32 @@ class Dialogue extends FlxSubState {
             throw 'Couldn\'t find dialogue IDs: $dialogueID';
         }
 
-        spr = sprite;
         super(0);
     }
-
+    
     override function create() {
         var s:FlxSprite = null;
         final l:Int = 256;
         final pos:Float = spr.x - 50;
-
+        sprArray = [];
+        
         s = new FlxSprite().makeGraphic(l, 82, 0xFFFFFFFF);
         s.x = pos - 60;
         s.y = spr.y - 90;
-        add(s);
+        sprArray.push(s);
+        add(sprArray[0]);
 
         s = new FlxSprite().makeGraphic(l + 20, 60, 0xFFFFFFFF);
         s.x = pos - 70;
         s.y = spr.y - 80;
-        add(s);
+        sprArray.push(s);
+        add(sprArray[1]);
 
         s = new FlxSprite().makeGraphic(l - 8, 72, 0xFF000000);
         s.x = pos - 56;
         s.y = spr.y - 85;
-        add(s);
+        sprArray.push(s);
+        add(sprArray[2]);
 
         final x = s.x + 4;
         final y = s.y + 4;
@@ -74,7 +86,8 @@ class Dialogue extends FlxSubState {
         s = new FlxSprite().makeGraphic(l + 12, 52, 0xFF000000);
         s.x = pos - 66;
         s.y = spr.y - 76;
-        add(s);
+        sprArray.push(s);
+        add(sprArray[3]);
 
         textSpr = new FlxText(x, y, l - 8, "").setFormat("assets/fonts/main.ttf", 18);
         add(textSpr);
@@ -93,9 +106,23 @@ class Dialogue extends FlxSubState {
         dialogueText = queue[0].dialogueText;
         timePerChar  = queue[0].timePerChar;
 
+        spr = queue[0].character;
+
+        var i:Int = 0;
+        final xy:Array<Array<Int>> = [[-60, -90], [-70, 80], [-56, -85], [-66, -76]];
+        final pos:Float = spr.x - 50;
+        for (spry in sprArray) {
+            spry.x = pos   + xy[i][0];
+            spry.x = spr.y + xy[i][1];
+            i++;
+        }
+
         timer.start(timePerChar, e -> {
             ind++;
             textSpr.text += dialogueText.charAt(ind);
+
+            speak.pitch = FlxG.random.float(0.75, 1.25);
+            speak.play(true);
 
             if (e.loopsLeft == 0) {
                 done = true;
