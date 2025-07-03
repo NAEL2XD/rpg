@@ -62,7 +62,7 @@ class Battle extends FlxSubState {
                     bg.screenCenter();
                     insert(index, bg);
 
-                    player.x = 40;
+                    player.x = 70;
                     player.y = 235;
                     insert(index + 1, player);
 
