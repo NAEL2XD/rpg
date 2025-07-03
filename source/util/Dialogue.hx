@@ -45,8 +45,8 @@ class Dialogue extends FlxSubState {
                     queue.push({
                         dialogueText: dID.text,
                         timePerChar: dID.timePerChar,
-                        character: dID.char,
-                        manualPress: dID.manualPress == null ? false : true
+                        character: dialID.char,
+                        manualPress: dID.manualPress == null ? false : dID.manualPress
                     });
                 }
             }
@@ -164,8 +164,8 @@ class Dialogue extends FlxSubState {
     }
 
     override function update(elapsed:Float) {
-        if (FlxG.keys.justPressed.ANY || manualPress) {
-            if (done && manualPress) {
+        if (FlxG.keys.justPressed.ANY || !manualPress) {
+            if (done) {
                 if (queue.length == 0) {
                     close();
                 } else {
