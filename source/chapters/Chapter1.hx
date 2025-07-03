@@ -45,7 +45,7 @@ class Chapter1_1 extends FlxState {
     }
 
     override function update(elapsed:Float) {
-        player.checkMovement();
+        //player.checkMovement();
         super.update(elapsed);
     }
 }

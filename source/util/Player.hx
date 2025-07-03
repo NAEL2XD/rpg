@@ -33,7 +33,7 @@ class Player extends FlxSprite {
             i++;
         }
 
-        if (FlxG.keys.justPressed.SPACE) {
+        if (FlxG.keys.justPressed.SPACE && !jumpeg) {
             jumped = true;
             jumpHeight = 8;
 
