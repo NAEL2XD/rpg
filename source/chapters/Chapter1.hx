@@ -1,5 +1,8 @@
 package chapters;
 
+import flixel.sound.FlxSound;
+import flixel.tweens.FlxTween;
+import flixel.math.FlxMath;
 import util.Dialogue;
 
 class Chapter1_1 extends FlxState {
@@ -21,6 +24,11 @@ class Chapter1_1 extends FlxState {
         player.cutscene = true;
         player.playSound("yawn");
         add(player);
+
+        up.x = 551;
+        up.y = 131;
+        up.scale.set(1.5, 1.5);
+        add(up);
 
         FlxG.camera.flash(0xFF000000, 2, function() {
             var state = new Dialogue([{
@@ -46,7 +54,36 @@ class Chapter1_1 extends FlxState {
     }
 
     override function update(elapsed:Float) {
-        //player.checkMovement();
+        player.checkMovement();
+
+        up.alpha = 1.5 - (FlxMath.distanceBetween(player, up) / 100);
+        if (!player.cutscene) {
+            if (FlxMath.distanceBetween(player, up) < 50 && FlxG.keys.justPressed.UP) {
+                FlxG.sound.play("assets/sounds/door_open.ogg");
+                player.cutscene = false;
+                
+                var black:FlxSprite = new FlxSprite().makeGraphic(640, 360, 0xFF000000);
+                black.alpha = 0;
+                FlxTween.tween(black, {alpha: 1}, 1, {onComplete: e -> {
+                    var snd:FlxSound = FlxG.sound.load("assets/sounds/door_close.ogg");
+                    snd.onComplete = function() {
+                        var state = new Dialogue([{
+                            dID: "shocked",
+                            char: player
+                        }]);
+                    
+                        openSubState(state);
+                    };
+                    snd.play();
+                }});
+                add(black);
+            
+                FlxTween.num(FlxG.sound.music.volume, 0, 1, {}, e -> {
+                    FlxG.sound.music.volume = e;
+                });
+            }
+        }
+
         super.update(elapsed);
     }
 }

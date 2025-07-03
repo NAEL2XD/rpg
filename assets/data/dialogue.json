@@ -14,6 +14,11 @@
             "dialogueID": "houseWake3",
             "text": "I mean, what could go wrong? Something bad isn't gonna happen.",
             "timePerChar": 0.06
+        },
+        {
+            "dialogueID": "shocked",
+            "text": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!000000000!!",
+            "timePerChar": 0.01
         }
     ]
 }

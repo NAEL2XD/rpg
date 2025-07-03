@@ -17,34 +17,32 @@ class Player extends FlxSprite {
     }
     
     public function checkMovement() {
-        if (cutscene) {
-            return;
-        }
-        
-        var i:Int = 0;
-        for (k in [LEFT, RIGHT, A, D]) {
-            if (FlxG.keys.anyPressed([k])) {
-                switch(i % 2) {
-                    case 0: velocityMovement -= 0.5;
-                    case 1: velocityMovement += 0.5;
+        if (!cutscene) {
+            var i:Int = 0;
+            for (k in [LEFT, RIGHT, A, D]) {
+                if (FlxG.keys.anyPressed([k])) {
+                    switch(i % 2) {
+                        case 0: velocityMovement -= 0.5;
+                        case 1: velocityMovement += 0.5;
+                    }
                 }
+
+                i++;
             }
 
-            i++;
-        }
-
-        if (FlxG.keys.justPressed.SPACE && !jumpeg) {
-            jumped = true;
-            jumpHeight = 8;
-
-            playSound("jump");
-        } else if (jumped) {
-            jumpHeight -= .5;
-            jumpY += jumpHeight;
-
-            if (jumpY < 0) {
-                jumpY = 0;
-                jumped = false;
+            if (FlxG.keys.justPressed.SPACE && !jumped) {
+                jumped = true;
+                jumpHeight = 8;
+                
+                playSound("jump");
+            } else if (jumped) {
+                jumpHeight -= .5;
+                jumpY += jumpHeight;
+            
+                if (jumpY < 0) {
+                    jumpY = 0;
+                    jumped = false;
+                }
             }
         }
 
