@@ -45,8 +45,8 @@ class Dialogue extends FlxSubState {
                     queue.push({
                         dialogueText: dID.text,
                         timePerChar: dID.timePerChar,
-                        character: dialID.char,
-                        manualPress: dialID.manualPress
+                        character: dID.char,
+                        manualPress: dID.manualPress
                     });
                 }
             }
