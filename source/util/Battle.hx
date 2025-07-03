@@ -66,7 +66,7 @@ class Battle extends FlxSubState {
                     for (e in battle.enemyData) {
                         e.enemy.x = pos2[l][k][0];
                         e.enemy.y = pos2[l][k][1];
-                        insert(index, e.enemy);
+                        insert(index + 1, e.enemy);
                         k++;
                     }
 

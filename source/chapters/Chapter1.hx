@@ -158,7 +158,7 @@ class Chapter1_2 extends FlxState {
                 player.lockedVM = 5.25;
                 player.jump(true);
 
-                new FlxTimer().start(1, e -> {
+                if (FlxG.overlap(player, noobs[0])) {
                     openSubState(new Battle({
                         enemyData: [{
                             hp: 5,
@@ -175,7 +175,7 @@ class Chapter1_2 extends FlxState {
                             char: noobs[0]
                         }])
                     }));
-                });
+                }
 
                 jumped = true;
             }
