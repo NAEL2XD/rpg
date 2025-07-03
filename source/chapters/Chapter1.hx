@@ -63,7 +63,7 @@ class Chapter1_1 extends FlxState {
         if (!player.cutscene) {
             if (FlxMath.distanceBetween(player, up) < 80 && FlxG.keys.anyJustPressed([Z, W, UP])) {
                 FlxG.sound.play("assets/sounds/door_open.ogg");
-                player.cutscene = false;
+                player.cutscene = true;
 
                 var black:FlxSprite = new FlxSprite().makeGraphic(640, 360, 0xFF000000);
                 black.alpha = 0;

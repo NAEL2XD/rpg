@@ -135,7 +135,7 @@ class Dialogue extends FlxSubState {
             i++;
         }
         
-        while (sprArray[0].x > 280) {
+        while (sprArray[0].x > 320) {
             for (sprrr in sprArray) {
                 sprrr.x--;
             }
