@@ -106,7 +106,7 @@ class Chapter1_2 extends FlxState {
     var player:Player = new Player();
     var outside:FlxSprite = new FlxSprite().loadGraphic("assets/images/world/houseOutside/0.png");
     var noobs:Array<FlxSprite> = [];
-    
+
     var jumped:Bool = false;
     var readyToAttack:Bool = false;
 
@@ -198,7 +198,8 @@ class Chapter1_2 extends FlxState {
                     extraDialogues: new Dialogue([{
                         dID: "battleEnemy1",
                         char: noobs[0]
-                    }])
+                    }]),
+                    startASYourTurn: true
                 }));
             }
         }

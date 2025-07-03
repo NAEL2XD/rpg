@@ -13,7 +13,8 @@ typedef BattleEnemies = {
 typedef BattleMetadata = {
     enemyData:Array<BattleEnemies>,
     background:String,
-    extraDialogues:Dialogue
+    extraDialogues:Dialogue,
+    startASYourTurn:Bool
 }
 
 class Battle extends FlxSubState {
@@ -23,6 +24,9 @@ class Battle extends FlxSubState {
     var transitions:Array<FlxSprite> = [];
     
     var player:Player = new Player();
+
+    var isYourTurn:Bool = false;
+    var turnLeftTillOpponent:Int = 1;
 
     public function new(battleData:BattleMetadata) {
         battle = battleData;
@@ -58,10 +62,14 @@ class Battle extends FlxSubState {
                     bg.screenCenter();
                     insert(index, bg);
 
+                    player.x = 40;
+                    player.y = 235;
+                    insert(index + 1, player);
+
                     l = battle.enemyData.length-1;
                     var k:Int = 0;
                     final pos2:Array<Array<Array<Float>>> = [
-                        [[480, 240]],
+                        [[480, 235]],
                         [[480, 200], [480, 270]]
                     ];
 
@@ -84,11 +92,17 @@ class Battle extends FlxSubState {
                         
                         k++;
                     }
+
+                    isYourTurn = battle.startASYourTurn;
                 }
             }});
             add(transitions[l]);
         }
 
         super.create();
+    }
+
+    override function update(elapsed:Float) {
+        super.update(elapsed);
     }
 }
