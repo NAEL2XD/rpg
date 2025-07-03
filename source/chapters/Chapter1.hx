@@ -14,7 +14,8 @@ class Chapter1_1 extends FlxState {
         add(house);
 
         player.x = 86;
-        player.y = 196;
+        player.posY = 196;
+        player.checkMovement();
         player.cutscene = true;
         player.playSound("yawn");
         add(player);

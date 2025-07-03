@@ -2,9 +2,9 @@ package util;
 
 class Player extends FlxSprite {
     public var cutscene:Bool = false;
+    public var posY:Float = 0;
 
-    var velocityMovement:Array<Float> = [0, 0];
-    var currentPos:Array<Float> = [0, 0];
+    var velocityMovement:Float = 0;
 
     var jumpY:Float = 0;
     var jumpHeight:Float = 0;
@@ -21,13 +21,11 @@ class Player extends FlxSprite {
         }
         
         var i:Int = 0;
-        for (k in [LEFT, DOWN, UP, RIGHT, A, S, W, D]) {
+        for (k in [LEFT, RIGHT, A, D]) {
             if (FlxG.keys.anyPressed([k])) {
-                switch(i % 4) {
-                    case 0: velocityMovement[0] -= 0.5;
-                    case 1: velocityMovement[1] += 0.5;
-                    case 2: velocityMovement[1] -= 0.5;
-                    case 3: velocityMovement[0] += 0.5;
+                switch(i % 2) {
+                    case 0: velocityMovement -= 0.5;
+                    case 1: velocityMovement += 0.5;
                 }
             }
 
@@ -42,16 +40,14 @@ class Player extends FlxSprite {
             jumpY += jumpHeight;
 
             if (jumpY < 0) {
+                jumpY = 0;
                 jumped = false;
             }
         }
 
-        velocityMovement[0] /= 1.15;
-        velocityMovement[1] /= 1.15;
-        currentPos[0] += velocityMovement[0];
-        currentPos[1] += velocityMovement[1];
-        x = currentPos[0];
-        y = currentPos[1] - jumpY;
+        velocityMovement /= 1.15;
+        x += velocityMovement;
+        y = posY - jumpY;
     }
 
     public function playSound(name:String) {
