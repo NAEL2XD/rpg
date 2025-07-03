@@ -5,6 +5,8 @@ class Player extends FlxSprite {
     public var posY:Float = 0;
     public var limitXPos:Array<Float> = [0, 0];
     public var lockedVM:Float = 0;
+    public var jumpLow:Float = 0;
+    public var inBattle:Bool = false;
 
     var velocityMovement:Float = 0;
 
@@ -18,6 +20,10 @@ class Player extends FlxSprite {
     }
     
     public function checkMovement() {
+        if (inBattle) {
+            return;
+        }
+
         if (!cutscene) {
             var i:Int = 0;
             for (k in [LEFT, RIGHT, A, D]) {
@@ -46,6 +52,12 @@ class Player extends FlxSprite {
     }
 
     public function jump(?force:Bool = false, ?lowAmount:Float = 0) {
+        if (inBattle) {
+            lowAmount = -120;
+        }
+
+        jumpLow = lowAmount;
+
         if ((FlxG.keys.justPressed.SPACE && !jumped) || force) {
             jumped = true;
             jumpHeight = 8;
@@ -55,8 +67,8 @@ class Player extends FlxSprite {
             jumpHeight -= .5;
             jumpY += jumpHeight;
         
-            if (jumpY < lowAmount) {
-                jumpY = lowAmount;
+            if (jumpY < jumpLow) {
+                jumpY = jumpLow;
                 jumped = false;
             }
         }

@@ -21,6 +21,8 @@ class Battle extends FlxSubState {
     var battle:BattleMetadata = null;
 
     var transitions:Array<FlxSprite> = [];
+    
+    var player:Player = new Player();
 
     public function new(battleData:BattleMetadata) {
         battle = battleData;
