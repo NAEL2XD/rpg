@@ -59,8 +59,8 @@ class Battle extends FlxSubState {
                     l = battle.enemyData.length-1;
                     var k:Int = 0;
                     final pos2:Array<Array<Array<Float>>> = [
-                        [[320, 240]],
-                        [[320, 200], [320, 270]]
+                        [[480, 240]],
+                        [[480, 200], [480, 270]]
                     ];
 
                     for (e in battle.enemyData) {
