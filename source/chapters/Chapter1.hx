@@ -42,6 +42,9 @@ class Chapter1_1 extends FlxState {
             }, {
                 dID: "houseWake3",
                 char: player
+            }, {
+                dID: "houseWake4",
+                char: player
             }]);
 
             state.closeCallback = function() {

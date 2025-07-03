@@ -16,6 +16,11 @@
             "timePerChar": 0.06
         },
         {
+            "dialogueID": "houseWake4",
+            "text": "*Foreshadowing*",
+            "timePerChar": 0.2
+        },
+        {
             "dialogueID": "shocked1",
             "text": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
             "timePerChar": 0.01
