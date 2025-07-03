@@ -4,6 +4,7 @@ import util.Dialogue;
 
 class Chapter1_1 extends FlxState {
     var player:Player = new Player();
+    var up:FlxSprite = new FlxSprite().loadGraphic("assets/images/up.png");
 
     override function create() {
         var house:FlxSprite = new FlxSprite().loadGraphic("assets/images/world/house/0.png");
