@@ -56,7 +56,7 @@ class Player extends FlxSprite {
             jumpY += jumpHeight;
         
             if (jumpY < lowAmount) {
-                jumpY = 0;
+                jumpY = lowAmount;
                 jumped = false;
             }
         }
