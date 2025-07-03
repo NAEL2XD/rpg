@@ -103,6 +103,7 @@ class Chapter1_1 extends FlxState {
 class Chapter1_2 extends FlxState {
     var player:Player = new Player();
     var outside:FlxSprite = new FlxSprite().loadGraphic("assets/images/world/houseOutside/0.png");
+    var jumped:Bool = false;
 
     override function create() {
         outside.antialiasing = false;
@@ -150,7 +151,7 @@ class Chapter1_2 extends FlxState {
 
             state.closeCallback = function() {
                 player.lockedVM = 3;
-                player.jump();
+                player.jump(true);
             }
 
             openSubState(state);
@@ -168,6 +169,10 @@ class Chapter1_2 extends FlxState {
 
     override function update(elapsed:Float) {
         player.checkMovement();
+
+        if (jumped) {
+            player.jump(false, -60);
+        }
 
         super.update(elapsed);
     }

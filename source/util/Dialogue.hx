@@ -114,26 +114,15 @@ class Dialogue extends FlxSubState {
         spr = queue[0].character;
 
         var i:Int = 0;
-        var ooB:Bool = false;
         final xy:Array<Array<Int>> = [[60, 90], [70, 80], [56, 85], [66, 76]];
         final pos:Float = spr.x - 60;
         for (spry in sprArray) {
             spry.x = pos   - xy[i][0];
             spry.y = spr.y - xy[i][1];
-
-            if (spry.x < 0) {
-                spry.x += 70;
-            } else if (spry.x > 420) {
-                ooB = true;
-            }
             
             if (i == 2) {
                 textSpr.x = spry.x;
                 textSpr.y = spry.y;
-                
-                if (textSpr.x < 0) {
-                    textSpr.x += 70;
-                }
             }
             
             i++;
@@ -144,6 +133,11 @@ class Dialogue extends FlxSubState {
                 sprrr.x--;
             }
             textSpr.x--;
+        } while (sprArray[0].x < 20) {
+            for (sprrr in sprArray) {
+                sprrr.x++;
+            }
+            textSpr.x++;
         }
 
         timer.start(timePerChar, e -> {

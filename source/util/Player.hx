@@ -45,7 +45,7 @@ class Player extends FlxSprite {
         y = posY - jumpY;
     }
 
-    public function jump(?force:Bool = false) {
+    public function jump(?force:Bool = false, ?lowAmount:Float = 0) {
         if ((FlxG.keys.justPressed.SPACE && !jumped) || force) {
             jumped = true;
             jumpHeight = 8;
@@ -55,7 +55,7 @@ class Player extends FlxSprite {
             jumpHeight -= .5;
             jumpY += jumpHeight;
         
-            if (jumpY < 0) {
+            if (jumpY < lowAmount) {
                 jumpY = 0;
                 jumped = false;
             }
