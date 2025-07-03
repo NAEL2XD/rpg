@@ -146,8 +146,10 @@ class Dialogue extends FlxSubState {
             ind++;
             textSpr.text += dialogueText.charAt(ind);
 
-            speak.pitch = FlxG.random.float(0.75, 1.25);
-            speak.play(true);
+            if (dialogueText.charAt(ind) != " ") {
+                speak.pitch = FlxG.random.float(0.75, 1.25);
+                speak.play(true);
+            }
 
             if (e.loopsLeft == 0) {
                 done = true;
