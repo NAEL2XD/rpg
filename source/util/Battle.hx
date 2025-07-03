@@ -42,18 +42,19 @@ class Battle extends FlxSubState {
         final pos:Array<Array<Int>> = [[0, -360], [640, 0], [0, 360], [-640, 0]];
         for (i in pos) {
             var l:Int = transitions.length;
-            transitions.push(new FlxSprite().makeGraphic(640, 360));
+            transitions.push(new FlxSprite().makeGraphic(640, 360, 0xFF000000));
             transitions[l].alpha = 0;
             transitions[l].x = i[0];
             transitions[l].y = i[1];
             FlxTween.tween(transitions[l], {alpha: 1, x: 0, y: 0}, 1.2, {onComplete: e -> {
                 if (l == 3) {
+                    final index:Int = members.indexOf(transitions[0]);
                     var bg:FlxSprite = new FlxSprite().loadGraphic('assets/images/battleBGs/${battle.background}.png');
                     bg.antialiasing = false;
                     bg.scale.set(10, 10);
                     bg.updateHitbox();
                     bg.screenCenter();
-                    insert(-1, bg);
+                    insert(index, bg);
 
                     l = battle.enemyData.length-1;
                     var k:Int = 0;
@@ -65,7 +66,7 @@ class Battle extends FlxSubState {
                     for (e in battle.enemyData) {
                         e.enemy.x = pos2[l][k][0];
                         e.enemy.y = pos2[l][k][1];
-                        insert(0, e.enemy);
+                        insert(index, e.enemy);
                         k++;
                     }
 
