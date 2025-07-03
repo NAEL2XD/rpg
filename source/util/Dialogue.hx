@@ -116,9 +116,17 @@ class Dialogue extends FlxSubState {
             spry.x = pos   - xy[i][0];
             spry.y = spr.y - xy[i][1];
 
+            if (spry.x < 0) {
+                spry.x += 70;
+            }
+
             if (i == 2) {
                 textSpr.x = spry.x;
                 textSpr.y = spry.y;
+
+                if (textSpr.x < 0) {
+                    textSpr.x += 70;
+                }
             }
 
             i++;

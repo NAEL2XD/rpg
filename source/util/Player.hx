@@ -1,6 +1,8 @@
 package util;
 
 class Player extends FlxSprite {
+    public var cutscene:Bool = false;
+
     var velocityMovement:Array<Float> = [0, 0];
     var currentPos:Array<Float> = [0, 0];
 
@@ -10,10 +12,14 @@ class Player extends FlxSprite {
     
     public function new() {
         super();
-        makeGraphic(32, 32, 0xFF00FF00);
+        makeGraphic(24, 24, 0xFF00FF00);
     }
     
     public function checkMovement() {
+        if (cutscene) {
+            return;
+        }
+        
         var i:Int = 0;
         for (k in [LEFT, DOWN, UP, RIGHT, A, S, W, D]) {
             if (FlxG.keys.anyPressed([k])) {
@@ -46,5 +52,9 @@ class Player extends FlxSprite {
         currentPos[1] += velocityMovement[1];
         x = currentPos[0];
         y = currentPos[1] - jumpY;
+    }
+
+    public function playSound(name:String) {
+        FlxG.sound.play('assets/sounds/player/$name.ogg');
     }
 }

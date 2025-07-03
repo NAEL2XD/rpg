@@ -1,51 +1,44 @@
 package chapters;
 
-import flixel.tweens.FlxTween;
-import flixel.util.FlxTimer;
 import util.Dialogue;
 
 class Chapter1_1 extends FlxState {
-    var sprite:FlxSprite = new FlxSprite(240, 160).makeGraphic(16, 16);
+    var player:Player = new Player();
 
     override function create() {
-        new FlxTimer().start(1, e -> {
+        var house:FlxSprite = new FlxSprite().loadGraphic("assets/images/world/house/0.png");
+        house.antialiasing = false;
+        house.scale.set(10, 10);
+        house.updateHitbox();
+        house.screenCenter();
+        add(house);
+
+        player.x = 80;
+        player.y = 170;
+        player.cutscene = true;
+        player.playSound("yawn");
+        add(player);
+
+        FlxG.camera.flash(0xFF000000, 2, function() {
             var state = new Dialogue([{
-                dID: "test1",
-                char: sprite
+                dID: "houseWake1",
+                char: player
             }, {
-                dID: "test2",
-                char: sprite
+                dID: "houseWake2",
+                char: player
             }, {
-                dID: "test3",
-                char: sprite
+                dID: "houseWake3",
+                char: player
             }]);
-            openSubState(state);
 
             state.closeCallback = function() {
-                var spriteMonster:FlxSprite = new FlxSprite();
-                spriteMonster.makeGraphic(24, 24, 0xFFFF0000);
-                spriteMonster.screenCenter();
-                spriteMonster.x = 480;
-                FlxTween.tween(spriteMonster, {x: 280}, 2, {onComplete: e -> {
-                    openSubState(new Dialogue([{
-                        dID: "test4",
-                        char: spriteMonster
-                    }, {
-                        dID: "test5",
-                        char: sprite
-                    }, {
-                        dID: "test6",
-                        char: spriteMonster
-                    }, {
-                        dID: "test7",
-                        char: sprite
-                    }]));
-                }});
-                add(spriteMonster);
+                player.cutscene = false;
+                FlxG.sound.playMusic("assets/music/plains.ogg");
             }
+
+            openSubState(state);
         });
 
-        add(sprite);
         super.create();
     }
 

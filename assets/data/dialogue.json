@@ -1,38 +1,18 @@
 {
     "dialogueList": [
         {
-            "dialogueID": "test1",
-            "text": "This is a test.",
+            "dialogueID": "houseWake1",
+            "text": "Yawwnnnnn.",
+            "timePerChar": 0.2
+        },
+        {
+            "dialogueID": "houseWake2",
+            "text": "Let's just start this day, shall we?",
             "timePerChar": 0.06
         },
         {
-            "dialogueID": "test2",
-            "text": "this is also a work in progress so yeah.",
-            "timePerChar": 0.06
-        },
-        {
-            "dialogueID": "test3",
-            "text": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "timePerChar": 0.03
-        },
-        {
-            "dialogueID": "test4",
-            "text": "Arrrre youuuuu the playyyyyyerrrrrr?",
-            "timePerChar": 0.08
-        },
-        {
-            "dialogueID": "test5",
-            "text": "Who are you?",
-            "timePerChar": 0.06
-        },
-        {
-            "dialogueID": "test6",
-            "text": "Yoooooooouuurrr bigggest thrrrrreat.",
-            "timePerChar": 0.08
-        },
-        {
-            "dialogueID": "test7",
-            "text": "Oh hell naw, i'm gonna show who's boss.",
+            "dialogueID": "houseWake3",
+            "text": "I mean, what could go wrong? Something bad isn't gonna happen.",
             "timePerChar": 0.06
         }
     ]
