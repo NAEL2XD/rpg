@@ -153,8 +153,10 @@ class Chapter1_2 extends FlxState {
             }]);
 
             state.closeCallback = function() {
-                player.lockedVM = 3;
+                player.lockedVM = 4.5;
                 player.jump(true);
+
+                jumped = true;
             }
 
             openSubState(state);
