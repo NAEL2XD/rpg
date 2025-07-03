@@ -53,6 +53,8 @@ class Dialogue extends FlxSubState {
             throw 'Couldn\'t find dialogue IDs: $dialogueID';
         }
 
+        spr = queue[0].character;
+
         super(0);
     }
     
@@ -62,7 +64,7 @@ class Dialogue extends FlxSubState {
         final pos:Float = spr.x - 50;
         sprArray = [];
         
-        s = new FlxSprite().makeGraphic(l, 82, 0xFFFFFFFF);
+        s = new FlxSprite().makeGraphic(l-210, 82, 0xFFFFFFFF);
         s.x = pos - 60;
         s.y = spr.y - 90;
         sprArray.push(s);
