@@ -29,6 +29,52 @@
             "dialogueID": "shocked2",
             "text": "Oh you better not be able to hurt me are you, little creep!?",
             "timePerChar": 0.04
+        },
+        {
+            "dialogueID": "houseEnemyApproach1",
+            "text": "Oh jesus christ not you guys",
+            "timePerChar": 0.06
+        },
+        {
+            "dialogueID": "houseEnemyApproach2",
+            "text": "Oooo, what's the matter loser? Scaring like a little girl~?",
+            "timePerChar": 0.06
+        },
+        {
+            "dialogueID": "houseEnemyApproach3",
+            "text": "Ohoho you seem pathetic, except for us gang!",
+            "timePerChar": 0.06
+        },
+        {
+            "dialogueID": "houseEnemyApproach4",
+            "text": "Dude, can you guys leave me alone?? You're so annoying!",
+            "timePerChar": 0.06
+        },
+        {
+            "dialogueID": "houseEnemyApproach5",
+            "text": "Can't take harassment? You're such a loser!",
+            "timePerChar": 0.06
+        },
+        {
+            "dialogueID": "houseEnemyApproach6",
+            "text": "*Freak...*",
+            "timePerChar": 0.24
+        },
+        {
+            "dialogueID": "houseEnemyApproach7",
+            "text": "Can't take us strong horsemans? You're so pathetic!!",
+            "timePerChar": 0.06
+        },
+        {
+            "dialogueID": "houseEnemyApproach8",
+            "text": "Oh that's it, you know what happens to all you guys!!!",
+            "timePerChar": 0.02
+        },
+        {
+            "dialogueID": "houseEnemyApproach9",
+            "text": "What are you gotta do now, loser-",
+            "timePerChar": 0.06,
+            "manualPress": false
         }
     ]
 }

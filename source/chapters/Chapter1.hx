@@ -81,6 +81,9 @@ class Chapter1_1 extends FlxState {
                             char: player
                         }]);
                     
+                        state.closeCallback = function() {
+                            FlxG.switchState(Chapter1_2.new);
+                        }
                         openSubState(state);
                     };
                     snd.play();
@@ -92,6 +95,72 @@ class Chapter1_1 extends FlxState {
                 });
             }
         }
+
+        super.update(elapsed);
+    }
+}
+
+class Chapter1_2 extends FlxState {
+    var player:Player = new Player();
+    var outside:FlxSprite = new FlxSprite().loadGraphic("assets/images/world/houseOutside/0.png");
+
+    override function create() {
+        outside.antialiasing = false;
+        outside.scale.set(10, 10);
+        outside.updateHitbox();
+        outside.screenCenter();
+        add(outside);
+
+        var noobs:Array<FlxSprite> = [];
+        for (i in 0...2) {
+            noobs.push(new FlxSprite().makeGraphic(28, 28, 0xFF000000));
+            noobs[i].x = 220 + (70 * i);
+            noobs[i].y = 232;
+            add(noobs[i]);
+        }
+
+        FlxG.sound.playMusic("assets/music/serious.ogg");
+
+        FlxG.camera.flash(0xFF000000, 2, function() {
+            var state = new Dialogue([{
+                dID: "houseEnemyApproach1",
+                char: player
+            }, {
+                dID: "houseEnemyApproach2",
+                char: noobs[0]
+            }, {
+                dID: "houseEnemyApproach3",
+                char: noobs[1]
+            }, {
+                dID: "houseEnemyApproach4",
+                char: player
+            }, {
+                dID: "houseEnemyApproach5",
+                char: noobs[0]
+            }, {
+                dID: "houseEnemyApproach6",
+                char: player
+            }, {
+                dID: "houseEnemyApproach7",
+                char: noobs[1]
+            }, {
+                dID: "houseEnemyApproach8",
+                char: player
+            }]);
+
+            state.closeCallback = function() {
+                player.lockedVM = 3;
+                player.jump();
+            }
+
+            openSubState(state);
+        });
+
+        super.create();
+    }
+
+    override function update(elapsed:Float) {
+        player.checkMovement();
 
         super.update(elapsed);
     }

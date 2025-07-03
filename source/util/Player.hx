@@ -4,6 +4,7 @@ class Player extends FlxSprite {
     public var cutscene:Bool = false;
     public var posY:Float = 0;
     public var limitXPos:Array<Float> = [0, 0];
+    public var lockedVM:Float = 0;
 
     var velocityMovement:Float = 0;
 
@@ -30,20 +31,7 @@ class Player extends FlxSprite {
                 i++;
             }
 
-            if (FlxG.keys.justPressed.SPACE && !jumped) {
-                jumped = true;
-                jumpHeight = 8;
-                
-                playSound("jump");
-            } else if (jumped) {
-                jumpHeight -= .5;
-                jumpY += jumpHeight;
-            
-                if (jumpY < 0) {
-                    jumpY = 0;
-                    jumped = false;
-                }
-            }
+            jump();
         }
 
         if (x < limitXPos[0]) {
@@ -53,8 +41,25 @@ class Player extends FlxSprite {
         }
 
         velocityMovement /= 1.15;
-        x += velocityMovement;
+        x += velocityMovement + lockedVM;
         y = posY - jumpY;
+    }
+
+    public function jump(?force:Bool = false) {
+        if ((FlxG.keys.justPressed.SPACE && !jumped) || force) {
+            jumped = true;
+            jumpHeight = 8;
+            
+            playSound("jump");
+        } else if (jumped) {
+            jumpHeight -= .5;
+            jumpY += jumpHeight;
+        
+            if (jumpY < 0) {
+                jumpY = 0;
+                jumped = false;
+            }
+        }
     }
 
     public function playSound(name:String) {

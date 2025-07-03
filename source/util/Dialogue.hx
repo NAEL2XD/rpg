@@ -11,7 +11,8 @@ import flixel.FlxSubState;
 typedef Dialogues = {
     dialogueText:String,
     timePerChar:Float,
-    character:FlxObject
+    character:FlxObject,
+    manualPress:Bool
 }
 
 typedef DialogueMap = {
@@ -32,6 +33,7 @@ class Dialogue extends FlxSubState {
     var dialogueText:String = "";
     var done:Bool = false;
     var timePerChar:Float = 0;
+    var manualPress:Bool = false;
 
     public function new(dialogueID:Array<DialogueMap>) {
         var dial:Array<Dynamic> = list.dialogueList;
@@ -43,7 +45,8 @@ class Dialogue extends FlxSubState {
                     queue.push({
                         dialogueText: dID.text,
                         timePerChar: dID.timePerChar,
-                        character: dialID.char
+                        character: dialID.char,
+                        manualPress: dialID.manualPress
                     });
                 }
             }
@@ -106,6 +109,7 @@ class Dialogue extends FlxSubState {
 
         dialogueText = queue[0].dialogueText;
         timePerChar  = queue[0].timePerChar;
+        manualPress  = queue[0].manualPress;
 
         spr = queue[0].character;
 
@@ -160,14 +164,14 @@ class Dialogue extends FlxSubState {
     }
 
     override function update(elapsed:Float) {
-        if (FlxG.keys.justPressed.ANY) {
-            if (done) {
+        if (FlxG.keys.justPressed.ANY || manualPress) {
+            if (done && manualPress) {
                 if (queue.length == 0) {
                     close();
                 } else {
                     newDialogue();
                 }
-            } else {
+            } else if (FlxG.keys.justPressed.ANY) {
                 timer.cancel();
                 textSpr.text = dialogueText;
                 done = true;
