@@ -109,7 +109,6 @@ class Chapter1_2 extends FlxState {
 
     var jumped:Bool = false;
     var readyToAttack:Bool = false;
-    var needsToRun:Bool = false;
 
     override function create() {
         outside.antialiasing = false;
@@ -181,23 +180,6 @@ class Chapter1_2 extends FlxState {
     override function update(elapsed:Float) {
         player.checkMovement();
 
-        if (needsToRun) {
-            var i:Int = 0;
-            for (noo in noobs) {
-                FlxTween.tween(noo, {x: 840}, 2, {onComplete: e -> {
-                    i++;
-                    if (i == 2) {
-                        openSubState(new Dialogue([{
-                            dID: "battleEnemy6",
-                            char: player
-                        }]));
-                    }
-                }});
-            }
-
-            needsToRun = false;
-        }
-
         if (jumped) {
             player.jump(false, -60);
 
@@ -226,20 +208,35 @@ class Chapter1_2 extends FlxState {
                 battle.closeCallback = function() {
                     player.lockedVM = 0;
         
-                    var shock = new Dialogue([{
-                        dID: "battleEnemy3",
-                        char: noobs[0]
-                    }, {
-                        dID: "battleEnemy4",
-                        char: noobs[1]
-                    }, {
-                        dID: "battleEnemy5",
-                        char: noobs[0]
-                    }]);
+                    new FlxTimer().start(0.1, e -> {
+                        var shock = new Dialogue([{
+                            dID: "battleEnemy3",
+                            char: noobs[0]
+                        }, {
+                            dID: "battleEnemy4",
+                            char: noobs[1]
+                        }, {
+                            dID: "battleEnemy5",
+                            char: noobs[0]
+                        }]);
 
-                    openSubState(shock);
+                        shock.closeCallback = function() {
+                            var i:Int = 0;
+                            for (noo in noobs) {
+                                FlxTween.tween(noo, {x: 840}, 2, {onComplete: e -> {
+                                    i++;
+                                    if (i == 2) {
+                                        openSubState(new Dialogue([{
+                                            dID: "battleEnemy6",
+                                            char: player
+                                        }]));
+                                    }
+                                }});
+                            }
+                        }
 
-                    needsToRun = true;
+                        openSubState(shock);
+                    });
                 };
 
                 openSubState(battle);
