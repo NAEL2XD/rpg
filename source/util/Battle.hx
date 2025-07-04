@@ -323,8 +323,8 @@ class Battle extends FlxSubState {
         to.hp -= loseHp;
 
         if (to.hp < 1) {
-            for (i in 0...40) {
-                new FlxTimer().start(0.005 * i, e -> {
+            for (i in 0...50) {
+                new FlxTimer().start(0.00375 * i, e -> {
 			    	var a = new FlxSprite().makeGraphic(Std.int(to.enemy.width), Std.int(to.enemy.height), FlxG.random.color(0xFF000000, 0xFFFFFFFF));
 					a.x = to.enemy.x;
 					a.y = to.enemy.y;
