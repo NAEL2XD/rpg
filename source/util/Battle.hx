@@ -135,6 +135,8 @@ class Battle extends FlxSubState {
                     }
 
                     isYourTurn = battle.startASYourTurn;
+
+                    add(opponentName);
                 }
             }});
 
@@ -166,6 +168,7 @@ class Battle extends FlxSubState {
                 var ind:Int = 0;
                 for (enemy in battle.enemyData) {
                     FlxSpriteUtil.setBrightness(cast(enemy.enemy, FlxSprite), ind == battleWhoToBattle ? 0.5 : 0);
+                    ind++;
                 }
             }
 
