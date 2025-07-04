@@ -210,10 +210,9 @@ class Battle extends FlxSubState {
                             new FlxTimer().start(.725, e -> {
                                 if (playerCanControl) {
                                     dealDamage(battle.enemyData[battleWhoToBattle], 2);
+                                    playerNewTurn();
                                     playerCanControl = false;
                                 }
-
-                                playerNewTurn();
                             });
                     }
                 }});
@@ -267,6 +266,7 @@ class Battle extends FlxSubState {
                 case 0: // Jump
                     if (FlxG.keys.justPressed.SPACE && playerPressTime - Timer.stamp() < 0.25) {
                         playerCanControl = false;
+                        playerNewTurn();
                         dealDamage(battle.enemyData[battleWhoToBattle], 3);
                     }
             }
@@ -274,10 +274,10 @@ class Battle extends FlxSubState {
     }
 
     function dealDamage(to:BattleEnemies, loseHp:Int) {
-        var damage:FlxText = new FlxText(to.enemy.x + 70, to.enemy.y - 16, 640, '${loseHp}').setFormat("assets/fonts/hpDeal.ttf", loseHp < 12 ? 12 : loseHp, 0xFFFF9100, LEFT, OUTLINE, 0xFFBD5500);
+        var damage:FlxText = new FlxText(to.enemy.x + 100, to.enemy.y - 16, 640, '${loseHp}').setFormat("assets/fonts/hpDeal.ttf", loseHp < 12 ? 12 : loseHp, 0xFFFF9100, LEFT, OUTLINE, 0xFFBD5500);
         damage.scale.set(1.4, 1.4);
         FlxTween.tween(damage, {x: damage.x + 24, y: damage.y - 36}, 1.2, {ease: FlxEase.sineOut, onComplete: e -> {
-            FlxTween.tween(damage, {"scale.y": 1.4, alpha: 0}, 0.8, {onComplete: e -> {
+            FlxTween.tween(damage, {"scale.y": 1.8, alpha: 0}, 0.8, {onComplete: e -> {
                 damage.destroy();
             }});
         }});
