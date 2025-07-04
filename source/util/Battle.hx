@@ -257,7 +257,7 @@ class Battle extends FlxSubState {
                         for (l in 0...4) {
                             FlxTween.tween(transitions[l], {alpha: 1, x: 0, y: 0}, 1.2, {onComplete: e -> {
                                 if (l == 3) {
-                                    closeSubState();
+                                    close();
                                 }
                             }});
                         }
