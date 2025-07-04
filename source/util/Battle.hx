@@ -292,8 +292,8 @@ class Battle extends FlxSubState {
 
             var lucky:FlxSprite = new FlxSprite().loadGraphic("assets/images/lucky.png");
             lucky.scale.set(0.7, 0.7);
-            lucky.x = to.enemy.x - 44;
-            lucky.y = to.enemy.y - 56;
+            lucky.x = to.enemy.x - 46;
+            lucky.y = to.enemy.y - 63;
             FlxTween.tween(lucky, {x: lucky.x + 24, y: lucky.y - 36}, 1.2, {ease: FlxEase.sineOut, onComplete: e -> {
                 FlxTween.tween(lucky, {"scale.y": 2.4, alpha: 0}, 0.4, {onComplete: e -> {
                     lucky.destroy();
