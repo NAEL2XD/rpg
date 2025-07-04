@@ -291,14 +291,14 @@ class Battle extends FlxSubState {
             FlxG.sound.play("assets/sounds/LuckyHit.ogg");
 
             var lucky:FlxSprite = new FlxSprite().loadGraphic("assets/images/lucky.png");
-            lucky.scale.set(0.5, 0.5);
-            lucky.x = to.enemy.x - 34;
-            lucky.y = to.enemy.y - 48;
-            //FlxTween.tween(lucky, {x: lucky.x + 24, y: lucky.y - 36}, 1.2, {ease: FlxEase.sineOut, onComplete: e -> {
-            //    FlxTween.tween(lucky, {"scale.y": 2.4, alpha: 0}, 0.4, {onComplete: e -> {
-            //        lucky.destroy();
-            //    }});
-            //}});
+            lucky.scale.set(0.7, 0.7);
+            lucky.x = to.enemy.x - 44;
+            lucky.y = to.enemy.y - 56;
+            FlxTween.tween(lucky, {x: lucky.x + 24, y: lucky.y - 36}, 1.2, {ease: FlxEase.sineOut, onComplete: e -> {
+                FlxTween.tween(lucky, {"scale.y": 2.4, alpha: 0}, 0.4, {onComplete: e -> {
+                    lucky.destroy();
+                }});
+            }});
             add(lucky);
 
             loseHp = Std.int(loseHp * 1.75);
