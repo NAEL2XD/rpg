@@ -1,5 +1,6 @@
 package util;
 
+import flixel.sound.FlxSound;
 import flixel.util.FlxSpriteUtil;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
@@ -40,6 +41,8 @@ class Battle extends FlxSubState {
     var blocks:Array<FlxSprite> = [];
     var blocksShowedUp:Bool = false;
     var blockIndex:Int = 0;
+
+    var action:FlxSound = FlxG.sound.load("assets/sounds/action_s.ogg");
 
     public function new(battleData:BattleMetadata) {
         blocks = [];
@@ -162,7 +165,7 @@ class Battle extends FlxSubState {
             opponentName.text = '${data.name} | ${data.hp} HP';
 
             function change(scroll:Int, ?playSound:Bool = true) {
-                FlxG.sound.play("assets/sounds/action_s.ogg");
+                action.play();
                 battleWhoToBattle += scroll;
 
                 var ind:Int = 0;
@@ -176,11 +179,14 @@ class Battle extends FlxSubState {
                 change(-1);
             } else if (FlxG.keys.anyJustPressed([D, RIGHT]) && battleWhoToBattle != battle.enemyData.length - 1) {
                 change(1);
+            } else if (FlxG.keys.anyJustPressed([BACKSPACE, ESCAPE])) {
+                battleChosen = false;
+                battleInProgress = true;
             }
         } else if (!battleInProgress) {
             if (isYourTurn) {
                 function change(scroll:Int) {
-                    FlxG.sound.play("assets/sounds/action_s.ogg");
+                    action.play();
                     blockIndex += scroll;
 
                     var ind:Int = 0;
