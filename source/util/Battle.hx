@@ -180,8 +180,12 @@ class Battle extends FlxSubState {
             } else if (FlxG.keys.anyJustPressed([D, RIGHT]) && battleWhoToBattle != battle.enemyData.length - 1) {
                 change(1);
             } else if (FlxG.keys.anyJustPressed([BACKSPACE, ESCAPE])) {
+                for (enemy in battle.enemyData) {
+                    FlxSpriteUtil.setBrightness(cast(enemy.enemy, FlxSprite), 0);
+                }
+
                 battleChosen = false;
-                battleInProgress = true;
+                battleInProgress = false;
             }
         } else if (!battleInProgress) {
             if (isYourTurn) {
