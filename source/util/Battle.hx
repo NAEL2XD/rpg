@@ -205,9 +205,9 @@ class Battle extends FlxSubState {
                         case 0: // Jump
                             player.jump(true, 0, 12);
                             FlxTween.tween(player, {x: data.enemy.x}, 0.5);
-                            playerPressTime = Timer.stamp() + 0.85;
+                            playerPressTime = Timer.stamp() + .725;
 
-                            new FlxTimer().start(0.85, e -> {
+                            new FlxTimer().start(.725, e -> {
                                 if (playerCanControl) {
                                     dealDamage(battle.enemyData[battleWhoToBattle], 2);
                                     playerCanControl = false;
