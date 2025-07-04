@@ -197,11 +197,11 @@ class Battle extends FlxSubState {
 
                 battleChosen = false;
                 battleInProgress = true;
-                playerCanControl = true;
                 
                 FlxG.sound.play("assets/sounds/action_c.ogg");
                 
                 FlxTween.tween(player, {x: data.enemy.x - 60, posY: data.enemy.y}, 0.8, {onComplete: e -> {
+                    playerCanControl = true;
                     playerDidPress = false;
                     switch(blockIndex) {
                         case 0: // Jump
