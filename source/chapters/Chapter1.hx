@@ -95,6 +95,8 @@ class Chapter1_2 extends FlxState {
     var jumped:Bool = false;
     var readyToAttack:Bool = false;
 
+    var house:Entering = null;
+
     override function create() {
         if (FlxG.save.data.c1_2.done == null) {
             FlxG.save.data.c1_2.done = false;
@@ -175,6 +177,15 @@ class Chapter1_2 extends FlxState {
             copy;
         }];
 
+        house = new Entering({
+            x: 20,
+            y: 160,
+            closeTo: 70,
+            switchTo: Chapter1_1.new,
+            player: player,
+            state: this
+        });
+
         FlxG.save.data.c1_1.done = true;
 
         super.create();
@@ -182,6 +193,7 @@ class Chapter1_2 extends FlxState {
 
     override function update(elapsed:Float) {
         player.checkMovement();
+        house.checkMovement();
 
         if (jumped) {
             player.jump(false, -60);

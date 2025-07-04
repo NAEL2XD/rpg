@@ -17,9 +17,9 @@ class Main extends Sprite {
 			FlxG.save.data.c1_2 = {};
 		}
 		
+		addChild(new FlxGame(640, 320, Chapter1_1, 60, 60, true));
+		
 		FlxG.autoPause     = false;
 		FlxG.mouse.visible = false;
-
-		addChild(new FlxGame(640, 320, Chapter1_1, 60, 60, true));
 	}
 }
