@@ -198,6 +198,9 @@ class Chapter1_2 extends FlxState {
                     extraDialogues: new Dialogue([{
                         dID: "battleEnemy1",
                         char: noobs[0]
+                    }, {
+                        dID: "battleEnemy2",
+                        char: player
                     }]),
                     startASYourTurn: true
                 }));

@@ -53,6 +53,8 @@ class Battle extends FlxSubState {
         cutscene = true;
         battleInProgress = true;
         battleChosen = false;
+        playerCanControl = false;
+        playerDidPress = false;
 
         opponentName.visible = false;
 
