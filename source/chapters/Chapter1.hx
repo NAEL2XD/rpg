@@ -232,7 +232,7 @@ class Chapter1_2 extends FlxState {
                         shock.closeCallback = function() {
                             var i:Int = 0;
                             for (noo in noobsCopy) {
-                                FlxTween.tween(noo, {x: noo.x 640}, 2, {onComplete: e -> {
+                                FlxTween.tween(noo, {x: noo.x + 640}, 2, {onComplete: e -> {
                                     i++;
                                     if (i == 2) {
                                         openSubState(new Dialogue([{
