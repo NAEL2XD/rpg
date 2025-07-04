@@ -68,6 +68,13 @@ class Player extends FlxSprite {
         }
     }
 
+    public function resetJump() {
+        jumped = false;
+        jumpHeight = 0;
+        jumpLow = 0;
+        jumpY = 0;
+    }
+
     public function playSound(name:String) {
         FlxG.sound.play('assets/sounds/player/$name.ogg');
     }
