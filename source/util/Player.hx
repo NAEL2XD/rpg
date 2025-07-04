@@ -38,7 +38,15 @@ class Player extends FlxSprite {
             }
         }
 
-        jump();
+        if (jumped) {
+            jumpHeight -= .5;
+            jumpY += jumpHeight;
+        
+            if (jumpY < jumpLow) {
+                jumpY = jumpLow;
+                jumped = false;
+            }
+        }
 
         if (x < limitXPos[0]) {
             x = limitXPos[0];
@@ -63,14 +71,6 @@ class Player extends FlxSprite {
             jumpHeight = 8;
             
             playSound("jump");
-        } else if (jumped) {
-            jumpHeight -= .5;
-            jumpY += jumpHeight;
-        
-            if (jumpY < jumpLow) {
-                jumpY = jumpLow;
-                jumped = false;
-            }
         }
     }
 

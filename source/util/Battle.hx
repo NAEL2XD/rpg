@@ -201,6 +201,7 @@ class Battle extends FlxSubState {
                         FlxTween.tween(block, {alpha: 0}, 0.25, {ease: FlxEase.linear});
                     }
 
+                    blocksShowedUp = false;
                     battleChoose = true;
                 }
             }
