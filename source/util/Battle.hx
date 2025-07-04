@@ -237,11 +237,7 @@ class Battle extends FlxSubState {
                         FlxTween.tween(white, {alpha: 0.4}, 0.6);
                         insert(members.indexOf(bg) + 1, white);
 
-                        final oldX:Float = player.x;
-                        player.screenCenter(X);
-                        final targetX:Float = player.x;
-                        player.x = oldX;
-                        FlxTween.tween(player, {x: targetX}, 0.6);
+                        FlxTween.tween(player, {x: 308}, 0.6);
 
                         var text:FlxText = new FlxText(0, 0, 640, "Battle Results").setFormat("assets/fonts/main.ttf", 32, 0xFF000000, CENTER);
                         text.y = -64;
