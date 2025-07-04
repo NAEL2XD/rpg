@@ -175,6 +175,8 @@ class Chapter1_2 extends FlxState {
         player.checkMovement();
         add(player);
 
+        noobsCopy = noobs;
+
         super.create();
     }
 
@@ -185,8 +187,6 @@ class Chapter1_2 extends FlxState {
             player.jump(false, -60);
 
             if (FlxG.overlap(player, noobs[0]) && readyToAttack) {
-                noobsCopy = noobs.copy();
-
                 var battle = new Battle({
                     enemyData: [{
                         hp: 5,
@@ -232,7 +232,7 @@ class Chapter1_2 extends FlxState {
                         shock.closeCallback = function() {
                             var i:Int = 0;
                             for (noo in noobsCopy) {
-                                FlxTween.tween(noo, {x: 840}, 2, {onComplete: e -> {
+                                FlxTween.tween(noo, {x: noo.x 640}, 2, {onComplete: e -> {
                                     i++;
                                     if (i == 2) {
                                         openSubState(new Dialogue([{
