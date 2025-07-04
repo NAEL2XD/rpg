@@ -290,6 +290,12 @@ class Battle extends FlxSubState {
                 playerDidPress = true;
             }
         }
+
+        for (enemy in battle.enemyData) {
+            if (enemy.defeated) {
+                battle.enemyData.remove(enemy);
+            }
+        }
     }
 
     function dealDamage(to:BattleEnemies, loseHp:Int):BattleEnemies {
@@ -341,6 +347,7 @@ class Battle extends FlxSubState {
             }
 
             to.enemy.destroy();
+            to.defeated = true;
             
             FlxG.sound.play("assets/sounds/enemyDefeat.ogg");
         } else {
