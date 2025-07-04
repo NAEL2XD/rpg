@@ -1,5 +1,6 @@
 package util;
 
+import haxe.Timer;
 import flixel.sound.FlxSound;
 import flixel.util.FlxSpriteUtil;
 import flixel.text.FlxText;
@@ -28,6 +29,8 @@ class Battle extends FlxSubState {
     
     var player:Player = new Player();
     var playerRememberPos:Array<Float> = [];
+    var playerCanControl:Bool = false;
+    var playerPressTime:Float = 0;
     
     var battle:BattleMetadata = null; 
     var battleInProgress:Bool = true;
@@ -89,6 +92,7 @@ class Battle extends FlxSubState {
                     player.x = 70;
                     player.posY = 235;
                     player.inBattle = true;
+                    playerRememberPos = [70, 235];
                     insert(index + 1, player);
 
                     l = battle.enemyData.length-1;
@@ -185,6 +189,25 @@ class Battle extends FlxSubState {
                 }
 
                 battleChosen = false;
+            } else if (FlxG.keys.justPressed.ENTER) {
+                battleChosen = false;
+                battleInProgress = true;
+                playerCanControl = true;
+
+                FlxG.sound.play("assets/sounds/action_c.ogg");
+
+                FlxTween.tween(player, {x: data.enemy.x - 60, posY: data.enemy.y}, 0.8, {onComplete: e -> {
+                    switch(blockIndex) {
+                        case 0: // Jump
+                            player.jump(true, 0, 12);
+                            FlxTween.tween(player, {x: data.enemy.x}, 0.5);
+                            playerPressTime = Timer.stamp() + 0.7;
+
+                            new FlxTimer().start(0.7, e -> {
+                                playerCanControl = false;
+                            });
+                    }
+                }});
             }
         } else if (!battleInProgress) {
             if (isYourTurn) {
@@ -229,5 +252,28 @@ class Battle extends FlxSubState {
                 }
             }
         }
+
+        if (playerCanControl) {
+            switch(blockIndex) {
+                case 0: // Jump
+                    if (FlxG.keys.justPressed.SPACE && playerPressTime - Timer.stamp() < 0.25) {
+                        playerCanControl = false;
+                    } else if (!playerCanControl) {
+
+                    }
+            }
+        }
+    }
+
+    function dealDamage(to:BattleEnemies, loseHp:Int) {
+        var damage:FlxText = new FlxText(to.enemy.x + 16, to.enemy.y - 16, 640, '${to.hp}').setFormat("assets/fonts/hpDeal.ttf", loseHp < 12 ? 12 : loseHp, 0xFFFF9100, LEFT, OUTLINE, 0xFFBD5500);
+        FlxTween.tween(damage, {y: damage.y - 24}, 1.2, {onComplete: e -> {
+            FlxTween.tween(damage, {"scale.y": 1.4, alpha: 0}, 0.8, {onComplete: e -> {
+                damage.destroy();
+            }});
+        }});
+        add(damage);
+
+        to.hp -= loseHp;
     }
 }

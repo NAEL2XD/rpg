@@ -57,12 +57,12 @@ class Player extends FlxSprite {
         y = posY - jumpY;
     }
 
-    public function jump(?force:Bool = false, ?lowAmount:Float = 0) {
+    public function jump(?force:Bool = false, ?lowAmount:Float = 0, ?height:Float = 8) {
         jumpLow = lowAmount;
 
         if ((!jumped && !cutscene) || force) {
             jumped = true;
-            jumpHeight = 8;
+            jumpHeight = height;
             
             playSound("jump");
         }
