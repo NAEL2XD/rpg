@@ -16,7 +16,8 @@ typedef EnteringData = {
     state:FlxState,
     ?dialogue:Dialogue,
     ?soundIfEnter:String,
-    ?soundIfExit:String
+    ?soundIfExit:String,
+    ?fadeOutMusic:Bool
 }
 
 class Entering extends FlxSprite {
@@ -65,7 +66,7 @@ class Entering extends FlxSprite {
             dataStr.player.cutscene = true;
             dataStr.state.add(black);
 
-            if (FlxG.sound.music != null) {
+            if (FlxG.sound.music != null && dataStr.fadeOutMusic) {
                 FlxTween.num(FlxG.sound.music.volume, 0, 1, {}, e -> {
                     FlxG.sound.music.volume = e;
                 });

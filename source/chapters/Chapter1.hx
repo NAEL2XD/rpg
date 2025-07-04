@@ -14,6 +14,10 @@ class Chapter1_1 extends FlxState {
     var up:Entering = null;
 
     override function create() {
+        if (FlxG.save.data.c1_1.done == null) {
+            FlxG.save.data.c1_1.done = false;
+        }
+
         var house:FlxSprite = new FlxSprite().loadGraphic("assets/images/world/house/0.png");
         house.antialiasing = false;
         house.scale.set(10, 10);
@@ -21,10 +25,10 @@ class Chapter1_1 extends FlxState {
         house.screenCenter();
         add(house);
 
-        player.x = 86;
+        player.x = FlxG.save.data.c1_1.done ? 530 : 86;
         player.posY = 196;
         player.checkMovement();
-        player.cutscene = true;
+        player.cutscene = !FlxG.save.data.c1_1.done;
         player.playSound("yawn");
         add(player);
 
@@ -35,37 +39,40 @@ class Chapter1_1 extends FlxState {
             switchTo: Chapter1_2.new,
             player: player,
             state: this,
-            dialogue: new Dialogue([{
+            dialogue: !FlxG.save.data.c1_1.done ? new Dialogue([{
                 dID: "shocked1",
                 char: player
             }, {
                 dID: "shocked2",
                 char: player
-            }])
+            }]) : null,
+            fadeOutMusic: true
         });
         add(up);
 
         FlxG.camera.flash(0xFF000000, 2, function() {
-            var state = new Dialogue([{
-                dID: "houseWake1",
-                char: player
-            }, {
-                dID: "houseWake2",
-                char: player
-            }, {
-                dID: "houseWake3",
-                char: player
-            }, {
-                dID: "houseWake4",
-                char: player
-            }]);
+            if (!FlxG.save.data.c1_1.done) {
+                var state = new Dialogue([{
+                    dID: "houseWake1",
+                    char: player
+                }, {
+                    dID: "houseWake2",
+                    char: player
+                }, {
+                    dID: "houseWake3",
+                    char: player
+                }, {
+                    dID: "houseWake4",
+                    char: player
+                }]);
 
-            state.closeCallback = function() {
-                player.cutscene = false;
-                FlxG.sound.playMusic("assets/music/plains.ogg");
+                state.closeCallback = function() {
+                    player.cutscene = false;
+                    FlxG.sound.playMusic("assets/music/plains.ogg");
+                }
+
+                openSubState(state);
             }
-
-            openSubState(state);
         });
 
         super.create();
@@ -89,64 +96,72 @@ class Chapter1_2 extends FlxState {
     var readyToAttack:Bool = false;
 
     override function create() {
+        if (FlxG.save.data.c1_2.done == null) {
+            FlxG.save.data.c1_2.done = false;
+        }
+
         outside.antialiasing = false;
         outside.scale.set(10, 10);
         outside.updateHitbox();
         outside.screenCenter();
         add(outside);
 
-        for (i in 0...2) {
-            noobs.push(new FlxSprite().makeGraphic(28, 28, 0xFFFF0000));
-            noobs[i].x = 220 + (70 * i);
-            noobs[i].y = 222;
-            add(noobs[i]);
+        if (!FlxG.save.data.c1_2.done) {
+            for (i in 0...2) {
+                noobs.push(new FlxSprite().makeGraphic(28, 28, 0xFFFF0000));
+                noobs[i].x = 220 + (70 * i);
+                noobs[i].y = 222;
+                add(noobs[i]);
+            }
         }
 
         FlxG.sound.playMusic("assets/music/serious.ogg");
 
-        FlxG.camera.flash(0xFF000000, 2, function() {
-            var state = new Dialogue([{
-                dID: "houseEnemyApproach1",
-                char: player
-            }, {
-                dID: "houseEnemyApproach2",
-                char: noobs[0]
-            }, {
-                dID: "houseEnemyApproach3",
-                char: noobs[1]
-            }, {
-                dID: "houseEnemyApproach4",
-                char: player
-            }, {
-                dID: "houseEnemyApproach5",
-                char: noobs[0]
-            }, {
-                dID: "houseEnemyApproach6",
-                char: player
-            }, {
-                dID: "houseEnemyApproach7",
-                char: noobs[1]
-            }, {
-                dID: "houseEnemyApproach8",
-                char: player
-            }, {
-                dID: "houseEnemyApproach9",
-                char: noobs[0]
-            }]);
+        if (!FlxG.save.data.c1_2.done) {
+            FlxG.camera.flash(0xFF000000, 2, function() {
+                var state = new Dialogue([{
+                    dID: "houseEnemyApproach1",
+                    char: player
+                }, {
+                    dID: "houseEnemyApproach2",
+                    char: noobs[0]
+                }, {
+                    dID: "houseEnemyApproach3",
+                    char: noobs[1]
+                }, {
+                    dID: "houseEnemyApproach4",
+                    char: player
+                }, {
+                    dID: "houseEnemyApproach5",
+                    char: noobs[0]
+                }, {
+                    dID: "houseEnemyApproach6",
+                    char: player
+                }, {
+                    dID: "houseEnemyApproach7",
+                    char: noobs[1]
+                }, {
+                    dID: "houseEnemyApproach8",
+                    char: player
+                }, {
+                    dID: "houseEnemyApproach9",
+                    char: noobs[0]
+                }]);
 
-            state.closeCallback = function() {
-                player.lockedVM = 5.25;
-                player.jump(true);
+                state.closeCallback = function() {
+                    player.lockedVM = 5.25;
+                    player.jump(true);
 
-                readyToAttack = true;
-                jumped = true;
-            }
+                    readyToAttack = true;
+                    jumped = true;
+                }
 
-            openSubState(state);
-        });
+                openSubState(state);
+            });
+        }
 
         player.x = 40;
-        player.posY = 186;
+        player.posY = FlxG.save.data.c1_2.done ? 226 : 186;
         player.cutscene = true;
         player.checkMovement();
         add(player);
@@ -159,6 +174,8 @@ class Chapter1_2 extends FlxState {
             add(copy);
             copy;
         }];
+
+        FlxG.save.data.c1_1.done = true;
 
         super.create();
     }
