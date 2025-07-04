@@ -46,7 +46,7 @@ class Chapter1_1 extends FlxState {
                 dID: "shocked2",
                 char: player
             }]) : null,
-            fadeOutMusic: true
+            fadeOutMusic: !FlxG.save.data.c1_1.done
         });
         add(up);
 
@@ -187,7 +187,6 @@ class Chapter1_2 extends FlxState {
         });
 
         FlxG.save.data.c1_1.done = true;
-        FlxG.save.flush();
 
         super.create();
     }
@@ -263,6 +262,7 @@ class Chapter1_2 extends FlxState {
                                             FlxG.sound.playMusic("assets/music/plains.ogg");
                                             player.cutscene = false;
                                             jumped = false;
+                                            FlxG.save.data.c1_2.done = true;
                                         }
 
                                         openSubState(state);
