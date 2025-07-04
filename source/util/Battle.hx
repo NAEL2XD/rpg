@@ -147,6 +147,7 @@ class Battle extends FlxSubState {
 
     override function update(elapsed:Float) {
         super.update(elapsed);
+        player.checkMovement();
 
         if (cutscene) {
             return;
