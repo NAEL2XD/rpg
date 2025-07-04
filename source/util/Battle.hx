@@ -30,12 +30,14 @@ class Battle extends FlxSubState {
     var isYourTurn:Bool = false;
     var turnLeftTillOpponent:Int = 1;
     var cutscene:Bool = true;
-    var battleInProgress:Bool = false;
+    var battleInProgress:Bool = true;
     var blocksShowedUp:Bool = false;
     var blockIndex:Int = 0;
 
     public function new(battleData:BattleMetadata) {
         blocks = [];
+        cutscene = true;
+        battleInProgress = true;
 
         battle = battleData;
         super(0);
@@ -104,11 +106,18 @@ class Battle extends FlxSubState {
                         FlxTween.tween(transitions[k], {alpha: 0, x: m[0], y: m[0]}, 1.2, {onComplete: e -> {
                             if (m[0] == -640) {
                                 if (battle.extraDialogues != null) {
-                                    openSubState(battle.extraDialogues);
-                                }
+                                    var state = battle.extraDialogues
 
-                                cutscene = false;
-                                battleInProgress = false;
+                                    state.closeCallback = function() {
+                                        cutscene = false;
+                                        battleInProgress = false;
+                                    }
+
+                                    openSubState(state);
+                                } else {
+                                    cutscene = false;
+                                    battleInProgress = false;
+                                }
                             }
                         }});
                         
@@ -142,7 +151,7 @@ class Battle extends FlxSubState {
 
                     var ind:Int = 0;
                     for (block in blocks) {
-                        FlxTween.tween(block, {x: 60 + (36 * (blockIndex + ind)), alpha: 1}, 0.25);
+                        FlxTween.tween(block, {x: 66 + (36 * (blockIndex + ind)), alpha: 1}, 0.25);
                         ind++;
                     }
                 }
@@ -151,7 +160,7 @@ class Battle extends FlxSubState {
                     var index:Int = 0;
 
                     for (block in blocks) {
-                        block.x = 96 + (index * 36);
+                        block.x = 102 + (index * 36);
                         block.y = 190;
                         FlxTween.tween(block, {x: block.x - 36, alpha: 1}, 0.66, {ease: FlxEase.sineOut});
                     }
