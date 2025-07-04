@@ -13,7 +13,8 @@ import flixel.tweens.FlxTween;
 typedef BattleEnemies = {
     hp:Int,
     enemy:FlxObject,
-    name:String
+    name:String,
+    defeated:Bool
 }
 
 typedef BattleMetadata = {
@@ -194,7 +195,7 @@ class Battle extends FlxSubState {
                 }
 
                 battleChosen = false;
-            } else if (FlxG.keys.justPressed.ENTER) {
+            } else if (FlxG.keys.justPressed.SPACE) {
                 for (enemy in battle.enemyData) {
                     FlxSpriteUtil.setBrightness(cast(enemy.enemy, FlxSprite), 0);
                 }
@@ -293,7 +294,6 @@ class Battle extends FlxSubState {
 
     function dealDamage(to:BattleEnemies, loseHp:Int):BattleEnemies {
         final lucky:Bool = FlxG.random.bool(10);
-        final oldto:BattleEnemies = to;
 
         if (lucky) {
             FlxG.sound.play("assets/sounds/LuckyHit.ogg");
@@ -340,7 +340,6 @@ class Battle extends FlxSubState {
 			    });
             }
 
-            battle.enemyData.remove(oldto);
             to.enemy.destroy();
             
             FlxG.sound.play("assets/sounds/enemyDefeat.ogg");
