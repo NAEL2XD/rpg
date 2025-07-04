@@ -86,6 +86,7 @@ class Battle extends FlxSubState {
                     }
 
                     final blockName:Array<String> = ["jump"];
+                    
 
                     k = 0;
                     for (m in pos) {
