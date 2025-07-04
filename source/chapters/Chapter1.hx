@@ -179,7 +179,7 @@ class Chapter1_2 extends FlxState {
 
         house = new Entering({
             x: 20,
-            y: 160,
+            y: 180,
             closeTo: 70,
             switchTo: Chapter1_1.new,
             player: player,
@@ -187,6 +187,7 @@ class Chapter1_2 extends FlxState {
         });
 
         FlxG.save.data.c1_1.done = true;
+        FlxG.save.flush();
 
         super.create();
     }
