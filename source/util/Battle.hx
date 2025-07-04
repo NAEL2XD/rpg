@@ -1,5 +1,6 @@
 package util;
 
+import flixel.FlxCamera;
 import haxe.Timer;
 import flixel.sound.FlxSound;
 import flixel.util.FlxSpriteUtil;
@@ -259,7 +260,7 @@ class Battle extends FlxSubState {
                     change(1);
                 } else if (FlxG.keys.justPressed.SPACE) {
                     FlxG.sound.play("assets/sounds/action_c.ogg");
-                    player.jump(true, 0, 4);
+                    player.jump(true, 0, 6.5);
 
                     for (block in blocks) {
                         FlxTween.tween(block, {alpha: 0}, 0.25, {ease: FlxEase.linear});
@@ -320,6 +321,24 @@ class Battle extends FlxSubState {
         add(damage);
 
         to.hp -= loseHp;
+
+        if (to.hp < 1) {
+            for (i in 0...25) {
+                new FlxTimer().start(0.015 * i, e -> {
+			    	var a = new FlxSprite().makeGraphic(Std.int(to.enemy.width), Std.int(to.enemy.height), FlxG.random.color(0xFF000000, 0xFFFFFFFF));
+					a.x = to.enemy.x;
+					a.y = to.enemy.y;
+					a.acceleration.y = 200;
+					a.velocity.x = FlxG.random.float(-480, 480);
+					a.velocity.y = FlxG.random.float(-200, -350);
+					FlxTween.tween(a, {angle: FlxG.random.float(-180, 180), alpha: 0}, 0.4, {onComplete: e -> {
+						a.destroy();
+					}});
+					add(a);
+			    });
+            }
+            FlxCamera
+        }
         return to;
     }
 
