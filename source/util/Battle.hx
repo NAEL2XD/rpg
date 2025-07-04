@@ -340,16 +340,7 @@ class Battle extends FlxSubState {
             }
 
             to.enemy.destroy();
-            
-            var indexToRemove = battle.enemyData.indexOf(to);
-            if (indexToRemove != -1) {
-                battle.enemyData.splice(indexToRemove, 1);
-
-                // Reset battleWhoToBattle if it's now out of bounds
-                if (battleWhoToBattle >= battle.enemyData.length) {
-                    battleWhoToBattle = battle.enemyData.length > 0 ? battle.enemyData.length - 1 : 0;
-                }
-            }
+            battle.enemyData.splice(battle.enemyData.indexOf(to), 1);
             
             FlxG.sound.play("assets/sounds/enemyDefeat.ogg");
         } else {
