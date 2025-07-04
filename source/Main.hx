@@ -5,14 +5,17 @@ import flixel.FlxGame;
 import openfl.display.Sprite;
 
 class Main extends Sprite {
+	var startOver:Bool = true;
 	public function new() {
 		super();
 		
 		FlxG.save.bind("rpg");
-		FlxG.save.erase();
+		trace(FlxG.save.status);
 
-		FlxG.save.data.c1_1 = {};
-		FlxG.save.data.c1_2 = {};
+		if (startOver) {
+			FlxG.save.data.c1_1 = {};
+			FlxG.save.data.c1_2 = {};
+		}
 		
 		FlxG.autoPause     = false;
 		FlxG.mouse.visible = false;
