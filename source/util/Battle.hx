@@ -83,7 +83,7 @@ class Battle extends FlxSubState {
                     insert(index, bg);
 
                     player.x = 70;
-                    player.y = 235;
+                    player.posY = 235;
                     player.inBattle = true;
                     insert(index + 1, player);
 
