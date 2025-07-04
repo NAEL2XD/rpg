@@ -163,6 +163,8 @@ class Chapter1_2 extends FlxState {
 
                 openSubState(state);
             });
+        } else {
+            FlxG.camera.flash(0xFF000000);
         }
 
         player.x = 40;
@@ -181,8 +183,8 @@ class Chapter1_2 extends FlxState {
         }];
 
         house = new Entering({
-            x: 1,
-            y: 210,
+            x: 11,
+            y: 235,
             closeTo: 70,
             switchTo: Chapter1_1.new,
             player: player,
