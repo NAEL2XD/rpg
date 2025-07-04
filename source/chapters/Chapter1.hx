@@ -1,5 +1,6 @@
 package chapters;
 
+import util.Entering;
 import util.Battle;
 import flixel.util.FlxTimer;
 import haxe.Timer;
@@ -10,7 +11,7 @@ import util.Dialogue;
 
 class Chapter1_1 extends FlxState {
     var player:Player = new Player();
-    var up:FlxSprite = new FlxSprite().loadGraphic("assets/images/up.png");
+    var up:Entering = null;
 
     override function create() {
         var house:FlxSprite = new FlxSprite().loadGraphic("assets/images/world/house/0.png");
@@ -22,16 +23,26 @@ class Chapter1_1 extends FlxState {
 
         player.x = 86;
         player.posY = 196;
-        player.limitXPos = [0, 616];
         player.checkMovement();
         player.cutscene = true;
         player.playSound("yawn");
         add(player);
 
-        up.x = 551;
-        up.y = 131;
-        up.scale.set(1.5, 1.5);
-        up.updateHitbox();
+        up = new Entering({
+            x: 551,
+            y: 131,
+            closeTo: 75,
+            switchTo: Chapter1_2.new,
+            player: player,
+            state: this,
+            dialogue: new Dialogue([{
+                dID: "shocked1",
+                char: player
+            }, {
+                dID: "shocked2",
+                char: player
+            }])
+        });
         add(up);
 
         FlxG.camera.flash(0xFF000000, 2, function() {
@@ -62,41 +73,7 @@ class Chapter1_1 extends FlxState {
 
     override function update(elapsed:Float) {
         player.checkMovement();
-
-        up.alpha = 1.5 - (FlxMath.distanceBetween(player, up) / 100);
-        up.y = 133 + (Math.sin(Timer.stamp()) * 4);
-        if (!player.cutscene) {
-            if (FlxMath.distanceBetween(player, up) < 80 && FlxG.keys.anyJustPressed([Z, W, UP])) {
-                FlxG.sound.play("assets/sounds/door_open.ogg");
-                player.cutscene = true;
-
-                var black:FlxSprite = new FlxSprite().makeGraphic(640, 360, 0xFF000000);
-                black.alpha = 0;
-                FlxTween.tween(black, {alpha: 1}, 1, {onComplete: e -> {
-                    var snd:FlxSound = FlxG.sound.load("assets/sounds/door_close.ogg");
-                    snd.onComplete = function() {
-                        var state = new Dialogue([{
-                            dID: "shocked1",
-                            char: player
-                        }, {
-                            dID: "shocked2",
-                            char: player
-                        }]);
-                    
-                        state.closeCallback = function() {
-                            FlxG.switchState(Chapter1_2.new);
-                        }
-                        openSubState(state);
-                    };
-                    snd.play();
-                }});
-                add(black);
-
-                FlxTween.num(FlxG.sound.music.volume, 0, 1, {}, e -> {
-                    FlxG.sound.music.volume = e;
-                });
-            }
-        }
+        up.checkMovement();
 
         super.update(elapsed);
     }
@@ -171,7 +148,6 @@ class Chapter1_2 extends FlxState {
         player.x = 40;
         player.posY = 186;
         player.cutscene = true;
-        player.limitXPos = [0, 616];
         player.checkMovement();
         add(player);
 
@@ -196,11 +172,11 @@ class Chapter1_2 extends FlxState {
             if (FlxG.overlap(player, noobs[0]) && readyToAttack) {
                 var battle = new Battle({
                     enemyData: [{
-                        hp: 5,
+                        hp: 8,
                         enemy: noobs[0],
                         name: "Gang I"
                     }, {
-                        hp: 5,
+                        hp: 8,
                         enemy: noobs[1],
                         name: "Gang II"
                     }],
