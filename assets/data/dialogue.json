@@ -106,6 +106,17 @@
             "dialogueID": "battleEnemy6",
             "text": "That should teach them a lesson, such bratty brats.",
             "timePerChar": 0.06
+        },
+        {
+            "dialogueID": "battleEnemy7",
+            "text": "I just hope it doesn't happen again.",
+            "timePerChar": 0.06
+        }
+        ,
+        {
+            "dialogueID": "battleEnemy8",
+            "text": "*It will*",
+            "timePerChar": 0.2
         }
     ]
 }

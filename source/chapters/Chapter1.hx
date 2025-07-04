@@ -218,7 +218,7 @@ class Chapter1_2 extends FlxState {
                 battle.closeCallback = function() {
                     new FlxTimer().start(0.1, e -> {
                         player.lockedVM = 0;
-                        player.posY = 220;
+                        player.posY = 224;
                         player.resetJump();
 
                         for (noob in noobsCopy) {
@@ -242,10 +242,23 @@ class Chapter1_2 extends FlxState {
                                 FlxTween.tween(noo, {x: noo.x + 480}, 2, {onComplete: e -> {
                                     i++;
                                     if (i == 2) {
-                                        openSubState(new Dialogue([{
+                                        var state = new Dialogue([{
                                             dID: "battleEnemy6",
                                             char: player
-                                        }]));
+                                        }, {
+                                            dID: "battleEnemy7",
+                                            char: player
+                                        }, {
+                                            dID: "battleEnemy8",
+                                            char: player
+                                        }]);
+
+                                        state.closeCallback = function() {
+                                            FlxG.sound.playMusic("assets/music/plains.ogg");
+                                            jumped = false;
+                                        }
+
+                                        openSubState(state);
                                     }
                                 }});
                             }
