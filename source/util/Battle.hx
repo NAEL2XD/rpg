@@ -29,7 +29,7 @@ class Battle extends FlxSubState {
     
     var battle:BattleMetadata = null; 
     var battleInProgress:Bool = true;
-    var battleChoose:Bool = true;
+    var battleChosen:Bool = false;
     var battleWhoToBattle:Int = 0;
     var cutscene:Bool = true;
     var isYourTurn:Bool = false;
@@ -44,6 +44,7 @@ class Battle extends FlxSubState {
         blocks = [];
         cutscene = true;
         battleInProgress = true;
+        battleChosen = false;
 
         opponentName.visible = false;
 
@@ -151,7 +152,7 @@ class Battle extends FlxSubState {
             return;
         }
 
-        if (battleChoose) {
+        if (battleChosen) {
             var data:BattleEnemies = battle.enemyData[battleWhoToBattle];
             opponentName.text = '${data.name} | ${data.hp} HP';
 
@@ -202,7 +203,7 @@ class Battle extends FlxSubState {
                     }
 
                     blocksShowedUp = false;
-                    battleChoose = true;
+                    battleChosen = true;
                 }
             }
         }

@@ -46,6 +46,8 @@ class Player extends FlxSprite {
                 jumpY = jumpLow;
                 jumped = false;
             }
+        } else if (FlxG.keys.justPressed.SPACE) {
+            jump();
         }
 
         if (x < limitXPos[0]) {
@@ -66,7 +68,7 @@ class Player extends FlxSprite {
 
         jumpLow = lowAmount;
 
-        if ((FlxG.keys.justPressed.SPACE && !jumped && !cutscene) || force) {
+        if ((!jumped && !cutscene) || force) {
             jumped = true;
             jumpHeight = 8;
             
