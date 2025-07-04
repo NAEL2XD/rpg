@@ -205,9 +205,9 @@ class Battle extends FlxSubState {
                         case 0: // Jump
                             player.jump(true, 0, 12);
                             FlxTween.tween(player, {x: data.enemy.x}, 0.5);
-                            playerPressTime = Timer.stamp() + 0.7;
+                            playerPressTime = Timer.stamp() + 0.85;
 
-                            new FlxTimer().start(0.7, e -> {
+                            new FlxTimer().start(0.85, e -> {
                                 if (playerCanControl) {
                                     dealDamage(battle.enemyData[battleWhoToBattle], 2);
                                     playerCanControl = false;
@@ -289,7 +289,7 @@ class Battle extends FlxSubState {
     function playerNewTurn() {
         player.jump(true, 0, 9);
         FlxTween.tween(player, {x: 200}, 0.8, {onComplete: e -> {
-            FlxTween.tween(player, {x: playerRememberPos[0], yPos: playerRememberPos[1]}, 0.7, {onComplete: e -> {
+            FlxTween.tween(player, {x: playerRememberPos[0], posY: playerRememberPos[1]}, 0.7, {onComplete: e -> {
                 battleInProgress = false;
             }});
         }});
