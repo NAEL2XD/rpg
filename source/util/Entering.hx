@@ -41,7 +41,7 @@ class Entering extends FlxSprite {
 
     public function checkMovement() {
         alpha = dataStr.player.cutscene ? 0 : (1.5 - (FlxMath.distanceBetween(dataStr.player, this) / 100));
-        y = 133 + (Math.sin(Timer.stamp()) * 4);
+        y = dataStr.y + (Math.sin(Timer.stamp()) * 4);
         
         if (FlxMath.distanceBetween(dataStr.player, this) < 80 && FlxG.keys.anyJustPressed([Z, W, UP]) && !dataStr.player.cutscene) {
             var black:FlxSprite = new FlxSprite().makeGraphic(640, 360, 0xFF000000);

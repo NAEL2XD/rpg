@@ -33,7 +33,7 @@ class Chapter1_1 extends FlxState {
 
         up = new Entering({
             x: 551,
-            y: 131,
+            y: 133,
             closeTo: 75,
             switchTo: Chapter1_2.new,
             player: player,
@@ -184,7 +184,7 @@ class Chapter1_2 extends FlxState {
 
         house = new Entering({
             x: 11,
-            y: 254,
+            y: 170,
             closeTo: 70,
             switchTo: Chapter1_1.new,
             player: player,
