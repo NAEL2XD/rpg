@@ -331,15 +331,15 @@ class Battle extends FlxSubState {
 					a.acceleration.y = 500;
 					a.velocity.x = FlxG.random.float(-80, 80);
 					a.velocity.y = FlxG.random.float(-200, -350);
-					FlxTween.tween(a, {angle: FlxG.random.float(-60, 60), alpha: 0, "scale.x": 0, "scale.y": 0}, 0.7, {onComplete: e -> {
+					FlxTween.tween(a, {angle: FlxG.random.float(-60, 60), alpha: 0, "scale.x": 0, "scale.y": 0}, 0.8, {onComplete: e -> {
 						a.destroy();
 					}});
 					add(a);
 			    });
             }
 
-            battle.enemyData.remove(to);
             to.enemy.destroy();
+            battle.enemyData[battleWhoToBattle] = null;
             
             FlxG.sound.play("assets/sounds/enemyDefeat.ogg");
         } else {
