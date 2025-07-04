@@ -206,29 +206,7 @@ class Chapter1_2 extends FlxState {
                 });
 
                 battle.closeCallback = function() {
-                    var shock = new Dialogue([{
-                        dID: "battleEnemy3",
-                        char: noobs[0]
-                    }, {
-                        dID: "battleEnemy4",
-                        char: noobs[1]
-                    }, {
-                        dID: "battleEnemy5",
-                        char: noobs[0]
-                    }]);
-
-                    shock.closeCallback = function() {
-                        for (noo in noobs) {
-                            FlxTween.tween(noo, {x: 840}, 2, {onComplete: e -> {
-                                openSubState(new Dialogue([{
-                                    dID: "battleEnemy6",
-                                    char: player
-                                }]));
-                            }});
-                        }
-                    }
-
-                    openSubState(shock);
+                    dialogues();
                 };
 
                 openSubState(battle);
@@ -236,5 +214,33 @@ class Chapter1_2 extends FlxState {
         }
 
         super.update(elapsed);
+    }
+
+    function dialogues() {
+        player.lockedVM = 0;
+        
+        var shock = new Dialogue([{
+            dID: "battleEnemy3",
+            char: noobs[0]
+        }, {
+            dID: "battleEnemy4",
+            char: noobs[1]
+        }, {
+            dID: "battleEnemy5",
+            char: noobs[0]
+        }]);
+
+        shock.closeCallback = function() {
+            for (noo in noobs) {
+                FlxTween.tween(noo, {x: 840}, 2, {onComplete: e -> {
+                    openSubState(new Dialogue([{
+                        dID: "battleEnemy6",
+                        char: player
+                    }]));
+                }});
+            }
+        }
+
+        openSubState(shock);
     }
 }

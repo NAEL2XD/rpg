@@ -159,7 +159,7 @@ class Dialogue extends FlxSubState {
         if (FlxG.keys.justPressed.ANY || !manualPress) {
             if (done) {
                 if (queue.length == 0) {
-                    close();
+                    closeSubState();
                 } else {
                     newDialogue();
                 }
