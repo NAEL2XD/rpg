@@ -210,7 +210,8 @@ class Chapter1_2 extends FlxState {
 
                 battle.closeCallback = function() {
                     player.lockedVM = 0;
-                    player.posY = 204;
+                    player.jumpLow = 0;
+                    player.posY = 234;
 
                     for (noob in noobsCopy) {
                         add(noob);

@@ -94,12 +94,12 @@
         },
         {
             "dialogueID": "battleEnemy4",
-            "text": "THIS GUY IS STRONGER THAN US! BOLT! BOLT!!!!",
+            "text": "THIS GUY IS STRONGER THAN US! BOLT! BOLT!!!! WE NEED TO RUN!!",
             "timePerChar": 0.04
         },
         {
             "dialogueID": "battleEnemy5",
-            "text": "Whatever, weak gang.",
+            "text": "Whatever you say, weak little noob.",
             "timePerChar": 0.06
         },
         {
