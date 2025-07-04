@@ -1,5 +1,6 @@
 package util;
 
+import flixel.tweens.FlxEase;
 import util.Dialogue;
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxTween;
@@ -31,8 +32,11 @@ class Battle extends FlxSubState {
     var cutscene:Bool = true;
     var battleInProgress:Bool = false;
     var blocksShowedUp:Bool = false;
+    var blockIndex:Int = 0;
 
     public function new(battleData:BattleMetadata) {
+        blocks = [];
+
         battle = battleData;
         super(0);
     }
@@ -56,6 +60,7 @@ class Battle extends FlxSubState {
             transitions[l].alpha = 0;
             transitions[l].x = i[0];
             transitions[l].y = i[1];
+
             FlxTween.tween(transitions[l], {alpha: 1, x: 0, y: 0}, 1.2, {onComplete: e -> {
                 if (l == 3) {
                     final index:Int = members.indexOf(transitions[0]);
@@ -86,7 +91,13 @@ class Battle extends FlxSubState {
                     }
 
                     final blockName:Array<String> = ["jump"];
-                    
+                    for (block in blockName) {
+                        final n:Int = blocks.length;
+                        blocks.push(new FlxSprite().loadGraphic('assets/images/$block.png'));
+                        blocks[n].alpha = 0;
+                        blocks[n].scale.set(1.6, 1.6);
+                        add(blocks[n]);
+                    }
 
                     k = 0;
                     for (m in pos) {
@@ -107,6 +118,7 @@ class Battle extends FlxSubState {
                     isYourTurn = battle.startASYourTurn;
                 }
             }});
+
             add(transitions[l]);
         }
 
@@ -124,8 +136,33 @@ class Battle extends FlxSubState {
 
         if (!battleInProgress) {
             if (isYourTurn) {
-                if (!blocksShowedUp) {
+                function change(scroll:Int) {
+                    FlxG.sound.play("assets/sounds/action_s.ogg");
+                    blockIndex += scroll;
 
+                    var ind:Int = 0;
+                    for (block in blocks) {
+                        FlxTween.tween(block, {x: 60 + (36 * (blockIndex + ind)), alpha: 1}, 0.25);
+                        ind++;
+                    }
+                }
+
+                if (!blocksShowedUp) {
+                    var index:Int = 0;
+
+                    for (block in blocks) {
+                        block.x = 96 + (index * 36);
+                        block.y = 190;
+                        FlxTween.tween(block, {x: block.x - 36, alpha: 1}, 0.66, {ease: FlxEase.sineOut});
+                    }
+
+                    blocksShowedUp = true;
+                }
+
+                if (FlxG.keys.anyJustPressed([Q, A, LEFT]) && blockIndex != 0) {
+                    change(-1);
+                } else if (FlxG.keys.anyJustPressed([D, RIGHT]) && blockIndex != blocks.length - 1) {
+                    change(-1);
                 }
             }
         }
