@@ -317,11 +317,11 @@ class Battle extends FlxSubState {
             }
         }
 
-        FlxTween.tween(sprite, {x: sprite.x - sprite.width}, 0.4);
+        FlxTween.tween(sprite, {x: sprite.x - sprite.width - 14}, 0.1);
         add(sprite);
 
         new FlxTimer().start(1.2, e -> {
-            FlxTween.tween(sprite, {"scale.x": 0, "scale.y": 0}, 0.4, {onComplete: e -> {
+            FlxTween.tween(sprite, {"scale.x": 0, "scale.y": 0}, 0.25, {onComplete: e -> {
                 sprite.destroy();
             }});
         });
