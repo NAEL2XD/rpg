@@ -274,10 +274,10 @@ class Battle extends FlxSubState {
     }
 
     function dealDamage(to:BattleEnemies, loseHp:Int) {
-        var damage:FlxText = new FlxText(to.enemy.x + 100, to.enemy.y - 16, 640, '${loseHp}').setFormat("assets/fonts/hpDeal.ttf", loseHp < 12 ? 12 : loseHp, 0xFFFF9100, LEFT, OUTLINE, 0xFFBD5500);
+        var damage:FlxText = new FlxText(to.enemy.x + 116, to.enemy.y - 24, 640, '${loseHp}').setFormat("assets/fonts/hpDeal.ttf", loseHp < 12 ? 12 : loseHp, 0xFFFF9100, LEFT, OUTLINE, 0xFFBD5500);
         damage.scale.set(1.4, 1.4);
         FlxTween.tween(damage, {x: damage.x + 24, y: damage.y - 36}, 1.2, {ease: FlxEase.sineOut, onComplete: e -> {
-            FlxTween.tween(damage, {"scale.y": 1.8, alpha: 0}, 0.8, {onComplete: e -> {
+            FlxTween.tween(damage, {"scale.y": 2.4, alpha: 0}, 0.4, {onComplete: e -> {
                 damage.destroy();
             }});
         }});
