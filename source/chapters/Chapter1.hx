@@ -29,7 +29,6 @@ class Chapter1_1 extends FlxState {
         player.posY = 196;
         player.checkMovement();
         player.cutscene = !FlxG.save.data.c1_1.done;
-        player.playSound("yawn");
         add(player);
 
         up = new Entering({
@@ -75,6 +74,10 @@ class Chapter1_1 extends FlxState {
             }
         });
 
+        if (!FlxG.save.data.c1_1.done) {
+            player.playSound("yawn");
+        }
+
         super.create();
     }
 
@@ -117,9 +120,9 @@ class Chapter1_2 extends FlxState {
             }
         }
 
-        FlxG.sound.playMusic("assets/music/serious.ogg");
-
         if (!FlxG.save.data.c1_2.done) {
+            FlxG.sound.playMusic("assets/music/serious.ogg");
+
             FlxG.camera.flash(0xFF000000, 2, function() {
                 var state = new Dialogue([{
                     dID: "houseEnemyApproach1",
@@ -178,13 +181,14 @@ class Chapter1_2 extends FlxState {
         }];
 
         house = new Entering({
-            x: 80,
+            x: 25,
             y: 180,
             closeTo: 70,
             switchTo: Chapter1_1.new,
             player: player,
             state: this
         });
+        add(house);
 
         FlxG.save.data.c1_1.done = true;
 
