@@ -207,11 +207,11 @@ class Battle extends FlxSubState {
                         case 0: // Jump
                             player.jump(true, 0, 12);
                             FlxTween.tween(player, {x: data.enemy.x}, 0.5);
-                            playerPressTime = Timer.stamp() + .725;
+                            playerPressTime = Timer.stamp() + .76;
 
-                            new FlxTimer().start(.725, e -> {
+                            new FlxTimer().start(.76, e -> {
                                 if (playerCanControl) {
-                                    dealDamage(battle.enemyData[battleWhoToBattle], 2);
+                                    battle.enemyData[battleWhoToBattle] = dealDamage(battle.enemyData[battleWhoToBattle], 2);
                                     playerNewTurn();
                                     playerCanControl = false;
                                 }
@@ -270,7 +270,7 @@ class Battle extends FlxSubState {
                         playerCanControl = false;
                         playerNewTurn();
                         rating(1);
-                        dealDamage(battle.enemyData[battleWhoToBattle], 3);
+                        battle.enemyData[battleWhoToBattle] = dealDamage(battle.enemyData[battleWhoToBattle], 3);
                     }
             }
 
@@ -280,7 +280,7 @@ class Battle extends FlxSubState {
         }
     }
 
-    function dealDamage(to:BattleEnemies, loseHp:Int) {
+    function dealDamage(to:BattleEnemies, loseHp:Int):BattleEnemies {
         var damage:FlxText = new FlxText(to.enemy.x + 116, to.enemy.y - 24, 640, '${loseHp}').setFormat("assets/fonts/hpDeal.ttf", loseHp < 12 ? 12 : loseHp, 0xFFFF9100, LEFT, OUTLINE, 0xFFBD5500);
         damage.scale.set(1.4, 1.4);
         FlxTween.tween(damage, {x: damage.x + 24, y: damage.y - 36}, 1.2, {ease: FlxEase.sineOut, onComplete: e -> {
@@ -291,6 +291,7 @@ class Battle extends FlxSubState {
         add(damage);
 
         to.hp -= loseHp;
+        return to;
     }
 
     function playerNewTurn() {
@@ -317,13 +318,14 @@ class Battle extends FlxSubState {
             }
         }
 
-        FlxTween.tween(sprite, {x: sprite.x - sprite.width - 14}, 0.1);
-        add(sprite);
-
         new FlxTimer().start(1.2, e -> {
             FlxTween.tween(sprite, {"scale.x": 0, "scale.y": 0}, 0.25, {onComplete: e -> {
                 sprite.destroy();
             }});
         });
+
+        FlxTween.tween(sprite, {x: sprite.x - sprite.width - 14}, 0.1);
+        sprite.antialiasing = false;
+        add(sprite);
     }
 }
