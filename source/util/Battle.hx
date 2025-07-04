@@ -289,11 +289,11 @@ class Battle extends FlxSubState {
     function dealDamage(to:BattleEnemies, loseHp:Int):BattleEnemies {
         if (FlxG.random.bool(50)) {
             FlxG.sound.play("assets/sounds/LuckyHit.ogg");
-            
+
             var lucky:FlxSprite = new FlxSprite().loadGraphic("assets/images/lucky.png");
             lucky.scale.set(0.5, 0.5);
-            lucky.x = to.enemy.x - 16;
-            lucky.y = to.enemy.y - 30;
+            lucky.x = to.enemy.x - 26;
+            lucky.y = to.enemy.y - 40;
             FlxTween.tween(lucky, {x: lucky.x + 24, y: lucky.y - 36}, 1.2, {ease: FlxEase.sineOut, onComplete: e -> {
                 FlxTween.tween(lucky, {"scale.y": 2.4, alpha: 0}, 0.4, {onComplete: e -> {
                     lucky.destroy();
