@@ -167,7 +167,7 @@ class Chapter1_2 extends FlxState {
 
         player.x = 40;
         player.posY = FlxG.save.data.c1_2.done ? 226 : 186;
-        player.cutscene = true;
+        player.cutscene = !FlxG.save.data.c1_2.done;
         player.checkMovement();
         add(player);
 
@@ -181,8 +181,8 @@ class Chapter1_2 extends FlxState {
         }];
 
         house = new Entering({
-            x: 25,
-            y: 180,
+            x: 1,
+            y: 210,
             closeTo: 70,
             switchTo: Chapter1_1.new,
             player: player,
