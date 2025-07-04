@@ -165,7 +165,7 @@ class Battle extends FlxSubState {
             opponentName.text = '${data.name} | ${data.hp} HP';
 
             function change(scroll:Int, ?playSound:Bool = true) {
-                action.play();
+                action.play(true);
                 battleWhoToBattle += scroll;
 
                 var ind:Int = 0;
@@ -185,12 +185,11 @@ class Battle extends FlxSubState {
                 }
 
                 battleChosen = false;
-                battleInProgress = false;
             }
         } else if (!battleInProgress) {
             if (isYourTurn) {
                 function change(scroll:Int) {
-                    action.play();
+                    action.play(true);
                     blockIndex += scroll;
 
                     var ind:Int = 0;
