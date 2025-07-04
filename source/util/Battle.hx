@@ -106,7 +106,7 @@ class Battle extends FlxSubState {
                         FlxTween.tween(transitions[k], {alpha: 0, x: m[0], y: m[0]}, 1.2, {onComplete: e -> {
                             if (m[0] == -640) {
                                 if (battle.extraDialogues != null) {
-                                    var state = battle.extraDialogues
+                                    var state = battle.extraDialogues;
 
                                     state.closeCallback = function() {
                                         cutscene = false;
@@ -151,7 +151,7 @@ class Battle extends FlxSubState {
 
                     var ind:Int = 0;
                     for (block in blocks) {
-                        FlxTween.tween(block, {x: 66 + (36 * (blockIndex + ind)), alpha: 1}, 0.25);
+                        FlxTween.tween(block, {x: 74 + (36 * (blockIndex + ind)), alpha: 1}, 0.25);
                         ind++;
                     }
                 }
@@ -160,7 +160,7 @@ class Battle extends FlxSubState {
                     var index:Int = 0;
 
                     for (block in blocks) {
-                        block.x = 102 + (index * 36);
+                        block.x = 110 + (index * 36);
                         block.y = 180;
                         FlxTween.tween(block, {x: block.x - 36, alpha: 1}, 0.66, {ease: FlxEase.sineOut});
                     }
@@ -171,7 +171,7 @@ class Battle extends FlxSubState {
                 if (FlxG.keys.anyJustPressed([Q, A, LEFT]) && blockIndex != 0) {
                     change(-1);
                 } else if (FlxG.keys.anyJustPressed([D, RIGHT]) && blockIndex != blocks.length - 1) {
-                    change(-1);
+                    change(1);
                 }
             }
         }
