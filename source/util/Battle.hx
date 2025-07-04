@@ -340,7 +340,7 @@ class Battle extends FlxSubState {
             }
 
             to.enemy.destroy();
-            battle.enemyData.splice(battleWhoToBattle, 1);
+            battle.enemyData.splice(battleWhoToBattle-1, 1);
             
             FlxG.sound.play("assets/sounds/enemyDefeat.ogg");
         } else {
