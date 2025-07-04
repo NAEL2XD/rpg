@@ -31,6 +31,7 @@ class Battle extends FlxSubState {
     var playerRememberPos:Array<Float> = [];
     var playerCanControl:Bool = false;
     var playerPressTime:Float = 0;
+    var playerDidPress:Bool = false;
     
     var battle:BattleMetadata = null; 
     var battleInProgress:Bool = true;
@@ -197,6 +198,7 @@ class Battle extends FlxSubState {
                 battleChosen = false;
                 battleInProgress = true;
                 playerCanControl = true;
+                playerDidPress = false;
 
                 FlxG.sound.play("assets/sounds/action_c.ogg");
 
@@ -261,7 +263,7 @@ class Battle extends FlxSubState {
             }
         }
 
-        if (playerCanControl) {
+        if (playerCanControl && !playerDidPress) {
             switch(blockIndex) {
                 case 0: // Jump
                     if (FlxG.keys.justPressed.SPACE && playerPressTime - Timer.stamp() < 0.25) {
@@ -269,6 +271,10 @@ class Battle extends FlxSubState {
                         playerNewTurn();
                         dealDamage(battle.enemyData[battleWhoToBattle], 3);
                     }
+            }
+
+            if (FlxG.keys.justPressed.SPACE) {
+                playerDidPress = true;
             }
         }
     }
