@@ -269,6 +269,7 @@ class Battle extends FlxSubState {
                     if (FlxG.keys.justPressed.SPACE && playerPressTime - Timer.stamp() < 0.25) {
                         playerCanControl = false;
                         playerNewTurn();
+                        rating(1);
                         dealDamage(battle.enemyData[battleWhoToBattle], 3);
                     }
             }
