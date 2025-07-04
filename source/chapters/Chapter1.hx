@@ -179,6 +179,7 @@ class Chapter1_2 extends FlxState {
         noobsCopy = [for (noob in noobs) {
             var copy = new FlxSprite(noob.x, noob.y).makeGraphic(28, 28, 0xFFFF0000);
             copy.visible = false;
+            copy.x += 200;
             add(copy);
             copy;
         }];
@@ -217,6 +218,7 @@ class Chapter1_2 extends FlxState {
                 battle.closeCallback = function() {
                     new FlxTimer().start(0.1, e -> {
                         player.lockedVM = 0;
+                        player.posY = 220;
                         player.resetJump();
 
                         for (noob in noobsCopy) {
@@ -237,7 +239,7 @@ class Chapter1_2 extends FlxState {
                         shock.closeCallback = function() {
                             var i:Int = 0;
                             for (noo in noobsCopy) {
-                                FlxTween.tween(noo, {x: noo.x + 640}, 2, {onComplete: e -> {
+                                FlxTween.tween(noo, {x: noo.x + 480}, 2, {onComplete: e -> {
                                     i++;
                                     if (i == 2) {
                                         openSubState(new Dialogue([{
