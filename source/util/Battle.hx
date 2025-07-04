@@ -14,7 +14,7 @@ typedef BattleEnemies = {
     hp:Int,
     enemy:FlxObject,
     name:String,
-    defeated:Bool
+    ?defeated:Bool
 }
 
 typedef BattleMetadata = {
