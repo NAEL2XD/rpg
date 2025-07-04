@@ -111,7 +111,7 @@ class Battle extends FlxSubState {
                                     state.closeCallback = function() {
                                         cutscene = false;
                                         battleInProgress = false;
-                                    }
+                                    };
 
                                     openSubState(state);
                                 } else {
