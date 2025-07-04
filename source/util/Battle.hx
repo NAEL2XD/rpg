@@ -45,6 +45,7 @@ class Battle extends FlxSubState {
     var blocks:Array<FlxSprite> = [];
     var blocksShowedUp:Bool = false;
     var blockIndex:Int = 0;
+    var blocksMoved:Bool = false;
 
     var action:FlxSound = FlxG.sound.load("assets/sounds/action_s.ogg");
 
@@ -240,7 +241,9 @@ class Battle extends FlxSubState {
                     for (block in blocks) {
                         block.x = 107 + (index * 36);
                         block.y = 178;
-                        FlxTween.tween(block, {x: block.x - 36, alpha: 1}, 0.66, {ease: FlxEase.sineOut});
+                        FlxTween.tween(block, {x: block.x - 36, alpha: 1}, 0.66, {ease: FlxEase.sineOut, onComplete: e -> {
+                            blocksMoved = true;
+                        }});
                     }
 
                     blocksShowedUp = true;
@@ -260,6 +263,7 @@ class Battle extends FlxSubState {
 
                     blocksShowedUp = false;
                     battleChosen = true;
+                    blocksMoved = false;
                     battleWhoToBattle = 0;
                 }
             }
@@ -283,7 +287,21 @@ class Battle extends FlxSubState {
     }
 
     function dealDamage(to:BattleEnemies, loseHp:Int):BattleEnemies {
-        var damage:FlxText = new FlxText(to.enemy.x + 116, to.enemy.y - 24, 640, '${loseHp}').setFormat("assets/fonts/hpDeal.ttf", loseHp < 12 ? 12 : loseHp, 0xFFFF9100, LEFT, OUTLINE, 0xFFBD5500);
+        if (FlxG.random.bool(50)) {
+            var lucky:FlxSprite = new FlxSprite().loadGraphic("assets/images/lucky.png");
+            lucky.x = to.enemy.x - 12;
+            lucky.y = to.enemy.y - 24;
+            FlxTween.tween(lucky, {x: lucky.x + 24, y: lucky.y - 36}, 1.2, {ease: FlxEase.sineOut, onComplete: e -> {
+                FlxTween.tween(lucky, {"scale.y": 2.4, alpha: 0}, 0.4, {onComplete: e -> {
+                    lucky.destroy();
+                }});
+            }});
+            add(lucky);
+
+            loseHp = Std.int(loseHp * 1.75);
+        }
+
+        var damage:FlxText = new FlxText(to.enemy.x + 124, to.enemy.y - 24, 640, '${loseHp}').setFormat("assets/fonts/hpDeal.ttf", loseHp < 18 ? 18 : loseHp, 0xFFFF9100, LEFT, OUTLINE, 0xFFBD5500);
         damage.scale.set(1.4, 1.4);
         FlxTween.tween(damage, {x: damage.x + 24, y: damage.y - 36}, 1.2, {ease: FlxEase.sineOut, onComplete: e -> {
             FlxTween.tween(damage, {"scale.y": 2.4, alpha: 0}, 0.4, {onComplete: e -> {
