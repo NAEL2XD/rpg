@@ -218,7 +218,7 @@ class Chapter1_2 extends FlxState {
                 battle.closeCallback = function() {
                     new FlxTimer().start(0.1, e -> {
                         player.lockedVM = 0;
-                        player.posY = 224;
+                        player.posY = 226;
                         player.resetJump();
 
                         for (noob in noobsCopy) {
@@ -255,6 +255,7 @@ class Chapter1_2 extends FlxState {
 
                                         state.closeCallback = function() {
                                             FlxG.sound.playMusic("assets/music/plains.ogg");
+                                            player.cutscene = false;
                                             jumped = false;
                                         }
 
