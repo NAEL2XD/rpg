@@ -243,6 +243,10 @@ class Battle extends FlxSubState {
                         block.y = 178;
                         FlxTween.tween(block, {x: block.x - 36, alpha: 1}, 0.66, {ease: FlxEase.sineOut, onComplete: e -> {
                             blocksMoved = true;
+
+                            if (battleChosen) {
+                                block.alpha = 0;
+                            }
                         }});
                     }
 
@@ -255,7 +259,7 @@ class Battle extends FlxSubState {
                     change(1);
                 } else if (FlxG.keys.justPressed.SPACE) {
                     FlxG.sound.play("assets/sounds/action_c.ogg");
-                    player.jump(true);
+                    player.jump(true, 0, 4);
 
                     for (block in blocks) {
                         FlxTween.tween(block, {alpha: 0}, 0.25, {ease: FlxEase.linear});
@@ -287,7 +291,9 @@ class Battle extends FlxSubState {
     }
 
     function dealDamage(to:BattleEnemies, loseHp:Int):BattleEnemies {
-        if (FlxG.random.bool(50)) {
+        final lucky:Bool = FlxG.random.bool(10);
+
+        if (lucky) {
             FlxG.sound.play("assets/sounds/LuckyHit.ogg");
 
             var lucky:FlxSprite = new FlxSprite().loadGraphic("assets/images/lucky.png");
@@ -304,7 +310,7 @@ class Battle extends FlxSubState {
             loseHp = Std.int(loseHp * 1.75);
         }
 
-        var damage:FlxText = new FlxText(to.enemy.x + 124, to.enemy.y - 24, 640, '${loseHp}').setFormat("assets/fonts/hpDeal.ttf", loseHp < 18 ? 18 : loseHp, 0xFFFF9100, LEFT, OUTLINE, 0xFFBD5500);
+        var damage:FlxText = new FlxText(to.enemy.x + 124, to.enemy.y - 24, 640, '${loseHp}').setFormat("assets/fonts/hpDeal.ttf", loseHp < 18 ? 18 : loseHp, lucky ? 0xFF31c694 : 0xFFFF9100, LEFT, OUTLINE, lucky ? 0xFF21ad73 : 0xFFBD5500);
         damage.scale.set(1.4, 1.4);
         FlxTween.tween(damage, {x: damage.x + 24, y: damage.y - 36}, 1.2, {ease: FlxEase.sineOut, onComplete: e -> {
             FlxTween.tween(damage, {"scale.y": 2.4, alpha: 0}, 0.4, {onComplete: e -> {
