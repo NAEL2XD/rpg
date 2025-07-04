@@ -32,7 +32,7 @@ class Entering extends FlxSprite {
         y  = data.y;
         dataStr = data;
 
-        snd = FlxG.sound.load('assets/sounds/${data.dataStr == null ? "door_close" : data.dataStr}.ogg');
+        snd = FlxG.sound.load('assets/sounds/${data.soundIfEnter == null ? "door_close" : data.soundIfEnter}.ogg');
 
         scale.set(1.5, 1.5);
         updateHitbox();
@@ -45,7 +45,8 @@ class Entering extends FlxSprite {
         if (FlxMath.distanceBetween(dataStr.player, this) < 80 && FlxG.keys.anyJustPressed([Z, W, UP])) {
             var black:FlxSprite = new FlxSprite().makeGraphic(640, 360, 0xFF000000);
             black.alpha = 0;
-            FlxG.sound.load('assets/sounds/${dataStr.soundIfEnter == null ? "door_open" : dataStr.soundIfEnter}.ogg');
+            
+            FlxG.sound.play('assets/sounds/${dataStr.soundIfEnter == null ? "door_open" : dataStr.soundIfEnter}.ogg');
             FlxTween.tween(black, {alpha: 1}, 1, {onComplete: e -> {
                 snd.onComplete = function() {
                     if (dataStr.dialogue != null) {
