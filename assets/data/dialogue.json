@@ -85,6 +85,27 @@
             "dialogueID": "battleEnemy2",
             "text": "You'll be sorry if i defeat both of you!",
             "timePerChar": 0.06
+        },
+        {
+            "dialogueID": "battleEnemy3",
+            "text": "You may win this time but i won't forget that you've done this-",
+            "timePerChar": 0.06,
+            "manualPress": false
+        },
+        {
+            "dialogueID": "battleEnemy4",
+            "text": "THIS GUY IS STRONGER THAN US! BOLT! BOLT!!!!",
+            "timePerChar": 0.04
+        },
+        {
+            "dialogueID": "battleEnemy5",
+            "text": "Whatever, weak gang.",
+            "timePerChar": 0.06
+        },
+        {
+            "dialogueID": "battleEnemy6",
+            "text": "That should teach them a lesson, such bratty brats.",
+            "timePerChar": 0.06
         }
     ]
 }

@@ -25,9 +25,8 @@ typedef BattleMetadata = {
 }
 
 class Battle extends FlxSubState {
-    var oldSongPos:Float = 0;
-
     var transitions:Array<FlxSprite> = [];
+    var bg:FlxSprite = new FlxSprite();
     
     var player:Player = new Player();
     var playerRememberPos:Array<Float> = [];
@@ -39,10 +38,13 @@ class Battle extends FlxSubState {
     var battleInProgress:Bool = true;
     var battleChosen:Bool = false;
     var battleWhoToBattle:Int = 0;
+    var battleResults:Bool = false;
+
     var cutscene:Bool = true;
     var isYourTurn:Bool = false;
     var opponentName:FlxText = new FlxText(8, 8, 640).setFormat("assets/fonts/main.ttf", 24);
     var turnLeftTillOpponent:Int = 1;
+    var canPressToExit:Bool = false;
     
     var blocks:Array<FlxSprite> = [];
     var blocksShowedUp:Bool = false;
@@ -58,6 +60,8 @@ class Battle extends FlxSubState {
         battleChosen = false;
         playerCanControl = false;
         playerDidPress = false;
+        battleResults = false;
+        canPressToExit = false;
 
         opponentName.visible = false;
 
@@ -67,7 +71,6 @@ class Battle extends FlxSubState {
 
     override function create() {
         if (FlxG.sound.music != null) {
-            oldSongPos = FlxG.sound.music.time;
             FlxG.sound.music.destroy();
         }
 
@@ -88,7 +91,7 @@ class Battle extends FlxSubState {
             FlxTween.tween(transitions[l], {alpha: 1, x: 0, y: 0}, 1.2, {onComplete: e -> {
                 if (l == 3) {
                     final index:Int = members.indexOf(transitions[0]);
-                    var bg:FlxSprite = new FlxSprite().loadGraphic('assets/images/battleBGs/${battle.background}.png');
+                    bg.loadGraphic('assets/images/battleBGs/${battle.background}.png');
                     bg.antialiasing = false;
                     bg.scale.set(10, 10);
                     bg.updateHitbox();
@@ -155,8 +158,6 @@ class Battle extends FlxSubState {
 
             add(transitions[l]);
         }
-
-        cutscene = true;
 
         super.create();
     }
@@ -226,51 +227,88 @@ class Battle extends FlxSubState {
             }
         } else if (!battleInProgress) {
             if (isYourTurn) {
-                function change(scroll:Int) {
-                    action.play(true);
-                    blockIndex += scroll;
+                if (battle.enemyData.length == 0) {
+                    if (battleResults) {
+                        FlxG.sound.music.destroy();
+                        FlxG.sound.playMusic("assets/music/winner.ogg");
 
-                    var ind:Int = 0;
-                    for (block in blocks) {
-                        FlxTween.tween(block, {x: 71 + (36 * (blockIndex + ind)), alpha: 1}, 0.25);
-                        ind++;
-                    }
-                }
+                        var white:FlxSprite = new FlxSprite().makeGraphic(999, 999);
+                        white.alpha = 0;
+                        FlxTween.tween(white, {alpha: 0.4}, 0.6);
+                        insert(members.indexOf(bg), white);
 
-                if (!blocksShowedUp) {
-                    var index:Int = 0;
+                        final oldX:Float = player.x;
+                        player.screenCenter(X);
+                        final targetX:Float = player.x;
+                        player.x = oldX;
+                        FlxTween.tween(player, {x: targetX}, 0.6);
 
-                    for (block in blocks) {
-                        block.x = 107 + (index * 36);
-                        block.y = 178;
-                        FlxTween.tween(block, {x: block.x - 36, alpha: 1}, 0.66, {ease: FlxEase.sineOut, onComplete: e -> {
-                            blocksMoved = true;
-
-                            if (battleChosen) {
-                                block.alpha = 0;
-                            }
+                        var text:FlxText = new FlxText(0, 0, 640, "Battle Results").setFormat("assets/fonts/main.ttf", 32);
+                        text.y = 64;
+                        FlxTween.tween(text, {y: 24}, 0.6, {onComplete: e -> {
+                            canPressToExit = true;
                         }});
+                        add(text);
+
+                        battleResults = true;
+                    } else if (canPressToExit && FlxG.keys.justPressed.SPACE) {
+                        FlxTween.tween(FlxG.sound.music, {volume: 0}, 1.2);
+                        
+                        for (l in 0...4) {
+                            FlxTween.tween(transitions[l], {alpha: 1, x: 0, y: 0}, 1.2, {onComplete: e -> {
+                                if (l == 3) {
+                                    close();
+                                }
+                            }});
+                        }
+                    }
+                } else {
+                    function change(scroll:Int) {
+                        action.play(true);
+                        blockIndex += scroll;
+
+                        var ind:Int = 0;
+                        for (block in blocks) {
+                            FlxTween.tween(block, {x: 71 + (36 * (blockIndex + ind)), alpha: 1}, 0.25);
+                            ind++;
+                        }
                     }
 
-                    blocksShowedUp = true;
-                }
+                    if (!blocksShowedUp) {
+                        var index:Int = 0;
 
-                if (FlxG.keys.anyJustPressed([Q, A, LEFT]) && blockIndex != 0) {
-                    change(-1);
-                } else if (FlxG.keys.anyJustPressed([D, RIGHT]) && blockIndex != blocks.length - 1) {
-                    change(1);
-                } else if (FlxG.keys.justPressed.SPACE) {
-                    FlxG.sound.play("assets/sounds/action_c.ogg");
-                    player.jump(true, 0, 6.5);
+                        for (block in blocks) {
+                            block.x = 107 + (index * 36);
+                            block.y = 178;
+                            FlxTween.tween(block, {x: block.x - 36, alpha: 1}, 0.66, {ease: FlxEase.sineOut, onComplete: e -> {
+                                blocksMoved = true;
 
-                    for (block in blocks) {
-                        FlxTween.tween(block, {alpha: 0}, 0.25, {ease: FlxEase.linear});
+                                if (battleChosen) {
+                                    block.alpha = 0;
+                                }
+                            }});
+                        }
+
+                        blocksShowedUp = true;
                     }
 
-                    blocksShowedUp = false;
-                    battleChosen = true;
-                    blocksMoved = false;
-                    battleWhoToBattle = 0;
+                    if (FlxG.keys.anyJustPressed([Q, A, LEFT]) && blockIndex != 0) {
+                        change(-1);
+                    } else if (FlxG.keys.anyJustPressed([D, RIGHT]) && blockIndex != blocks.length - 1) {
+                        change(1);
+                    } else if (FlxG.keys.justPressed.SPACE) {
+                        FlxG.sound.play("assets/sounds/action_c.ogg");
+                        player.jump(true, 0, 6.5);
+
+                        for (block in blocks) {
+                            FlxTween.tween(block, {alpha: 0}, 0.25, {ease: FlxEase.linear});
+                        }
+
+                        blocksShowedUp = false;
+                        battleChosen = true;
+                        blocksMoved = false;
+                        battleWhoToBattle = 0;
+                    }
                 }
             }
         }

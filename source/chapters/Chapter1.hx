@@ -184,7 +184,7 @@ class Chapter1_2 extends FlxState {
             player.jump(false, -60);
 
             if (FlxG.overlap(player, noobs[0]) && readyToAttack) {
-                openSubState(new Battle({
+                var battle = new Battle({
                     enemyData: [{
                         hp: 5,
                         enemy: noobs[0],
@@ -203,7 +203,35 @@ class Chapter1_2 extends FlxState {
                         char: player
                     }]),
                     startASYourTurn: true
-                }));
+                });
+
+                battle.closeCallback = function() {
+                    var shock = new Dialogue([{
+                        dID: "battleEnemy3",
+                        char: noobs[0]
+                    }, {
+                        dID: "battleEnemy4",
+                        char: noobs[1]
+                    }, {
+                        dID: "battleEnemy5",
+                        char: noobs[0]
+                    }]);
+
+                    shock.closeCallback = function() {
+                        for (noo in noobs) {
+                            FlxTween.tween(noo, {x: 840}, 2, {onComplete: e -> {
+                                openSubState(new Dialogue([{
+                                    dID: "battleEnemy6",
+                                    char: player
+                                }]));
+                            }});
+                        }
+                    }
+
+                    openSubState(shock);
+                };
+
+                openSubState(battle);
             }
         }
 
