@@ -193,7 +193,7 @@ class Battle extends FlxSubState {
                 for (enemy in battle.enemyData) {
                     FlxSpriteUtil.setBrightness(cast(enemy.enemy, FlxSprite), 0);
                 }
-                
+
                 battleChosen = false;
                 battleInProgress = true;
                 playerCanControl = true;
@@ -212,6 +212,8 @@ class Battle extends FlxSubState {
                                     dealDamage(battle.enemyData[battleWhoToBattle], 2);
                                     playerCanControl = false;
                                 }
+
+                                playerNewTurn();
                             });
                     }
                 }});
@@ -272,7 +274,7 @@ class Battle extends FlxSubState {
     }
 
     function dealDamage(to:BattleEnemies, loseHp:Int) {
-        var damage:FlxText = new FlxText(to.enemy.x + 16, to.enemy.y - 16, 640, '${loseHp}').setFormat("assets/fonts/hpDeal.ttf", loseHp < 12 ? 12 : loseHp, 0xFFFF9100, LEFT, OUTLINE, 0xFFBD5500);
+        var damage:FlxText = new FlxText(to.enemy.x + 52, to.enemy.y - 16, 640, '${loseHp}').setFormat("assets/fonts/hpDeal.ttf", loseHp < 12 ? 12 : loseHp, 0xFFFF9100, LEFT, OUTLINE, 0xFFBD5500);
         damage.scale.set(1.4, 1.4);
         FlxTween.tween(damage, {y: damage.y - 36}, 1.2, {ease: FlxEase.sineOut, onComplete: e -> {
             FlxTween.tween(damage, {"scale.y": 1.4, alpha: 0}, 0.8, {onComplete: e -> {
@@ -282,5 +284,14 @@ class Battle extends FlxSubState {
         add(damage);
 
         to.hp -= loseHp;
+    }
+
+    function playerNewTurn() {
+        player.jump(true, 0, 9);
+        FlxTween.tween(player, {x: 200}, 0.8, {onComplete: e -> {
+            FlxTween.tween(player, {x: playerRememberPos[0], yPos: playerRememberPos[1]}, 0.7, {onComplete: e -> {
+                battleInProgress = false;
+            }});
+        }});
     }
 }
