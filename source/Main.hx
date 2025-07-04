@@ -9,5 +9,7 @@ class Main extends Sprite {
 		super();
 		
 		addChild(new FlxGame(640, 320, Chapter1_1, 60, 60, true));
+
+		FlxG.autoPause = false;
 	}
 }

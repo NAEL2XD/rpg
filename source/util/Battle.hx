@@ -22,11 +22,15 @@ class Battle extends FlxSubState {
     var battle:BattleMetadata = null;
 
     var transitions:Array<FlxSprite> = [];
-    
+    var blocks:Array<FlxSprite> = [];
+
     var player:Player = new Player();
 
     var isYourTurn:Bool = false;
     var turnLeftTillOpponent:Int = 1;
+    var cutscene:Bool = true;
+    var battleInProgress:Bool = false;
+    var blocksShowedUp:Bool = false;
 
     public function new(battleData:BattleMetadata) {
         battle = battleData;
@@ -64,6 +68,7 @@ class Battle extends FlxSubState {
 
                     player.x = 70;
                     player.y = 235;
+                    player.inBattle = true;
                     insert(index + 1, player);
 
                     l = battle.enemyData.length-1;
@@ -80,6 +85,8 @@ class Battle extends FlxSubState {
                         k++;
                     }
 
+                    final blockName:Array<String> = ["jump"];
+
                     k = 0;
                     for (m in pos) {
                         FlxTween.tween(transitions[k], {alpha: 0, x: m[0], y: m[0]}, 1.2, {onComplete: e -> {
@@ -87,6 +94,9 @@ class Battle extends FlxSubState {
                                 if (battle.extraDialogues != null) {
                                     openSubState(battle.extraDialogues);
                                 }
+
+                                cutscene = false;
+                                battleInProgress = false;
                             }
                         }});
                         
@@ -99,10 +109,28 @@ class Battle extends FlxSubState {
             add(transitions[l]);
         }
 
+        cutscene = true;
+
         super.create();
     }
 
     override function update(elapsed:Float) {
         super.update(elapsed);
+
+        if (cutscene) {
+            return;
+        }
+
+        if (!battleInProgress) {
+            if (isYourTurn) {
+                if (!blocksShowedUp) {
+
+                }
+            }
+        }
+    }
+
+    function name() {
+        
     }
 }

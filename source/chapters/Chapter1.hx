@@ -118,7 +118,7 @@ class Chapter1_2 extends FlxState {
         add(outside);
 
         for (i in 0...2) {
-            noobs.push(new FlxSprite().makeGraphic(28, 28, 0xFF000000));
+            noobs.push(new FlxSprite().makeGraphic(28, 28, 0xFFFF0000));
             noobs[i].x = 220 + (70 * i);
             noobs[i].y = 222;
             add(noobs[i]);

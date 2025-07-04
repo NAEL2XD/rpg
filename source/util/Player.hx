@@ -3,7 +3,7 @@ package util;
 class Player extends FlxSprite {
     public var cutscene:Bool = false;
     public var posY:Float = 0;
-    public var limitXPos:Array<Float> = [0, 0];
+    public var limitXPos:Array<Float> = [0, 616];
     public var lockedVM:Float = 0;
     public var jumpLow:Float = 0;
     public var inBattle:Bool = false;
