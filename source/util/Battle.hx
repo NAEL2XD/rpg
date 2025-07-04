@@ -1,5 +1,6 @@
 package util;
 
+import flixel.util.FlxSpriteUtil;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import util.Dialogue;
@@ -153,13 +154,19 @@ class Battle extends FlxSubState {
             return;
         }
 
+        opponentName.visible = battleChosen;
         if (battleChosen) {
             var data:BattleEnemies = battle.enemyData[battleWhoToBattle];
             opponentName.text = '${data.name} | ${data.hp} HP';
 
-            function change(scroll:Int) {
+            function change(scroll:Int, ?playSound:Bool = true) {
                 FlxG.sound.play("assets/sounds/action_s.ogg");
                 battleWhoToBattle += scroll;
+
+                var ind:Int = 0;
+                for (enemy in battle.enemyData) {
+                    FlxSpriteUtil.setBrightness(cast(enemy.enemy, FlxSprite), ind == battleWhoToBattle ? 0.5 : 0);
+                }
             }
 
             if (FlxG.keys.anyJustPressed([Q, A, LEFT]) && battleWhoToBattle != 0) {
@@ -197,6 +204,7 @@ class Battle extends FlxSubState {
                 } else if (FlxG.keys.anyJustPressed([D, RIGHT]) && blockIndex != blocks.length - 1) {
                     change(1);
                 } else if (FlxG.keys.justPressed.SPACE) {
+                    FlxG.sound.play("assets/sounds/action_c.ogg");
                     player.jump(true);
 
                     for (block in blocks) {
@@ -205,6 +213,7 @@ class Battle extends FlxSubState {
 
                     blocksShowedUp = false;
                     battleChosen = true;
+                    battleWhoToBattle = 0;
                 }
             }
         }
