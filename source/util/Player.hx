@@ -46,7 +46,7 @@ class Player extends FlxSprite {
                 jumpY = jumpLow;
                 jumped = false;
             }
-        } else if (FlxG.keys.justPressed.SPACE) {
+        } else if (FlxG.keys.justPressed.SPACE && !inBattle) {
             jump();
         }
 
@@ -62,10 +62,6 @@ class Player extends FlxSprite {
     }
 
     public function jump(?force:Bool = false, ?lowAmount:Float = 0) {
-        if (inBattle) {
-            lowAmount = -120;
-        }
-
         jumpLow = lowAmount;
 
         if ((!jumped && !cutscene) || force) {
