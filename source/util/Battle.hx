@@ -300,4 +300,29 @@ class Battle extends FlxSubState {
             }});
         }});
     }
+
+    function rating(id:Int) {
+        var sprite:FlxSprite = new FlxSprite();
+        sprite.y = 60;
+        sprite.angle = FlxG.random.float(-4, 4);
+
+        switch(id) {
+            case 1: {
+                sprite.loadGraphic("assets/images/good.png");
+                sprite.scale.set(2.4, 2.4);
+                sprite.updateHitbox();
+                sprite.x = 640;
+                FlxG.sound.play("assets/sounds/rating/good.ogg");
+            }
+        }
+
+        FlxTween.tween(sprite, {x: sprite.x - sprite.width}, 0.4);
+        add(sprite);
+
+        new FlxTimer().start(1.2, e -> {
+            FlxTween.tween(sprite, {"scale.x": 0, "scale.y": 0}, 0.4, {onComplete: e -> {
+                sprite.destroy();
+            }});
+        });
+    }
 }
