@@ -228,14 +228,14 @@ class Battle extends FlxSubState {
         } else if (!battleInProgress) {
             if (isYourTurn) {
                 if (battle.enemyData.length == 0) {
-                    if (battleResults) {
+                    if (!battleResults) {
                         FlxG.sound.music.destroy();
                         FlxG.sound.playMusic("assets/music/winner.ogg");
 
                         var white:FlxSprite = new FlxSprite().makeGraphic(999, 999);
                         white.alpha = 0;
                         FlxTween.tween(white, {alpha: 0.4}, 0.6);
-                        insert(members.indexOf(bg), white);
+                        insert(members.indexOf(bg) + 1, white);
 
                         final oldX:Float = player.x;
                         player.screenCenter(X);
@@ -243,8 +243,8 @@ class Battle extends FlxSubState {
                         player.x = oldX;
                         FlxTween.tween(player, {x: targetX}, 0.6);
 
-                        var text:FlxText = new FlxText(0, 0, 640, "Battle Results").setFormat("assets/fonts/main.ttf", 32);
-                        text.y = 64;
+                        var text:FlxText = new FlxText(0, 0, 640, "Battle Results").setFormat("assets/fonts/main.ttf", 32, 0xFF000000, CENTER);
+                        text.y = -64;
                         FlxTween.tween(text, {y: 24}, 0.6, {onComplete: e -> {
                             canPressToExit = true;
                         }});
@@ -253,7 +253,7 @@ class Battle extends FlxSubState {
                         battleResults = true;
                     } else if (canPressToExit && FlxG.keys.justPressed.SPACE) {
                         FlxTween.tween(FlxG.sound.music, {volume: 0}, 1.2);
-                        
+
                         for (l in 0...4) {
                             FlxTween.tween(transitions[l], {alpha: 1, x: 0, y: 0}, 1.2, {onComplete: e -> {
                                 if (l == 3) {
