@@ -293,6 +293,7 @@ class Battle extends FlxSubState {
 
     function dealDamage(to:BattleEnemies, loseHp:Int):BattleEnemies {
         final lucky:Bool = FlxG.random.bool(10);
+        final oldto:BattleEnemies = to;
 
         if (lucky) {
             FlxG.sound.play("assets/sounds/LuckyHit.ogg");
@@ -339,8 +340,8 @@ class Battle extends FlxSubState {
 			    });
             }
 
+            battle.enemyData.remove(oldto);
             to.enemy.destroy();
-            battle.enemyData.splice(battle.enemyData.indexOf(to), 1);
             
             FlxG.sound.play("assets/sounds/enemyDefeat.ogg");
         } else {
