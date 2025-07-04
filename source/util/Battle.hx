@@ -268,7 +268,7 @@ class Battle extends FlxSubState {
         if (playerCanControl && !playerDidPress) {
             switch(blockIndex) {
                 case 0: // Jump
-                    if (FlxG.keys.justPressed.SPACE && playerPressTime - Timer.stamp() < 0.25) {
+                    if (FlxG.keys.justPressed.SPACE && playerPressTime - Timer.stamp() < 0.075) {
                         playerCanControl = false;
                         playerNewTurn();
                         rating(1);
