@@ -111,8 +111,7 @@
             "dialogueID": "battleEnemy7",
             "text": "I just hope it doesn't happen again.",
             "timePerChar": 0.06
-        }
-        ,
+        } ,
         {
             "dialogueID": "battleEnemy8",
             "text": "*It will*",

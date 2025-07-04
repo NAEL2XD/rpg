@@ -129,7 +129,7 @@ class Battle extends FlxSubState {
 
                     k = 0;
                     for (m in pos) {
-                        FlxTween.tween(transitions[k], {alpha: 0, x: m[0], y: m[0]}, 1.2, {onComplete: e -> {
+                        FlxTween.tween(transitions[k], {alpha: 0, x: m[0], y: m[1]}, 1.2, {onComplete: e -> {
                             if (m[0] == -640) {
                                 if (battle.extraDialogues != null) {
                                     var state = battle.extraDialogues;
@@ -178,12 +178,12 @@ class Battle extends FlxSubState {
             function change(scroll:Int, ?playSound:Bool = true) {
                 action.play(true);
                 battleWhoToBattle += scroll;
+            }
 
-                var ind:Int = 0;
-                for (enemy in battle.enemyData) {
-                    FlxSpriteUtil.setBrightness(cast(enemy.enemy, FlxSprite), ind == battleWhoToBattle ? 0.5 : 0);
-                    ind++;
-                }
+            var ind:Int = 0;
+            for (enemy in battle.enemyData) {
+                FlxSpriteUtil.setBrightness(cast(enemy.enemy, FlxSprite), ind == battleWhoToBattle ? 0.5 : 0);
+                ind++;
             }
 
             if (FlxG.keys.anyJustPressed([Q, A, LEFT]) && battleWhoToBattle != 0) {
@@ -266,10 +266,13 @@ class Battle extends FlxSubState {
                     function change(scroll:Int) {
                         action.play(true);
                         blockIndex += scroll;
+                        blocksMoved = false;
 
                         var ind:Int = 0;
                         for (block in blocks) {
-                            FlxTween.tween(block, {x: 71 + (36 * (blockIndex + ind)), alpha: 1}, 0.25);
+                            FlxTween.tween(block, {x: 71 + (36 * (blockIndex + ind)), alpha: 1}, 0.2, {onComplete: e -> {
+                                blocksMoved = true;
+                            }});
                             ind++;
                         }
                     }
@@ -292,22 +295,24 @@ class Battle extends FlxSubState {
                         blocksShowedUp = true;
                     }
 
-                    if (FlxG.keys.anyJustPressed([Q, A, LEFT]) && blockIndex != 0) {
-                        change(-1);
-                    } else if (FlxG.keys.anyJustPressed([D, RIGHT]) && blockIndex != blocks.length - 1) {
-                        change(1);
-                    } else if (FlxG.keys.justPressed.SPACE) {
-                        FlxG.sound.play("assets/sounds/action_c.ogg");
-                        player.jump(true, 0, 6.5);
+                    if (blocksMoved) {
+                        if (FlxG.keys.anyJustPressed([Q, A, LEFT]) && blockIndex != 0) {
+                            change(-1);
+                        } else if (FlxG.keys.anyJustPressed([D, RIGHT]) && blockIndex != blocks.length - 1) {
+                            change(1);
+                        } else if (FlxG.keys.justPressed.SPACE) {
+                            FlxG.sound.play("assets/sounds/action_c.ogg");
+                            player.jump(true, 0, 6.5);
 
-                        for (block in blocks) {
-                            FlxTween.tween(block, {alpha: 0}, 0.25, {ease: FlxEase.linear});
+                            for (block in blocks) {
+                                FlxTween.tween(block, {alpha: 0}, 0.25, {ease: FlxEase.linear});
+                            }
+
+                            blocksShowedUp = false;
+                            battleChosen = true;
+                            blocksMoved = false;
+                            battleWhoToBattle = 0;
                         }
-
-                        blocksShowedUp = false;
-                        battleChosen = true;
-                        blocksMoved = false;
-                        battleWhoToBattle = 0;
                     }
                 }
             }
@@ -369,9 +374,9 @@ class Battle extends FlxSubState {
 
         if (to.hp < 1) {
             final old:FlxObject = to.enemy;
-            for (i in 0...50) {
-                new FlxTimer().start(0.00375 * i, e -> {
-			    	var a = new FlxSprite().makeGraphic(Std.int(old.width), Std.int(old.height), FlxG.random.color(0xFF000000, 0xFFFFFFFF));
+            for (i in 0...100) {
+                new FlxTimer().start(0.003 * i, e -> {
+			    	var a:FlxSprite = new FlxSprite().makeGraphic(Std.int(old.width), Std.int(old.height), FlxG.random.color(0xFF000000, 0xFFFFFFFF));
 					a.x = old.x;
 					a.y = old.y;
 					a.acceleration.y = 500;
