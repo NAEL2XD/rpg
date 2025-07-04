@@ -106,6 +106,7 @@ class Chapter1_2 extends FlxState {
     var player:Player = new Player();
     var outside:FlxSprite = new FlxSprite().loadGraphic("assets/images/world/houseOutside/0.png");
     var noobs:Array<FlxSprite> = [];
+    var noobsCopy:Array<FlxSprite> = [];
 
     var jumped:Bool = false;
     var readyToAttack:Bool = false;
@@ -184,6 +185,8 @@ class Chapter1_2 extends FlxState {
             player.jump(false, -60);
 
             if (FlxG.overlap(player, noobs[0]) && readyToAttack) {
+                noobsCopy = noobs.copy();
+
                 var battle = new Battle({
                     enemyData: [{
                         hp: 5,
@@ -207,22 +210,26 @@ class Chapter1_2 extends FlxState {
 
                 battle.closeCallback = function() {
                     player.lockedVM = 0;
+
+                    for (noob in noobsCopy) {
+                        add(noob);
+                    }
         
                     new FlxTimer().start(0.1, e -> {
                         var shock = new Dialogue([{
                             dID: "battleEnemy3",
-                            char: noobs[0]
+                            char: noobsCopy[0]
                         }, {
                             dID: "battleEnemy4",
-                            char: noobs[1]
+                            char: noobsCopy[1]
                         }, {
                             dID: "battleEnemy5",
-                            char: noobs[0]
+                            char: noobsCopy[0]
                         }]);
 
                         shock.closeCallback = function() {
                             var i:Int = 0;
-                            for (noo in noobs) {
+                            for (noo in noobsCopy) {
                                 FlxTween.tween(noo, {x: 840}, 2, {onComplete: e -> {
                                     i++;
                                     if (i == 2) {
