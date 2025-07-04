@@ -1,5 +1,6 @@
 package util;
 
+import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import util.Dialogue;
 import flixel.util.FlxTimer;
@@ -20,17 +21,22 @@ typedef BattleMetadata = {
 
 class Battle extends FlxSubState {
     var oldSongPos:Float = 0;
-    var battle:BattleMetadata = null;
 
     var transitions:Array<FlxSprite> = [];
-    var blocks:Array<FlxSprite> = [];
-
+    
     var player:Player = new Player();
-
-    var isYourTurn:Bool = false;
-    var turnLeftTillOpponent:Int = 1;
-    var cutscene:Bool = true;
+    var playerRememberPos:Array<Float> = [];
+    
+    var battle:BattleMetadata = null; 
     var battleInProgress:Bool = true;
+    var battleChoose:Bool = true;
+    var battleWhoToBattle:Int = 0;
+    var cutscene:Bool = true;
+    var isYourTurn:Bool = false;
+    var opponentName:FlxText = new FlxText(8, 8, 640).setFormat("assets/fonts/main.ttf", 24);
+    var turnLeftTillOpponent:Int = 1;
+    
+    var blocks:Array<FlxSprite> = [];
     var blocksShowedUp:Bool = false;
     var blockIndex:Int = 0;
 
@@ -38,6 +44,8 @@ class Battle extends FlxSubState {
         blocks = [];
         cutscene = true;
         battleInProgress = true;
+
+        opponentName.visible = false;
 
         battle = battleData;
         super(0);
@@ -143,7 +151,21 @@ class Battle extends FlxSubState {
             return;
         }
 
-        if (!battleInProgress) {
+        if (battleChoose) {
+            var data:BattleEnemies = battle.enemyData[battleWhoToBattle];
+            opponentName.text = '${data.name} | ${data.hp} HP';
+
+            function change(scroll:Int) {
+                FlxG.sound.play("assets/sounds/action_s.ogg");
+                battleWhoToBattle += scroll;
+            }
+
+            if (FlxG.keys.anyJustPressed([Q, A, LEFT]) && battleWhoToBattle != 0) {
+                change(-1);
+            } else if (FlxG.keys.anyJustPressed([D, RIGHT]) && battleWhoToBattle != battle.enemyData.length - 1) {
+                change(1);
+            }
+        } else if (!battleInProgress) {
             if (isYourTurn) {
                 function change(scroll:Int) {
                     FlxG.sound.play("assets/sounds/action_s.ogg");
@@ -172,12 +194,16 @@ class Battle extends FlxSubState {
                     change(-1);
                 } else if (FlxG.keys.anyJustPressed([D, RIGHT]) && blockIndex != blocks.length - 1) {
                     change(1);
+                } else if (FlxG.keys.justPressed.SPACE) {
+                    player.jump(true);
+
+                    for (block in blocks) {
+                        FlxTween.tween(block, {alpha: 0}, 0.25, {ease: FlxEase.linear});
+                    }
+
+                    battleChoose = true;
                 }
             }
         }
-    }
-
-    function name() {
-        
     }
 }
