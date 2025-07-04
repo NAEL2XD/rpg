@@ -20,11 +20,7 @@ class Player extends FlxSprite {
     }
     
     public function checkMovement() {
-        if (inBattle) {
-            return;
-        }
-
-        if (!cutscene) {
+        if (!cutscene && !inBattle) {
             var i:Int = 0;
             for (k in [LEFT, RIGHT, A, D]) {
                 if (FlxG.keys.anyPressed([k])) {
