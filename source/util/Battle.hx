@@ -204,7 +204,10 @@ class Battle extends FlxSubState {
                             playerPressTime = Timer.stamp() + 0.7;
 
                             new FlxTimer().start(0.7, e -> {
-                                playerCanControl = false;
+                                if (playerCanControl) {
+                                    dealDamage(battle.enemyData[battleWhoToBattle], 2);
+                                    playerCanControl = false;
+                                }
                             });
                     }
                 }});
@@ -258,8 +261,7 @@ class Battle extends FlxSubState {
                 case 0: // Jump
                     if (FlxG.keys.justPressed.SPACE && playerPressTime - Timer.stamp() < 0.25) {
                         playerCanControl = false;
-                    } else if (!playerCanControl) {
-
+                        dealDamage(battle.enemyData[battleWhoToBattle], 3);
                     }
             }
         }
