@@ -14,6 +14,8 @@ class Chapter1_1 extends FlxState {
     var up:Entering = null;
 
     override function create() {
+        super.create();
+
         if (FlxG.save.data.c1_1.done == null) {
             FlxG.save.data.c1_1.done = false;
         }
@@ -77,15 +79,13 @@ class Chapter1_1 extends FlxState {
         if (!FlxG.save.data.c1_1.done) {
             player.playSound("yawn");
         }
-
-        super.create();
     }
 
     override function update(elapsed:Float) {
+        super.update(elapsed);
+
         player.checkMovement();
         up.checkMovement();
-
-        super.update(elapsed);
     }
 }
 
@@ -99,8 +99,11 @@ class Chapter1_2 extends FlxState {
     var readyToAttack:Bool = false;
 
     var house:Entering = null;
+    var woods:Entering = null;
 
     override function create() {
+        super.create();
+
         if (FlxG.save.data.c1_2.done == null) {
             FlxG.save.data.c1_2.done = false;
         }
@@ -192,14 +195,25 @@ class Chapter1_2 extends FlxState {
         });
         add(house);
 
-        FlxG.save.data.c1_1.done = true;
+        woods = new Entering({
+            x: 590,
+            y: 170,
+            closeTo: 70,
+            switchTo: Chapter1_3.new,
+            player: player,
+            state: this
+        });
+        add(woods);
 
-        super.create();
+        FlxG.save.data.c1_1.done = true;
     }
 
     override function update(elapsed:Float) {
+        super.update(elapsed);
+
         player.checkMovement();
         house.checkMovement();
+        woods.checkMovement();
 
         if (jumped) {
             player.jump(false, -60);
@@ -285,6 +299,42 @@ class Chapter1_2 extends FlxState {
 
                 openSubState(battle);
             }
+        }
+    }
+}
+
+class Chapter1_3 extends FlxState {
+    var player:Player = new Player();
+    var enemy:FlxSprite = new FlxSprite().makeGraphic(24, 24, 0xFFFF0000);
+
+    override function create() {
+        super.create();
+
+        if (FlxG.save.data.c1_3.done == null) {
+            FlxG.save.data.c1_3.done = false;
+        }
+
+        player.x = 40;
+        player.posY = 226;
+        player.checkMovement();
+        add(player);
+
+        enemy.x = 320;
+        enemy.y = 226;
+        add(enemy);
+    }
+
+    override function update(elapsed:Float) {
+        if (FlxG.overlap(player, enemy)) {
+            openSubState(new Battle({
+                enemyData: [{
+                    hp: 5,
+                    enemy: enemy,
+                    name: "Enemy"
+                }],
+                background: "houseOut",
+                startASYourTurn: true
+            }));
         }
 
         super.update(elapsed);

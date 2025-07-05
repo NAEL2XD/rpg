@@ -20,8 +20,8 @@ typedef BattleEnemies = {
 typedef BattleMetadata = {
     enemyData:Array<BattleEnemies>,
     background:String,
-    extraDialogues:Dialogue,
-    startASYourTurn:Bool
+    startASYourTurn:Bool,
+    ?extraDialogues:Dialogue
 }
 
 class Battle extends FlxSubState {
