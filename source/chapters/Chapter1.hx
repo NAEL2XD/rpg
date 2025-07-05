@@ -305,7 +305,7 @@ class Chapter1_2 extends FlxState {
 
 class Chapter1_3 extends FlxState {
     var player:Player = new Player();
-    var enemy:FlxSprite = new FlxSprite().makeGraphic(24, 24, 0xFFFF0000);
+    var enemy:FlxSprite = new FlxSprite().makeGraphic(128, 8, 0xFFFF0000);
 
     override function create() {
         super.create();
@@ -330,7 +330,7 @@ class Chapter1_3 extends FlxState {
         if (FlxG.overlap(player, enemy)) {
             openSubState(new Battle({
                 enemyData: [{
-                    hp: 5,
+                    hp: 8,
                     enemy: enemy,
                     name: "Enemy"
                 }],
