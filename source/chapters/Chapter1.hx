@@ -207,11 +207,11 @@ class Chapter1_2 extends FlxState {
             if (FlxG.overlap(player, noobs[0]) && readyToAttack) {
                 var battle = new Battle({
                     enemyData: [{
-                        hp: 100,
+                        hp: 8,
                         enemy: noobs[0],
                         name: "Gang I"
                     }, {
-                        hp: 100,
+                        hp: 8,
                         enemy: noobs[1],
                         name: "Gang II"
                     }],

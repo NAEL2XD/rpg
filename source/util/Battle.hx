@@ -140,25 +140,6 @@ class Battle extends FlxSubState {
                                     state.closeCallback = function() {
                                         cutscene = false;
                                         battleInProgress = false;
-
-                                        new FlxTimer().start(1, e -> {
-                                            if (true) {
-                                                var rect:FlxSprite = new FlxSprite().makeGraphic(120, 40, 0xFF666666);
-                                                rect.y = -40;
-                                                rect.x = 420;
-                                                add(rect);
-                                            
-                                                FlxTween.tween(rect, {y: 235}, 1, {ease: FlxEase.sineIn, onComplete: e -> {
-                                                    for (enemy in battle.enemyData) {
-                                                        new FlxTimer().start(FlxG.random.float(0.1, 0.2), e -> {
-                                                            enemy = dealDamage(enemy, FlxG.random.int(1, 2));
-                                                        }, 50);
-                                                    }
-
-                                                    rect.destroy();
-                                                }});
-                                            }
-                                        });
                                     };
 
                                     openSubState(state);
