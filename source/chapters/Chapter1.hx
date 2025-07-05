@@ -207,11 +207,11 @@ class Chapter1_2 extends FlxState {
             if (FlxG.overlap(player, noobs[0]) && readyToAttack) {
                 var battle = new Battle({
                     enemyData: [{
-                        hp: 8,
+                        hp: 100,
                         enemy: noobs[0],
                         name: "Gang I"
                     }, {
-                        hp: 8,
+                        hp: 100,
                         enemy: noobs[1],
                         name: "Gang II"
                     }],
@@ -250,7 +250,7 @@ class Chapter1_2 extends FlxState {
                         shock.closeCallback = function() {
                             var i:Int = 0;
                             for (noo in noobsCopy) {
-                                FlxTween.tween(noo, {x: noo.x + 360}, 2, {onComplete: e -> {
+                                FlxTween.tween(noo, {x: noo.x + 240}, 2, {onComplete: e -> {
                                     i++;
                                     if (i == 2) {
                                         var state = new Dialogue([{
