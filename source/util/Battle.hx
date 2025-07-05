@@ -1,6 +1,5 @@
 package util;
 
-import flixel.FlxCamera;
 import haxe.Timer;
 import flixel.sound.FlxSound;
 import flixel.util.FlxSpriteUtil;
@@ -14,7 +13,8 @@ typedef BattleEnemies = {
     hp:Int,
     enemy:FlxObject,
     name:String,
-    ?defeated:Bool
+    ?defeated:Bool,
+    ?enemyID:Int
 }
 
 typedef BattleMetadata = {
@@ -39,6 +39,7 @@ class Battle extends FlxSubState {
     var battleChosen:Bool = false;
     var battleWhoToBattle:Int = 0;
     var battleResults:Bool = false;
+    var battleEnemiesX:Array<Float> = [];
 
     var cutscene:Bool = true;
     var isYourTurn:Bool = false;
@@ -112,9 +113,11 @@ class Battle extends FlxSubState {
                     ];
 
                     for (e in battle.enemyData) {
+                        e.enemyID = k;
                         e.enemy.x = pos2[l][k][0];
                         e.enemy.y = pos2[l][k][1];
                         insert(index + 1, e.enemy);
+                        battleEnemiesX.push(e.enemy.x);
                         k++;
                     }
 
@@ -147,7 +150,7 @@ class Battle extends FlxSubState {
                                             
                                                 FlxTween.tween(rect, {y: 235}, 1, {ease: FlxEase.sineIn, onComplete: e -> {
                                                     for (enemy in battle.enemyData) {
-                                                        new FlxTimer().start(0.1, e -> {
+                                                        new FlxTimer().start(FlxG.random.float(0.1, 0.2), e -> {
                                                             enemy = dealDamage(enemy, FlxG.random.int(1, 2));
                                                         }, 50);
                                                     }
@@ -409,6 +412,9 @@ class Battle extends FlxSubState {
             
             FlxG.sound.play("assets/sounds/enemyDefeat.ogg");
         } else {
+            to.enemy.x += 6;
+            FlxTween.cancelTweensOf(to.enemy);
+            FlxTween.tween(to.enemy, {x: battleEnemiesX[to.enemyID]}, 0.3, {ease: FlxEase.cubeOut});
             FlxG.sound.play("assets/sounds/enemyDamage.ogg");
         }
 
