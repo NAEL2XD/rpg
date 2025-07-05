@@ -111,11 +111,26 @@
             "dialogueID": "battleEnemy7",
             "text": "I just hope it doesn't happen again.",
             "timePerChar": 0.06
-        } ,
+        },
         {
             "dialogueID": "battleEnemy8",
             "text": "*It will*",
             "timePerChar": 0.2
+        },
+        {
+            "dialogueID": "battleEnemy9",
+            "text": "*Muffled noises*",
+            "timePerChar": 0.4
+        },
+        {
+            "dialogueID": "battleEnemy10",
+            "text": "Uhhhhhhh... What's up with you?",
+            "timePerChar": 0.06
+        },
+        {
+            "dialogueID": "battleEnemy11",
+            "text": "Doesn't matter, time to defeat your blocks!",
+            "timePerChar": 0.06
         }
     ]
 }

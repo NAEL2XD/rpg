@@ -21,7 +21,8 @@ typedef BattleMetadata = {
     enemyData:Array<BattleEnemies>,
     background:String,
     startASYourTurn:Bool,
-    ?extraDialogues:Dialogue
+    ?extraDialogues:Dialogue,
+    ?battleMusic:String
 }
 
 class Battle extends FlxSubState {
@@ -78,7 +79,7 @@ class Battle extends FlxSubState {
         FlxG.sound.play("assets/sounds/player/hereWeGo.ogg");
         
         new FlxTimer().start(0.9, e -> {
-            FlxG.sound.playMusic("assets/music/battle.ogg");
+            FlxG.sound.playMusic('assets/music/battle/${battle.battleMusic == null ? "battle" : battle.battleMusic}.ogg');
         });
 
         final pos:Array<Array<Int>> = [[0, -360], [640, 0], [0, 360], [-640, 0]];
@@ -351,7 +352,7 @@ class Battle extends FlxSubState {
             lucky.x = to.enemy.x - 46;
             lucky.y = to.enemy.y - 63;
             FlxTween.tween(lucky, {x: lucky.x + 24, y: lucky.y - 36}, 1.2, {ease: FlxEase.sineOut, onComplete: e -> {
-                FlxTween.tween(lucky, {"scale.y": 2.4, alpha: 0}, 0.4, {onComplete: e -> {
+                FlxTween.tween(lucky, {"scale.y": 1.4, alpha: 0}, 0.4, {onComplete: e -> {
                     lucky.destroy();
                 }});
             }});

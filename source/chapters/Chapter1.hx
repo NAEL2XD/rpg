@@ -335,7 +335,18 @@ class Chapter1_3 extends FlxState {
                     name: "Enemy"
                 }],
                 background: "houseOut",
-                startASYourTurn: true
+                startASYourTurn: true,
+                extraDialogues: new Dialogue([{
+                    dID: "battleEnemy9",
+                    char: enemy
+                }, {
+                    dID: "battleEnemy10",
+                    char: player
+                }, {
+                    dID: "battleEnemy11",
+                    char: player
+                }]),
+                battleMusic: "weird"
             }));
         }
 
