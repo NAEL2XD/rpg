@@ -412,9 +412,9 @@ class Battle extends FlxSubState {
             
             FlxG.sound.play("assets/sounds/enemyDefeat.ogg");
         } else {
-            to.enemy.x += 6;
+            to.enemy.x += 8;
             FlxTween.cancelTweensOf(to.enemy);
-            FlxTween.tween(to.enemy, {x: battleEnemiesX[to.enemyID]}, 0.3, {ease: FlxEase.cubeOut});
+            FlxTween.tween(to.enemy, {x: battleEnemiesX[to.enemyID]}, 0.4, {ease: FlxEase.cubeOut});
             FlxG.sound.play("assets/sounds/enemyDamage.ogg");
         }
 
