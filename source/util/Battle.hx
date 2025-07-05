@@ -147,8 +147,12 @@ class Battle extends FlxSubState {
                                             
                                                 FlxTween.tween(rect, {y: 235}, 1, {ease: FlxEase.sineIn, onComplete: e -> {
                                                     for (enemy in battle.enemyData) {
-                                                        enemy = dealDamage(enemy, enemy.hp / 2);
+                                                        new FlxTimer().start(0.01, e -> {
+                                                            enemy = dealDamage(enemy, FlxG.random.int(1, 2));
+                                                        }, 50);
                                                     }
+
+                                                    rect.destroy();
                                                 }});
                                             }
                                         });
