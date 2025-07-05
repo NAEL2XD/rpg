@@ -196,7 +196,7 @@ class Chapter1_2 extends FlxState {
         add(house);
 
         woods = new Entering({
-            x: 590,
+            x: 580,
             y: 170,
             closeTo: 70,
             switchTo: Chapter1_3.new,
@@ -325,6 +325,8 @@ class Chapter1_3 extends FlxState {
     }
 
     override function update(elapsed:Float) {
+        player.checkMovement();
+
         if (FlxG.overlap(player, enemy)) {
             openSubState(new Battle({
                 enemyData: [{

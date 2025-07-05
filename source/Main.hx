@@ -15,6 +15,7 @@ class Main extends Sprite {
 		if (startOver) {
 			FlxG.save.data.c1_1 = {};
 			FlxG.save.data.c1_2 = {};
+			FlxG.save.data.c1_3 = {};
 		}
 		
 		addChild(new FlxGame(640, 320, Chapter1_1, 60, 60, true));
