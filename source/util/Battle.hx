@@ -13,8 +13,10 @@ typedef BattleEnemies = {
     hp:Int,
     enemy:FlxObject,
     name:String,
+    damage:Int,
     ?defeated:Bool,
-    ?enemyID:Int
+    ?enemyID:Int,
+    ?nextTurn:Int
 }
 
 typedef BattleMetadata = {
@@ -45,7 +47,6 @@ class Battle extends FlxSubState {
     var cutscene:Bool = true;
     var isYourTurn:Bool = false;
     var opponentName:FlxText = new FlxText(8, 8, 640).setFormat("assets/fonts/main.ttf", 24);
-    var turnLeftTillOpponent:Int = 1;
     var canPressToExit:Bool = false;
     
     var blocks:Array<FlxSprite> = [];
@@ -117,6 +118,7 @@ class Battle extends FlxSubState {
                         e.enemyID = k;
                         e.enemy.x = pos2[l][k][0];
                         e.enemy.y = pos2[l][k][1];
+                        e.nextTurn = k+1;
                         insert(index + 1, e.enemy);
                         battleEnemiesX.push(e.enemy.x);
                         k++;
@@ -177,7 +179,7 @@ class Battle extends FlxSubState {
         opponentName.visible = battleChosen;
         if (battleChosen) {
             var data:BattleEnemies = battle.enemyData[battleWhoToBattle];
-            opponentName.text = '${data.name} | ${data.hp} HP';
+            opponentName.text = data.name;
 
             function change(scroll:Int, ?playSound:Bool = true) {
                 action.play(true);
@@ -222,7 +224,7 @@ class Battle extends FlxSubState {
                             new FlxTimer().start(.76, e -> {
                                 if (playerCanControl) {
                                     battle.enemyData[battleWhoToBattle] = dealDamage(battle.enemyData[battleWhoToBattle], 2);
-                                    playerNewTurn();
+                                    playerTurnJump();
                                     playerCanControl = false;
                                 }
                             });
@@ -323,7 +325,7 @@ class Battle extends FlxSubState {
                 case 0: // Jump
                     if (FlxG.keys.justPressed.SPACE && playerPressTime - Timer.stamp() < 0.075) {
                         playerCanControl = false;
-                        playerNewTurn();
+                        playerTurnJump();
                         rating(1);
                         battle.enemyData[battleWhoToBattle] = dealDamage(battle.enemyData[battleWhoToBattle], 3);
                     }
@@ -341,10 +343,10 @@ class Battle extends FlxSubState {
         }
     }
 
-    function dealDamage(to:BattleEnemies, loseHp:Int):BattleEnemies {
+    function dealDamage(to:BattleEnemies, loseHp:Int, ?isPlayer:Bool = false):BattleEnemies {
         final lucky:Bool = FlxG.random.bool(10);
 
-        if (lucky) {
+        if (lucky && !isPlayer) {
             FlxG.sound.play("assets/sounds/LuckyHit.ogg");
 
             var lucky:FlxSprite = new FlxSprite().loadGraphic("assets/images/lucky.png");
@@ -361,7 +363,7 @@ class Battle extends FlxSubState {
             loseHp = Std.int(loseHp * 1.75);
         }
 
-        var damage:FlxText = new FlxText(to.enemy.x + 124, to.enemy.y - 24, 640, '${loseHp}').setFormat("assets/fonts/hpDeal.ttf", loseHp < 18 ? 18 : loseHp, lucky ? 0xFF31c694 : 0xFFFF9100, LEFT, OUTLINE, lucky ? 0xFF21ad73 : 0xFFBD5500);
+        var damage:FlxText = new FlxText((isPlayer ? player.x : to.enemy.x) + 124, (isPlayer ? player.y : to.enemy.y) - 24, 640, '${loseHp}').setFormat("assets/fonts/hpDeal.ttf", loseHp < 18 ? 18 : loseHp, lucky ? 0xFF31c694 : 0xFFFF9100, LEFT, OUTLINE, lucky ? 0xFF21ad73 : 0xFFBD5500);
         damage.scale.set(1.4, 1.4);
         FlxTween.tween(damage, {x: damage.x + 24, y: damage.y - 36}, 1.2, {ease: FlxEase.sineOut, onComplete: e -> {
             FlxTween.tween(damage, {"scale.y": 2.4, alpha: 0}, 0.4, {onComplete: e -> {
@@ -370,44 +372,48 @@ class Battle extends FlxSubState {
         }});
         add(damage);
 
-        to.hp -= loseHp;
-
-        if (to.hp < 1) {
-            final old:FlxObject = to.enemy;
-            for (i in 0...100) {
-                new FlxTimer().start(0.003 * i, e -> {
-			    	var a:FlxSprite = new FlxSprite().makeGraphic(Std.int(old.width), Std.int(old.height), FlxG.random.color(0xFF000000, 0xFFFFFFFF));
-					a.x = old.x;
-					a.y = old.y;
-					a.acceleration.y = 500;
-					a.velocity.x = FlxG.random.float(-80, 80);
-					a.velocity.y = FlxG.random.float(-200, -350);
-					FlxTween.tween(a, {angle: FlxG.random.float(-60, 60), alpha: 0, "scale.x": 0, "scale.y": 0}, 0.8, {onComplete: e -> {
-						a.destroy();
-					}});
-					add(a);
-			    });
+        if (!isPlayer) {
+            to.hp -= loseHp;
+            if (to.hp < 1) {
+                final old:FlxObject = to.enemy;
+                for (i in 0...100) {
+                    new FlxTimer().start(0.003 * i, e -> {
+                        var a:FlxSprite = new FlxSprite().makeGraphic(Std.int(old.width), Std.int(old.height), FlxG.random.color(0xFF000000, 0xFFFFFFFF));
+                        a.x = old.x;
+                        a.y = old.y;
+                        a.acceleration.y = 500;
+                        a.velocity.x = FlxG.random.float(-80, 80);
+                        a.velocity.y = FlxG.random.float(-200, -350);
+                        FlxTween.tween(a, {angle: FlxG.random.float(-60, 60), alpha: 0, "scale.x": 0, "scale.y": 0}, 0.8, {onComplete: e -> {
+                            a.destroy();
+                        }});
+                        add(a);
+                    });
+                }
+    
+                to.enemy.destroy();
+                to.defeated = true;
+                
+                FlxG.sound.play("assets/sounds/enemyDefeat.ogg");
+            } else {
+                to.enemy.x += 8;
+                FlxTween.cancelTweensOf(to.enemy);
+                FlxTween.tween(to.enemy, {x: battleEnemiesX[to.enemyID]}, 0.4, {ease: FlxEase.cubeOut});
+                FlxG.sound.play("assets/sounds/enemyDamage.ogg");
             }
-
-            to.enemy.destroy();
-            to.defeated = true;
-            
-            FlxG.sound.play("assets/sounds/enemyDefeat.ogg");
         } else {
-            to.enemy.x += 8;
-            FlxTween.cancelTweensOf(to.enemy);
-            FlxTween.tween(to.enemy, {x: battleEnemiesX[to.enemyID]}, 0.4, {ease: FlxEase.cubeOut});
             FlxG.sound.play("assets/sounds/enemyDamage.ogg");
         }
 
         return to;
     }
 
-    function playerNewTurn() {
+    function playerTurnJump() {
         player.jump(true, 0, 9);
+
         FlxTween.tween(player, {x: 200}, 0.8, {onComplete: e -> {
             FlxTween.tween(player, {x: playerRememberPos[0], posY: playerRememberPos[1]}, 0.7, {onComplete: e -> {
-                battleInProgress = false;
+                nextTurn();
             }});
         }});
     }
@@ -436,5 +442,30 @@ class Battle extends FlxSubState {
         FlxTween.tween(sprite, {x: sprite.x - sprite.width - 14}, 0.1);
         sprite.antialiasing = false;
         add(sprite);
+    }
+
+    function nextTurn() {
+        var canBeYourTurn:Bool = true;
+
+        for (enemy in battle.enemyData) {
+            enemy.nextTurn--;
+            if (enemy.nextTurn == 0) {
+                trace("yes");
+                canBeYourTurn = false;
+
+                final remPos:Array<Float> = [enemy.enemy.x, enemy.enemy.y];
+                enemy.nextTurn = battle.enemyData.length;
+
+                FlxTween.tween(enemy.enemy, {x: playerRememberPos[0] + 8, y: playerRememberPos[1]}, 1, {onComplete: e -> {
+                    dealDamage(null, 1, true);
+                    FlxTween.tween(enemy.enemy, {x: remPos[0], y: remPos[1]}, 1, {onComplete: e -> {
+                        dealDamage(null, 1, true);
+                        isYourTurn = true;
+                    }});
+                }});
+            }
+        }
+
+        isYourTurn = canBeYourTurn;
     }
 }
