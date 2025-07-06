@@ -248,7 +248,7 @@ class Battle extends FlxSubState {
             if (isYourTurn) {
                 if (battle.enemyData.length == 0) {
                     if (!battleResults) {
-                        begin.destroy();
+                        begin.stop();
                         win.play();
 
                         var white:FlxSprite = new FlxSprite().makeGraphic(999, 999);
@@ -267,8 +267,6 @@ class Battle extends FlxSubState {
 
                         battleResults = true;
                     } else if (canPressToExit && FlxG.keys.justPressed.SPACE) {
-                        FlxTween.tween(FlxG.sound.music, {volume: 0}, 1.2);
-
                         for (l in 0...4) {
                             FlxTween.tween(transitions[l], {alpha: 1, x: 0, y: 0}, 1.2, {onComplete: e -> {
                                 if (l == 3) {
