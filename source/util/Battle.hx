@@ -467,5 +467,6 @@ class Battle extends FlxSubState {
         }
 
         isYourTurn = canBeYourTurn;
+        battleInProgress = !canBeYourTurn;
     }
 }
