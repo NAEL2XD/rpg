@@ -267,6 +267,8 @@ class Battle extends FlxSubState {
 
                         battleResults = true;
                     } else if (canPressToExit && FlxG.keys.justPressed.SPACE) {
+                        FlxTween.tween(begin, {volume: 0}, 1.2);
+
                         for (l in 0...4) {
                             FlxTween.tween(transitions[l], {alpha: 1, x: 0, y: 0}, 1.2, {onComplete: e -> {
                                 if (l == 3) {
