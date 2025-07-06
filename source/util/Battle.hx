@@ -459,7 +459,7 @@ class Battle extends FlxSubState {
                 FlxTween.tween(enemy.enemy, {x: playerRememberPos[0] + 8, y: playerRememberPos[1]}, 1, {onComplete: e -> {
                     dealDamage(null, 1, true);
                     FlxTween.tween(enemy.enemy, {x: remPos[0], y: remPos[1]}, 1, {onComplete: e -> {
-                        dealDamage(null, 1, true);
+                        battleInProgress = false;
                         isYourTurn = true;
                     }});
                 }});
