@@ -24,7 +24,9 @@ typedef BattleMetadata = {
     background:String,
     startASYourTurn:Bool,
     ?extraDialogues:Dialogue,
-    ?battleMusic:String
+    ?battleStart:String,
+    ?battleMusic:String,
+    ?battleEnd:String,
 }
 
 class Battle extends FlxSubState {
@@ -54,6 +56,9 @@ class Battle extends FlxSubState {
     var blockIndex:Int = 0;
     var blocksMoved:Bool = false;
 
+    var win:FlxSound = null;
+    var begin:FlxSound = null;
+
     var action:FlxSound = FlxG.sound.load("assets/sounds/action_s.ogg");
 
     public function new(battleData:BattleMetadata) {
@@ -80,7 +85,15 @@ class Battle extends FlxSubState {
         FlxG.sound.play("assets/sounds/player/hereWeGo.ogg");
         
         new FlxTimer().start(0.9, e -> {
-            FlxG.sound.playMusic('assets/music/battle/${battle.battleMusic == null ? "battle" : battle.battleMusic}.ogg');
+            win   = FlxG.sound.load('assets/music/battle/${battle.battleEnd == null ? "battleWin" : battle.battleEnd}.ogg');
+            begin = FlxG.sound.load('assets/music/battle/${battle.battleMusic == null ? "battleLoop" : battle.battleMusic}.ogg');
+            var start:FlxSound = FlxG.sound.load('assets/music/battle/${battle.battleStart == null ? "battleStart" : battle.battleStart}.ogg');
+
+            start.play();
+            start.onComplete = function() {
+                begin.looped = true;
+                begin.play();
+            };
         });
 
         final pos:Array<Array<Int>> = [[0, -360], [640, 0], [0, 360], [-640, 0]];
@@ -235,8 +248,8 @@ class Battle extends FlxSubState {
             if (isYourTurn) {
                 if (battle.enemyData.length == 0) {
                     if (!battleResults) {
-                        FlxG.sound.music.destroy();
-                        FlxG.sound.playMusic("assets/music/winner.ogg");
+                        begin.destroy();
+                        win.play();
 
                         var white:FlxSprite = new FlxSprite().makeGraphic(999, 999);
                         white.alpha = 0;
@@ -450,7 +463,6 @@ class Battle extends FlxSubState {
         for (enemy in battle.enemyData) {
             enemy.nextTurn--;
             if (enemy.nextTurn == 0) {
-                trace("yes");
                 canBeYourTurn = false;
 
                 final remPos:Array<Float> = [enemy.enemy.x, enemy.enemy.y];
