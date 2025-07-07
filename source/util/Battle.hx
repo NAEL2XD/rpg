@@ -135,11 +135,12 @@ class Battle extends FlxSubState {
                         [[480, 200], [480, 270]]
                     ];
 
+                    isYourTurn = battle.startASYourTurn;
                     for (e in battle.enemyData) {
                         e.enemyID = k;
                         e.enemy.x = pos2[l][k][0];
                         e.enemy.y = pos2[l][k][1];
-                        e.nextTurn = k+1;
+                        e.nextTurn = k+1 + (isYourTurn ? 1 : 0);
                         insert(index + 1, e.enemy);
                         battleEnemiesX.push(e.enemy.x);
                         k++;
@@ -157,15 +158,11 @@ class Battle extends FlxSubState {
                     k = 0;
                     for (m in pos) {
                         FlxTween.tween(transitions[k], {alpha: 0, x: m[0], y: m[1]}, 1.2, {onComplete: e -> {
-                            if (m[0] == -640) {
+                            if (k == transitions.length-1) {
                                 function start() {
                                     cutscene = false;
                                     battleInProgress = false;
-
-                                    isYourTurn = battle.startASYourTurn;
-                                    if (battle.startASYourTurn) {
-                                        nextTurn();
-                                    }
+                                    nextTurn();
                                 }
 
                                 if (battle.extraDialogues != null) {
