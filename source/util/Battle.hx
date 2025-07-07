@@ -389,6 +389,8 @@ class Battle extends FlxSubState {
         if (!isPlayer) {
             loseHp -= to.defense;
             loseHp = loseHp < 0 ? 0 : loseHp;
+        } else {
+            loseHp = to.damage;
         }
 
         if (lucky && !isPlayer) {
