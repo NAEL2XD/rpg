@@ -86,9 +86,6 @@ class Battle extends FlxSubState {
     override function create() {
         super.create();
 
-        var trans:FlxGroup = new FlxGroup();
-        add(trans);
-
         if (FlxG.sound.music != null) {
             FlxG.sound.music.destroy();
         }
@@ -198,7 +195,7 @@ class Battle extends FlxSubState {
                 }
             }});
 
-            trans.add(transitions[l]);
+            add(transitions[l]);
         }
     }
 
@@ -206,7 +203,7 @@ class Battle extends FlxSubState {
         super.update(elapsed);
         player.checkMovement();
 
-        playerHPText.text = '${FlxG.save.data.player.HP}/${FlxG.save.data.player.maxHP}';
+        playerHPText.text = '${FlxG.save.data.player.HP} / ${FlxG.save.data.player.maxHP}';
 
         if (cutscene) {
             return;
@@ -443,7 +440,7 @@ class Battle extends FlxSubState {
             new FlxTimer().start(0.1, e -> {
                 FlxG.save.data.player.HP--;
             }, loseHp);
-            
+
             FlxG.sound.play("assets/sounds/enemyDamage.ogg");
         }
 
