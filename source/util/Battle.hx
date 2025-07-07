@@ -182,12 +182,12 @@ class Battle extends FlxSubState {
                         hpStuff.x = 8 + (h * 2);
                         hpStuff.y = 8 + (h * 2);
                         playerHPStuff.push(hpStuff);
-                        add(playerHPStuff[h]);
+                        insert(index + 1, playerHPStuff[h]);
                     }
 
                     playerHPText.x = 12;
                     playerHPText.y = 10;
-                    add(playerHPText);
+                    insert(index + 1, playerHPText);
 
                     isYourTurn = battle.startASYourTurn;
 
