@@ -23,7 +23,7 @@ class Debug extends FlxState {
                     damage: 1
                 }],
                 background: "houseOut",
-                startASYourTurn: true
+                startASYourTurn: false
             }), false]
         ];
 
