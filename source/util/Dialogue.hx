@@ -91,7 +91,7 @@ class Dialogue extends FlxSubState {
         sprArray.push(s);
         add(sprArray[3]);
 
-        textSpr = new FlxText(0, 0, l, "").setFormat("assets/fonts/main.ttf", 18);
+        textSpr = new FlxText(0, 0, l - 8, "").setFormat("assets/fonts/main.ttf", 18);
         add(textSpr);
 
         newDialogue();
