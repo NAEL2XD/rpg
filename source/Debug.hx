@@ -5,24 +5,27 @@ import util.Battle;
 import chapters.Chapter1.Chapter1_1;
 
 class Debug extends FlxState {
+    var enemy:FlxSprite = new FlxSprite().makeGraphic(32, 32, 0xFFFF0000); 
     var choice:Int = 0;
     var texts:Array<FlxText> = [];
-    var lists:Array<Array<Dynamic>> = [
-        ["Chapter 0", Chapter1_1.new],
-        ["Battle Test", new Battle({
-            enemyData: [{
-                hp: 10,
-                enemy: new FlxSprite().makeGraphic(32, 32, 0xFFFF0000),
-                name: "Test",
-                damage: 1
-            }],
-            background: "",
-            startASYourTurn: false
-        })]
-    ];
+    var lists:Array<Array<Dynamic>> = [];
 
     override function create() {
         super.create();
+
+        lists = [
+            ["Chapter 0", Chapter1_1.new],
+            ["Battle Test", new Battle({
+                enemyData: [{
+                    hp: 10,
+                    enemy: enemy,
+                    name: "Test",
+                    damage: 1
+                }],
+                background: "houseOut",
+                startASYourTurn: false
+            })]
+        ];
 
         var times:Int = 0;
         for (list in lists) {
