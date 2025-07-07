@@ -1,6 +1,5 @@
 package;
 
-import chapters.Chapter1.Chapter1_1;
 import flixel.FlxGame;
 import openfl.display.Sprite;
 
@@ -22,7 +21,7 @@ class Main extends Sprite {
 			FlxG.save.data.c1_3 = {};
 		}
 		
-		addChild(new FlxGame(640, 320, Chapter1_1, 60, 60, true));
+		addChild(new FlxGame(640, 320, Debug, 60, 60, true));
 		
 		FlxG.autoPause     = false;
 		FlxG.mouse.visible = false;
