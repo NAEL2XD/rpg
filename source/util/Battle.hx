@@ -451,9 +451,11 @@ class Battle extends FlxSubState {
                 FlxG.sound.play("assets/sounds/enemyDamage.ogg");
             }
         } else {
-            new FlxTimer().start(0.1, e -> {
-                FlxG.save.data.player.HP--;
-            }, loseHp);
+            for (i in 0...loseHp) {
+                new FlxTimer().start((1 / loseHp) * i, e -> {
+                    FlxG.save.data.player.HP--;
+                }, loseHp);
+            }
 
             FlxG.sound.play("assets/sounds/enemyDamage.ogg");
         }
@@ -509,7 +511,7 @@ class Battle extends FlxSubState {
                 enemy.nextTurn = battle.enemyData.length;
 
                 FlxTween.tween(enemy.enemy, {x: playerRememberPos[0] + 8, y: playerRememberPos[1]}, 1, {onComplete: e -> {
-                    dealDamage(null, 1, true);
+                    dealDamage(enemy, 1, true);
                     FlxTween.tween(enemy.enemy, {x: remPos[0], y: remPos[1]}, 1, {onComplete: e -> {
                         battleInProgress = false;
                         isYourTurn = true;
