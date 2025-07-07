@@ -454,7 +454,7 @@ class Battle extends FlxSubState {
             for (i in 0...loseHp) {
                 new FlxTimer().start((1 / loseHp) * i, e -> {
                     FlxG.save.data.player.HP--;
-                }, loseHp);
+                });
             }
 
             FlxG.sound.play("assets/sounds/enemyDamage.ogg");
