@@ -35,9 +35,9 @@ class Debug extends FlxState {
     override function update(elapsed:Float) {
         super.update(elapsed);
 
-        if (FlxG.keys.justPressed.S && choice != 0) {
+        if (FlxG.keys.justPressed.Z && choice != 0) {
             choice--;
-        } else if (FlxG.keys.justPressed.Z && choice != lists.length) {
+        } else if (FlxG.keys.justPressed.S && choice != lists.length-1) {
             choice++;
         } else if (FlxG.keys.justPressed.ENTER) {
             openSubState(lists[choice][1]);

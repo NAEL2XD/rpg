@@ -158,22 +158,25 @@ class Battle extends FlxSubState {
                     for (m in pos) {
                         FlxTween.tween(transitions[k], {alpha: 0, x: m[0], y: m[1]}, 1.2, {onComplete: e -> {
                             if (m[0] == -640) {
+                                function start() {
+                                    cutscene = false;
+                                    battleInProgress = false;
+
+                                    isYourTurn = battle.startASYourTurn;
+                                    if (battle.startASYourTurn) {
+                                        nextTurn();
+                                    }
+                                }
+
                                 if (battle.extraDialogues != null) {
                                     var state = battle.extraDialogues;
-
                                     state.closeCallback = function() {
-                                        cutscene = false;
-                                        battleInProgress = false;
+                                        start();
                                     };
 
                                     openSubState(state);
                                 } else {
-                                    cutscene = false;
-                                    battleInProgress = false;
-                                }
-
-                                if (battle.startASYourTurn) {
-                                    nextTurn();
+                                    start();
                                 }
                             }
                         }});
