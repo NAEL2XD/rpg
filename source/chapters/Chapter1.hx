@@ -327,6 +327,7 @@ class Chapter1_3 extends FlxState {
     }
 
     override function update(elapsed:Float) {
+        super.update(elapsed);
         player.checkMovement();
 
         if (FlxG.overlap(player, enemy)) {
@@ -352,7 +353,5 @@ class Chapter1_3 extends FlxState {
                 battleMusic: "weird"
             }));
         }
-
-        super.update(elapsed);
     }
 }

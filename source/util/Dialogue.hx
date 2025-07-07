@@ -60,6 +60,8 @@ class Dialogue extends FlxSubState {
     }
     
     override function create() {
+        super.create();
+
         final l:Int = 256;
         final pos:Float = spr.x - 50;
         sprArray = [];
@@ -95,8 +97,6 @@ class Dialogue extends FlxSubState {
         add(textSpr);
 
         newDialogue();
-        
-        super.create();
     }
 
     function newDialogue() {
@@ -156,6 +156,8 @@ class Dialogue extends FlxSubState {
     }
 
     override function update(elapsed:Float) {
+        super.update(elapsed);
+        
         if (FlxG.keys.justPressed.ANY || !manualPress) {
             if (done) {
                 if (queue.length == 0) {
@@ -169,7 +171,5 @@ class Dialogue extends FlxSubState {
                 done = true;
             }
         }
-
-        super.update(elapsed);
     }
 }
