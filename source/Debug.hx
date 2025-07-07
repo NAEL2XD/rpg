@@ -14,7 +14,7 @@ class Debug extends FlxState {
         super.create();
 
         lists = [
-            ["Chapter 0", Chapter1_1.new],
+            ["Chapter 0", Chapter1_1.new, true],
             ["Battle Test", new Battle({
                 enemyData: [{
                     hp: 10,
@@ -24,7 +24,7 @@ class Debug extends FlxState {
                 }],
                 background: "houseOut",
                 startASYourTurn: true
-            })]
+            }), false]
         ];
 
         var times:Int = 0;
@@ -43,7 +43,11 @@ class Debug extends FlxState {
         } else if (FlxG.keys.justPressed.S && choice != lists.length-1) {
             choice++;
         } else if (FlxG.keys.justPressed.ENTER) {
-            openSubState(lists[choice][1]);
+            if (lists[choice][2]) {
+                FlxG.switchState(lists[choice][1]);
+            } else {
+                openSubState(lists[choice][1]);
+            }
         }
 
         var i:Int = 0;
