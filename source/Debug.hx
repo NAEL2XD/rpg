@@ -20,7 +20,8 @@ class Debug extends FlxState {
                     hp: 10,
                     enemy: enemy,
                     name: "Test",
-                    damage: 1
+                    damage: 100,
+                    defense: 0
                 }],
                 background: "houseOut",
                 startASYourTurn: false
