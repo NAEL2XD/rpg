@@ -171,6 +171,10 @@ class Battle extends FlxSubState {
                                     cutscene = false;
                                     battleInProgress = false;
                                 }
+
+                                if (battle.startASYourTurn) {
+                                    nextTurn();
+                                }
                             }
                         }});
                         
@@ -188,8 +192,6 @@ class Battle extends FlxSubState {
                     playerHPText.x = 12;
                     playerHPText.y = 10;
                     insert(index + 4, playerHPText);
-
-                    isYourTurn = battle.startASYourTurn;
 
                     opponentName.scale.set(0.6, 0.6);
                     opponentName.updateHitbox();
