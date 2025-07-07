@@ -381,7 +381,7 @@ class Battle extends FlxSubState {
     }
 
     function dealDamage(to:BattleEnemies, loseHp:Int, ?isPlayer:Bool = false):BattleEnemies {
-        final lucky:Bool = FlxG.random.bool(10);
+        final lucky:Bool = FlxG.random.bool(100);
 
         if (lucky && !isPlayer) {
             FlxG.sound.play("assets/sounds/LuckyHit.ogg");
@@ -389,8 +389,8 @@ class Battle extends FlxSubState {
             var lucky:FlxSprite = new FlxSprite().loadGraphic("assets/images/lucky.png");
             lucky.scale.set(0.7, 0.7);
             lucky.updateHitbox();
-            lucky.x = to.enemy.x - 46;
-            lucky.y = to.enemy.y - 63;
+            lucky.x = to.enemy.x - 12;
+            lucky.y = to.enemy.y - 12;
             FlxTween.tween(lucky, {x: lucky.x + 24, y: lucky.y - 36}, 1.2, {ease: FlxEase.sineOut, onComplete: e -> {
                 FlxTween.tween(lucky, {"scale.y": 1.4, alpha: 0}, 0.4, {onComplete: e -> {
                     lucky.destroy();
@@ -401,7 +401,7 @@ class Battle extends FlxSubState {
             loseHp = Std.int(loseHp * 1.75);
         }
 
-        var damage:FlxText = new FlxText((isPlayer ? player.x : to.enemy.x), (isPlayer ? player.y : to.enemy.y) - 24, 640, '${loseHp}').setFormat("assets/fonts/hpDeal.ttf", loseHp < 18 ? 18 : loseHp, isPlayer ? 0xFFFF0000 : lucky ? 0xFF31c694 : 0xFFFF9100, LEFT, OUTLINE, isPlayer ? 0xFFA30000 : lucky ? 0xFF21ad73 : 0xFFBD5500);
+        var damage:FlxText = new FlxText((isPlayer ? player.x : to.enemy.x) + 4, (isPlayer ? player.y : to.enemy.y) - 24, 640, '${loseHp}').setFormat("assets/fonts/hpDeal.ttf", loseHp < 18 ? 18 : loseHp, isPlayer ? 0xFFFF0000 : lucky ? 0xFF31c694 : 0xFFFF9100, LEFT, OUTLINE, isPlayer ? 0xFFA30000 : lucky ? 0xFF21ad73 : 0xFFBD5500);
         damage.scale.set(1.4, 1.4);
         damage.updateHitbox();
         FlxTween.tween(damage, {x: damage.x + 24, y: damage.y - 36}, 1.2, {ease: FlxEase.sineOut, onComplete: e -> {
