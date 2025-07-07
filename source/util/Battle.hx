@@ -1,6 +1,5 @@
 package util;
 
-import flixel.group.FlxGroup;
 import haxe.Timer;
 import flixel.sound.FlxSound;
 import flixel.util.FlxSpriteUtil;
@@ -15,6 +14,7 @@ typedef BattleEnemies = {
     enemy:FlxObject,
     name:String,
     damage:Int,
+    defense:Int,
     ?defeated:Bool,
     ?enemyID:Int,
     ?nextTurn:Int
@@ -385,6 +385,11 @@ class Battle extends FlxSubState {
 
     function dealDamage(to:BattleEnemies, loseHp:Int, ?isPlayer:Bool = false):BattleEnemies {
         final lucky:Bool = FlxG.random.bool(10);
+
+        if (!isPlayer) {
+            loseHp -= to.defense;
+            loseHp = loseHp < 0 ? 0 : loseHp;
+        }
 
         if (lucky && !isPlayer) {
             FlxG.sound.play("assets/sounds/LuckyHit.ogg");

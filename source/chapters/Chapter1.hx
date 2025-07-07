@@ -224,12 +224,14 @@ class Chapter1_2 extends FlxState {
                         hp: 8,
                         enemy: noobs[0],
                         name: "Gang I",
-                        damage: 1
+                        damage: 1,
+                        defense: 0
                     }, {
                         hp: 8,
                         enemy: noobs[1],
                         name: "Gang II",
-                        damage: 1
+                        damage: 1,
+                        defense: 1
                     }],
                     background: "houseOut",
                     extraDialogues: new Dialogue([{
@@ -336,7 +338,8 @@ class Chapter1_3 extends FlxState {
                     hp: 8,
                     enemy: enemy,
                     name: "Enemy",
-                    damage: 1
+                    damage: 1, 
+                    defense: 0
                 }],
                 background: "houseOut",
                 startASYourTurn: true,

@@ -5,7 +5,7 @@ import util.Battle;
 import chapters.Chapter1.Chapter1_1;
 
 class Debug extends FlxState {
-    var enemy:FlxSprite = new FlxSprite().makeGraphic(32, 32, 0xFFFF0000); 
+    var enemy:FlxSprite = new FlxSprite().makeGraphic(128, 128, 0xFFFF0000); 
     var choice:Int = 0;
     var texts:Array<FlxText> = [];
     var lists:Array<Array<Dynamic>> = [];
