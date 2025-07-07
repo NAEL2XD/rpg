@@ -381,7 +381,7 @@ class Battle extends FlxSubState {
     }
 
     function dealDamage(to:BattleEnemies, loseHp:Int, ?isPlayer:Bool = false):BattleEnemies {
-        final lucky:Bool = FlxG.random.bool(100);
+        final lucky:Bool = FlxG.random.bool(10);
 
         if (lucky && !isPlayer) {
             FlxG.sound.play("assets/sounds/LuckyHit.ogg");
