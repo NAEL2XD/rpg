@@ -335,7 +335,7 @@ class Chapter1_3 extends FlxState {
                     hp: 8,
                     enemy: enemy,
                     name: "Enemy",
-                        damage: 1
+                    damage: 1
                 }],
                 background: "houseOut",
                 startASYourTurn: true,
