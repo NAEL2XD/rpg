@@ -158,7 +158,7 @@ class Battle extends FlxSubState {
                     k = 0;
                     for (m in pos) {
                         FlxTween.tween(transitions[k], {alpha: 0, x: m[0], y: m[1]}, 1.2, {onComplete: e -> {
-                            if (k == transitions.length-1) {
+                            if (m[0] == -640) {
                                 function start() {
                                     cutscene = false;
                                     battleInProgress = false;
