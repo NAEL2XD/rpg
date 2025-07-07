@@ -140,6 +140,7 @@ class Battle extends FlxSubState {
                         e.enemyID = k;
                         e.enemy.x = pos2[l][k][0];
                         e.enemy.y = pos2[l][k][1];
+                        e.enemy.visible = true;
                         e.nextTurn = k+1 + (isYourTurn ? 1 : 0);
                         insert(index + 1, e.enemy);
                         battleEnemiesX.push(e.enemy.x);
@@ -432,7 +433,7 @@ class Battle extends FlxSubState {
                     });
                 }
     
-                to.enemy.destroy();
+                to.enemy.visible = false;
                 to.defeated = true;
                 
                 FlxG.sound.play("assets/sounds/enemyDefeat.ogg");
